@@ -55,7 +55,7 @@ def download_json(url: str) -> dict:
     })
     with urlopen(req, timeout=20) as resp:
         kind = resp.headers.get('Content-Type', '')
-        if 'json' not in kind.lower():
+        if 'json' not in kind.lower() and not (url.startswith('https://raw.githubusercontent.com/') and 'text/plain' in kind.lower()):
             raise ValueError(f'JSON 아닌 응답 ({kind}): 접근 차단 가능')
         return json.load(resp)
 
