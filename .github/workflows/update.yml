@@ -1,0 +1,102 @@
+name: Lotto results — update verified draw data
+
+on:
+  schedule:
+    # Saturday 22:20 KST and Sunday 09:20 KST
+    - cron: '20 13 * * 6'
+    - cron: '20 0 * * 0'
+  workflow_dispatch:
+    inputs:
+      manual_round:
+        description: 'Optional manual official draw round'
+        required: false
+      manual_date:
+        description: 'Official draw date YYYY-MM-DD'
+        required: false
+      manual_numbers:
+        description: 'Six numbers separated by commas'
+        required: false
+      manual_bonus:
+        description: 'Official bonus number'
+        required: false
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'scripts/update_draws.py'
+      - 'tests/test_update.py'
+      - 'data/draws.json'
+      - '.github/workflows/update.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lotto-public-data-updater
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Update lottery results (no purchase records)
+        env:
+          MANUAL_ROUND: ${{ inputs.manual_round }}
+          MANUAL_DATE: ${{ inputs.manual_date }}
+          MANUAL_NUMBERS: ${{ inputs.manual_numbers }}
+          MANUAL_BONUS: ${{ inputs.manual_bonus }}
+        run: |
+          args=()
+          if [[ -n "$MANUAL_ROUND" ]]; then
+            args+=(--manual-round "$MANUAL_ROUND" --manual-date "$MANUAL_DATE" --manual-numbers "$MANUAL_NUMBERS" --manual-bonus "$MANUAL_BONUS")
+          fi
+          python scripts/update_draws.py "${args[@]}"
+      - name: Commit new verified draws
+        run: |
+          if git diff --quiet -- data/draws.json; then
+            echo 'No new valid data.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/draws.json
+          git commit -m 'data: update lotto draw archive'
+          git push
+
+  deploy:
+    name: Publish latest dashboard + draw data
+    needs: update
+    if: ${{ needs.update.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/configure-pages@v5
+      - name: Prepare public artifacts only
+        run: |
+          mkdir -p _site/data
+          cp index.html _site/index.html
+          cp data/draws.json _site/data/draws.json
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
