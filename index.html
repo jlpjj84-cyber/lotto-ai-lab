@@ -17,16 +17,23 @@
 #holdoutVerdict{line-height:1.7}
 #monteResults .barh .left{width:110px}
 @media(max-width:480px){#testMetrics{grid-template-columns:1fr 1fr}#monteResults .barh .left{width:100px}}
+.status.warn{color:var(--gold);background:#3d2d20;border-color:#735a3d}
+.status.warn i{background:var(--gold);box-shadow:none}
+#syncOverview{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+#syncOverview p{margin:0}
+#storageNotice[hidden],#cancelEdit[hidden]{display:none}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="top"><div class="brand"><div class="logo">✳</div><div><div class="brand-title">LOTTO <span style="color:var(--mint)">LAB</span></div><div class="brand-sub">NUMBER RESEARCH CONSOLE · 3.0</div></div></div><div id="dataStatus" class="status"><i></i>데이터 로드 중</div></header>
+<div id="storageNotice" class="notice dangertext" role="alert" hidden></div>
 <nav class="tabs" aria-label="대시보드 메뉴">
 <button class="tab on" data-tab="overview">◈ 개요</button><button class="tab" data-tab="statistics">▥ 통계 분석</button><button class="tab" data-tab="backtest">⌁ 전략 검증</button><button class="tab" data-tab="generator">✳ 조합 생성</button><button class="tab" data-tab="records">▤ 구매 기록</button><button class="tab" data-tab="data">⚙ 데이터 관리</button>
 </nav>
 <section id="overview" class="view active">
 <div id="hero" class="hero"></div>
+<div id="syncOverview" class="notice" role="status" aria-live="polite"></div>
 <div id="metrics" class="metrics"></div>
 <div class="cols">
 <div><div class="card"><div class="card-title"><h2>최근 번호 출현 분포</h2><select id="overviewRange" aria-label="통계 기간"><option value="20">최근 20회</option><option value="50">최근 50회</option><option value="100" selected>최근 100회</option><option value="all">전체 보유 데이터</option></select></div><div id="overviewFreq"></div><div class="tiny" style="margin-top:8px">보너스 번호는 제외. 막대는 관측 빈도이며 다음 추첨 확률이 아닙니다.</div></div>
@@ -69,13 +76,13 @@
 </section>
 <section id="records" class="view">
 <div class="section-head"><div><h1>내 로또 구매 기록</h1><div class="tiny">이 브라우저에서 저장한 기록만 표시됩니다</div></div><button class="btn" data-jump="data">기록 백업 ↗</button></div><div class="metrics" id="recordMetrics"></div>
-<div class="cols"><div><div class="card"><div class="card-title"><h2>회차별 기록</h2><span class="chip" id="recordCount"></span></div><div id="recordList"></div></div></div><div class="card"><div class="card-title"><h2>수동 구매 기록 추가</h2></div><label class="form-label" for="manualRound">추첨 회차</label><input type="number" id="manualRound" min="1" max="9999" style="width:155px"/><label class="form-label" for="manualLines">A~E 번호 · 한 줄에 6개씩 (최대 5줄)</label><textarea id="manualLines" rows="5" style="width:100%;resize:vertical" placeholder="2 11 17 26 34 43&#10;5 14 20 29 36 41&#10;7 12 21 28 35 44"></textarea><div class="controls" style="margin-top:12px"><button class="btn primary" id="saveManual">직접 입력한 번호 저장</button></div><div class="tiny" style="margin-top:10px">추첨 전 번호는 결과 대기 상태로 표시됩니다. 같은 회차에 저장하면 기존 기록을 덮어씁니다.</div></div></div>
+<div class="cols"><div><div class="card"><div class="card-title"><h2>회차별 기록</h2><span class="chip" id="recordCount"></span></div><div id="recordList"></div></div></div><div class="card"><div class="card-title"><h2 id="recordFormTitle">수동 구매 기록 추가</h2></div><label class="form-label" for="manualRound">추첨 회차</label><input type="number" id="manualRound" min="1" max="9999" style="width:155px"/><label class="form-label" for="manualLines">A~E 번호 · 한 줄에 6개씩 (최대 5줄)</label><textarea id="manualLines" rows="5" style="width:100%;resize:vertical" placeholder="2 11 17 26 34 43&#10;5 14 20 29 36 41&#10;7 12 21 28 35 44"></textarea><div class="controls" style="margin-top:12px"><button class="btn primary" id="saveManual">추가 구매 저장</button><button class="btn" id="cancelEdit" hidden>수정 취소</button></div><div class="tiny" style="margin-top:10px">추첨 전 번호는 결과 대기 상태로 표시됩니다. 같은 회차에도 구매 건을 추가할 수 있습니다. 기존 기록은 해당 구매 건의 수정 버튼을 이용하세요.</div></div></div>
 </section>
 <section id="data" class="view">
 <div class="section-head"><div><h1>데이터 · 백업 · 업데이트</h1><div class="tiny">로또 이력과 내 구매 기록을 분리하여 관리</div></div></div>
 <div class="cols"><div><div class="card"><div class="card-title"><h2>당첨번호 데이터셋</h2><span id="datasetTag" class="chip accent"></span></div><div id="dataDetails" class="tiny"></div><hr class="line"><div class="controls"><button class="btn primary" id="onlineSync">GitHub 최신 데이터 확인 ↻</button><label class="btn" style="cursor:pointer">CSV 파일 불러오기<input id="csvUpload" type="file" accept=".csv,text/csv" hidden></label><button class="btn" id="exportDraws">당첨 데이터 CSV 내보내기</button></div><div class="smallprint" style="margin-top:12px">웹 배포 후에는 GitHub 저장소의 data/draws.json을 매번 접속할 때 읽습니다. GitHub Actions는 매주 토요일 추첨 후 갱신을 시도하며, 작업 실패 시 기존 검증 데이터가 유지됩니다. 브라우저의 구매 기록은 GitHub에 업로드하지 않습니다.</div><div id="syncMessage" class="tiny" style="margin-top:12px" role="status" aria-live="polite">GitHub 최신 데이터 연결 대기</div><div class="tiny" style="margin-top:6px">자동 갱신은 배포 후에 작동합니다. 개인 구매 기록은 브라우저에만 보관되므로 기기를 바꾸면 JSON 백업으로 복원하세요.</div><div class="tiny" style="margin-top:10px"><a target="_blank" rel="noopener" href="https://cashlogy.kr/lotto/excel">전체 회차 CSV 다운로드 페이지 ↗</a> · <a target="_blank" rel="noopener" href="https://www.dhlottery.co.kr/lt645/result">공식 동행복권 결과 확인 ↗</a></div></div>
-<div class="card"><div class="card-title"><h2>내 구매 기록 백업</h2></div><div class="tiny">기록은 이 브라우저에만 남습니다. 다른 휴대폰이나 파일을 교체할 때는 백업 파일을 보관해 주세요.</div><div class="controls" style="margin-top:18px"><button class="btn primary" id="exportBackup">전체 백업 JSON 내보내기</button><label class="btn" style="cursor:pointer">백업 JSON 복원<input id="jsonUpload" type="file" accept=".json,application/json" hidden></label><button class="btn" id="exportTickets">구매 기록 CSV 내보내기</button></div><hr class="line"><button class="btn danger" id="resetAll">사용자 데이터 초기화</button><div class="smallprint" style="margin-top:10px">초기화하면 앱에 내장된 100회 당첨 데이터와 1249회 샘플 구매 기록으로 돌아갑니다.</div></div></div>
-<div class="card"><div class="card-title"><h2>데이터 해석 및 한계</h2></div><div class="tiny"><p><b>출처:</b> 이 HTML 파일에 내장된 1150~1249회 데이터는 캐시로지의 동행복권 공개 자료 정리 페이지를 참고해 구성했습니다. 공식 원본 DB에 직접 연결된 서비스는 아닙니다. 구매기록은 제공된 사진에 표시된 1249회 번호를 초기값으로 입력했습니다.</p><p><b>정확성:</b> 결과 발표 전인 회차는 자동으로 당첨 판정하지 않습니다. 이력 업데이트 후 당첨 결과는 공식 동행복권에서 다시 확인하세요. 1~3등 당첨금이 데이터셋에 없으면 금액을 추정하지 않습니다.</p><p><b>통계:</b> 각 회차의 추첨은 독립 시행입니다. 고빈도, 저빈도, 동반 출현, 홀짝, 번호 합계, 백테스트는 설명·연구용이며 미래 번호 예측 능력이 확인된 것은 아닙니다.</p><p><b>개인정보:</b> 기본 대시보드는 외부 서버에 개인 구매 기록을 전송하지 않습니다. 온라인 갱신은 당첨 데이터 CSV를 요청하는 기능일 뿐입니다.</p></div></div>
+<div class="card"><div class="card-title"><h2>내 구매 기록 백업</h2></div><div class="tiny">기록은 이 브라우저에만 남습니다. 다른 휴대폰이나 파일을 교체할 때는 백업 파일을 보관해 주세요.</div><div class="controls" style="margin-top:18px"><button class="btn primary" id="exportBackup">전체 백업 JSON 내보내기</button><label class="btn" style="cursor:pointer">백업 JSON 복원<input id="jsonUpload" type="file" accept=".json,application/json" hidden></label><button class="btn" id="exportTickets">구매 기록 CSV 내보내기</button></div><hr class="line"><button class="btn danger" id="resetAll">사용자 데이터 초기화</button><div class="smallprint" style="margin-top:10px">초기화하면 구매 기록을 지우고 앱에 내장된 100회 당첨 데이터로 돌아갑니다. 필요한 기록은 먼저 JSON 백업으로 보관하세요.</div></div></div>
+<div class="card"><div class="card-title"><h2>데이터 해석 및 한계</h2></div><div class="tiny"><p><b>출처:</b> 이 HTML 파일에 내장된 1150~1249회 데이터는 캐시로지의 동행복권 공개 자료 정리 페이지를 참고해 구성했습니다. 공식 원본 DB에 직접 연결된 서비스는 아닙니다. 구매 기록은 사용자가 이 브라우저에서 직접 등록합니다.</p><p><b>정확성:</b> 결과 발표 전인 회차는 자동으로 당첨 판정하지 않습니다. 이력 업데이트 후 당첨 결과는 공식 동행복권에서 다시 확인하세요. 1~3등 당첨금이 데이터셋에 없으면 금액을 추정하지 않습니다.</p><p><b>통계:</b> 각 회차의 추첨은 독립 시행입니다. 고빈도, 저빈도, 동반 출현, 홀짝, 번호 합계, 백테스트는 설명·연구용이며 미래 번호 예측 능력이 확인된 것은 아닙니다.</p><p><b>개인정보:</b> 기본 대시보드는 외부 서버에 개인 구매 기록을 전송하지 않습니다. 온라인 갱신은 당첨 데이터 CSV를 요청하는 기능일 뿐입니다.</p></div></div>
 </section>
 <footer class="foot">LOTTO LAB · 오프라인 실행 가능한 단일 HTML · 기준일 2026.11.08 · 자료: <a href="https://cashlogy.kr/lotto/recent/100" target="_blank" rel="noopener">캐시로지 최근 100회</a> / <a href="https://www.dhlottery.co.kr/lt645/result" target="_blank" rel="noopener">동행복권 공식 확인</a><br>오락·기록·통계 도구이며 복권 구매, 자동 베팅, 수익 보장을 제공하지 않습니다. 복권은 19세 이상만 구매할 수 있습니다.</footer>
 </div>
@@ -84,9 +91,49 @@
 'use strict';
 const EMBEDDED_DRAWS=[{"round":1249,"date":"2026-11-07","numbers":[2,11,16,25,34,35],"bonus":14},{"round":1248,"date":"2026-10-31","numbers":[16,18,27,36,38,42],"bonus":22},{"round":1247,"date":"2026-10-24","numbers":[8,14,21,22,42,45],"bonus":24},{"round":1246,"date":"2026-10-17","numbers":[16,22,23,24,27,28],"bonus":6},{"round":1245,"date":"2026-10-10","numbers":[4,5,25,28,32,42],"bonus":12},{"round":1244,"date":"2026-10-03","numbers":[1,13,18,26,34,38],"bonus":25},{"round":1243,"date":"2026-09-26","numbers":[9,18,24,38,43,44],"bonus":35},{"round":1242,"date":"2026-09-19","numbers":[2,4,10,16,31,41],"bonus":9},{"round":1241,"date":"2026-09-12","numbers":[7,13,16,23,24,43],"bonus":9},{"round":1240,"date":"2026-09-05","numbers":[11,13,19,20,31,44],"bonus":27},{"round":1239,"date":"2026-08-29","numbers":[11,13,22,32,33,36],"bonus":8},{"round":1238,"date":"2026-08-22","numbers":[2,13,18,32,38,42],"bonus":22},{"round":1237,"date":"2026-08-15","numbers":[10,20,23,34,37,40],"bonus":36},{"round":1236,"date":"2026-08-08","numbers":[12,18,21,29,34,38],"bonus":10},{"round":1235,"date":"2026-08-01","numbers":[6,7,11,15,39,43],"bonus":20},{"round":1234,"date":"2026-07-25","numbers":[1,15,19,31,35,43],"bonus":27},{"round":1233,"date":"2026-07-18","numbers":[2,7,20,25,37,40],"bonus":29},{"round":1232,"date":"2026-07-11","numbers":[12,15,19,22,24,36],"bonus":3},{"round":1231,"date":"2026-07-04","numbers":[4,13,14,18,31,38],"bonus":15},{"round":1230,"date":"2026-06-27","numbers":[3,8,9,22,28,42],"bonus":45},{"round":1229,"date":"2026-06-20","numbers":[12,13,29,34,37,42],"bonus":16},{"round":1228,"date":"2026-06-13","numbers":[24,29,30,31,35,44],"bonus":1},{"round":1227,"date":"2026-06-06","numbers":[1,14,16,34,41,44],"bonus":13},{"round":1226,"date":"2026-05-30","numbers":[4,6,13,17,26,28],"bonus":41},{"round":1225,"date":"2026-05-23","numbers":[8,9,19,25,41,42],"bonus":33},{"round":1224,"date":"2026-05-16","numbers":[9,18,21,27,44,45],"bonus":28},{"round":1223,"date":"2026-05-09","numbers":[16,18,20,32,33,39],"bonus":26},{"round":1222,"date":"2026-05-02","numbers":[4,11,17,22,32,41],"bonus":34},{"round":1221,"date":"2026-04-25","numbers":[6,13,18,28,30,36],"bonus":9},{"round":1220,"date":"2026-04-18","numbers":[2,22,25,28,34,43],"bonus":16},{"round":1219,"date":"2026-04-11","numbers":[1,2,15,28,39,45],"bonus":31},{"round":1218,"date":"2026-04-04","numbers":[3,28,31,32,42,45],"bonus":25},{"round":1217,"date":"2026-03-28","numbers":[8,10,15,20,29,31],"bonus":41},{"round":1216,"date":"2026-03-21","numbers":[3,10,14,15,23,24],"bonus":25},{"round":1215,"date":"2026-03-14","numbers":[13,15,19,21,44,45],"bonus":39},{"round":1214,"date":"2026-03-07","numbers":[10,15,19,27,30,33],"bonus":14},{"round":1213,"date":"2026-02-28","numbers":[5,11,25,27,36,38],"bonus":2},{"round":1212,"date":"2026-02-21","numbers":[5,8,25,31,41,44],"bonus":45},{"round":1211,"date":"2026-02-14","numbers":[23,26,27,35,38,40],"bonus":10},{"round":1210,"date":"2026-02-07","numbers":[1,7,9,17,27,38],"bonus":31},{"round":1209,"date":"2026-01-31","numbers":[2,17,20,35,37,39],"bonus":24},{"round":1208,"date":"2026-01-24","numbers":[6,27,30,36,38,42],"bonus":25},{"round":1207,"date":"2026-01-17","numbers":[10,22,24,27,38,45],"bonus":11},{"round":1206,"date":"2026-01-10","numbers":[1,3,17,26,27,42],"bonus":23},{"round":1205,"date":"2026-01-03","numbers":[1,4,16,23,31,41],"bonus":2},{"round":1204,"date":"2025-12-27","numbers":[8,16,28,30,31,44],"bonus":27},{"round":1203,"date":"2025-12-20","numbers":[3,6,18,29,35,39],"bonus":24},{"round":1202,"date":"2025-12-13","numbers":[5,12,21,33,37,40],"bonus":7},{"round":1201,"date":"2025-12-06","numbers":[7,9,24,27,35,36],"bonus":37},{"round":1200,"date":"2025-11-29","numbers":[1,2,4,16,20,32],"bonus":45},{"round":1199,"date":"2025-11-22","numbers":[16,24,25,30,31,32],"bonus":7},{"round":1198,"date":"2025-11-15","numbers":[26,30,33,38,39,41],"bonus":21},{"round":1197,"date":"2025-11-08","numbers":[1,5,7,26,28,43],"bonus":30},{"round":1196,"date":"2025-11-01","numbers":[8,12,15,29,40,45],"bonus":14},{"round":1195,"date":"2025-10-25","numbers":[3,15,27,33,34,36],"bonus":37},{"round":1194,"date":"2025-10-18","numbers":[3,13,15,24,33,37],"bonus":2},{"round":1193,"date":"2025-10-11","numbers":[6,9,16,19,24,28],"bonus":17},{"round":1192,"date":"2025-10-04","numbers":[10,16,23,36,39,40],"bonus":11},{"round":1191,"date":"2025-09-27","numbers":[1,4,11,12,20,41],"bonus":2},{"round":1190,"date":"2025-09-20","numbers":[7,9,19,23,26,45],"bonus":33},{"round":1189,"date":"2025-09-13","numbers":[9,19,29,35,37,38],"bonus":31},{"round":1188,"date":"2025-09-06","numbers":[3,4,12,19,22,27],"bonus":9},{"round":1187,"date":"2025-08-30","numbers":[5,13,26,29,37,40],"bonus":42},{"round":1186,"date":"2025-08-23","numbers":[2,8,13,16,23,28],"bonus":35},{"round":1185,"date":"2025-08-16","numbers":[6,17,22,28,29,32],"bonus":38},{"round":1184,"date":"2025-08-09","numbers":[14,16,23,25,31,37],"bonus":42},{"round":1183,"date":"2025-08-02","numbers":[4,15,17,23,27,36],"bonus":31},{"round":1182,"date":"2025-07-26","numbers":[1,13,21,25,28,31],"bonus":22},{"round":1181,"date":"2025-07-19","numbers":[8,10,14,20,33,41],"bonus":28},{"round":1180,"date":"2025-07-12","numbers":[6,12,18,37,40,41],"bonus":3},{"round":1179,"date":"2025-07-05","numbers":[3,16,18,24,40,44],"bonus":21},{"round":1178,"date":"2025-06-28","numbers":[5,6,11,27,43,44],"bonus":17},{"round":1177,"date":"2025-06-21","numbers":[3,7,15,16,19,43],"bonus":21},{"round":1176,"date":"2025-06-14","numbers":[7,9,11,21,30,35],"bonus":29},{"round":1175,"date":"2025-06-07","numbers":[3,4,6,8,32,42],"bonus":31},{"round":1174,"date":"2025-05-31","numbers":[8,11,14,17,36,39],"bonus":22},{"round":1173,"date":"2025-05-24","numbers":[1,5,18,20,30,35],"bonus":3},{"round":1172,"date":"2025-05-17","numbers":[7,9,24,40,42,44],"bonus":45},{"round":1171,"date":"2025-05-10","numbers":[3,6,7,11,12,17],"bonus":19},{"round":1170,"date":"2025-05-03","numbers":[3,13,28,34,38,42],"bonus":25},{"round":1169,"date":"2025-04-26","numbers":[5,12,24,26,39,42],"bonus":20},{"round":1168,"date":"2025-04-19","numbers":[9,21,24,30,33,37],"bonus":29},{"round":1167,"date":"2025-04-12","numbers":[8,23,31,35,39,40],"bonus":24},{"round":1166,"date":"2025-04-05","numbers":[14,23,25,27,29,42],"bonus":16},{"round":1165,"date":"2025-03-29","numbers":[6,7,27,29,38,45],"bonus":17},{"round":1164,"date":"2025-03-22","numbers":[17,18,23,25,38,39],"bonus":22},{"round":1163,"date":"2025-03-15","numbers":[2,13,15,16,33,43],"bonus":4},{"round":1162,"date":"2025-03-08","numbers":[20,21,22,25,28,29],"bonus":6},{"round":1161,"date":"2025-03-01","numbers":[2,12,20,24,34,42],"bonus":37},{"round":1160,"date":"2025-02-22","numbers":[7,13,18,36,39,45],"bonus":19},{"round":1159,"date":"2025-02-15","numbers":[3,9,27,28,38,39],"bonus":7},{"round":1158,"date":"2025-02-08","numbers":[21,25,27,32,37,38],"bonus":20},{"round":1157,"date":"2025-02-01","numbers":[5,7,12,20,25,26],"bonus":28},{"round":1156,"date":"2025-01-25","numbers":[30,31,34,39,41,45],"bonus":7},{"round":1155,"date":"2025-01-18","numbers":[10,16,19,27,37,38],"bonus":13},{"round":1154,"date":"2025-01-11","numbers":[4,8,22,26,32,38],"bonus":27},{"round":1153,"date":"2025-01-04","numbers":[1,9,10,13,35,44],"bonus":5},{"round":1152,"date":"2024-12-28","numbers":[30,31,32,35,36,37],"bonus":5},{"round":1151,"date":"2024-12-21","numbers":[2,3,9,15,27,29],"bonus":8},{"round":1150,"date":"2024-12-14","numbers":[8,9,18,35,39,45],"bonus":25}];
 const STORAGE='lotto_lab_v3_private_records';
-let state={draws:structuredClone(EMBEDDED_DRAWS),tickets:[],source:'초기 100회',generator:[],genMode:'spread'};
-try{const saved=localStorage.getItem(STORAGE);if(saved){const parsed=JSON.parse(saved);if(Array.isArray(parsed.draws)&&parsed.draws.length)state.draws=normalizeDraws(parsed.draws);if(Array.isArray(parsed.tickets))state.tickets=parsed.tickets;state.source=parsed.source||state.source}}catch(e){console.warn('저장소 접근 제한',e)}
-function save(){try{localStorage.setItem(STORAGE,JSON.stringify({draws:state.draws,tickets:state.tickets,source:state.source}))}catch(e){console.warn('저장소 사용 불가',e)}}
+let state={draws:structuredClone(EMBEDDED_DRAWS),tickets:[],source:'초기 100회',serverUpdatedAt:null,generator:[],genMode:'spread'};
+let storageSnapshot=null;
+let storageReadError=false;
+let storageWarning='';
+let editingRecord=null;
+let syncState={phase:'idle',checkedAt:null};
+try {
+  storageSnapshot=localStorage.getItem(STORAGE);
+  if(storageSnapshot) Object.assign(state,readBackup(JSON.parse(storageSnapshot)));
+} catch(error) {
+  storageReadError=true;
+  storageWarning='저장된 기록을 읽지 못했습니다. 데이터 관리에서 원본 JSON 백업을 내보낸 후 복원해 주세요.';
+}
+
+// Serialize writes across tabs and reject edits based on an outdated snapshot.
+async function save(changes,{allowUnreadable=false,expectedSnapshot=storageSnapshot}={}) {
+  const commit=()=>{
+    if(storageReadError&&!allowUnreadable) throw Error('기존 기록을 먼저 백업하고 복원해 주세요.');
+    if(localStorage.getItem(STORAGE)!==expectedSnapshot) throw Error('다른 탭에서 기록이 변경되었습니다. 새로고침 후 다시 시도해 주세요.');
+    const next={...state,...changes};
+    const serialized=JSON.stringify({draws:next.draws,tickets:next.tickets,source:next.source,serverUpdatedAt:next.serverUpdatedAt});
+    localStorage.setItem(STORAGE,serialized);
+    state=next;
+    storageSnapshot=serialized;
+    storageReadError=false;
+    storageWarning='';
+    renderStorageNotice();
+  };
+  try {
+    if(navigator.locks) await navigator.locks.request(STORAGE,commit);
+    else commit();
+  } catch(error) {
+    storageWarning=`저장하지 못했습니다. ${error.message} 브라우저 저장 공간과 설정을 확인해 주세요.`;
+    renderStorageNotice();
+    throw Error(storageWarning);
+  }
+}
+
+function renderStorageNotice() {
+  const notice=document.getElementById('storageNotice');
+  notice.textContent=storageWarning;
+  notice.hidden=!storageWarning;
+}
 const $=id=>document.getElementById(id);
 const fmt=n=>Number(n).toLocaleString('ko-KR');
 const money=n=>Number(n).toLocaleString('ko-KR')+'원';
@@ -102,18 +149,78 @@ function subset(n){const s=sorted();return n==='all'?s:s.slice(0,Math.min(Number
 function frequency(rows){const c=Array(46).fill(0);rows.forEach(r=>r.numbers.forEach(n=>c[n]++));return c}
 function pairs(rows){const c=new Map();rows.forEach(r=>{const n=r.numbers;for(let i=0;i<6;i++)for(let j=i+1;j<6;j++){const k=`${n[i]}-${n[j]}`;c.set(k,(c.get(k)||0)+1)}});return [...c.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).slice(0,8)}
 function summary(rows){const c=frequency(rows);const rank=Array.from({length:45},(_,i)=>({n:i+1,c:c[i+1]}));return {c,high:[...rank].sort((a,b)=>b.c-a.c||a.n-b.n),low:[...rank].sort((a,b)=>a.c-b.c||a.n-b.n)}}
-function normalizeDraws(arr){const dict=new Map();for(let d of arr){let r=Number(d.round??d.drwNo);let nums=d.numbers||[d.n1,d.n2,d.n3,d.n4,d.n5,d.n6].map(Number);nums=nums.map(Number).sort((a,b)=>a-b);const b=Number(d.bonus);if(!Number.isInteger(r)||r<1||nums.length!==6||new Set(nums).size!==6||nums.some(x=>!Number.isInteger(x)||x<1||x>45)||!Number.isInteger(b)||b<1||b>45||nums.includes(b))continue;const date=d.date||d.drwNoDate||datePlus('2002-12-07',(r-1)*7);dict.set(r,{round:r,date:String(date).slice(0,10),numbers:nums,bonus:b,prizes:d.prizes||{}})}return [...dict.values()].sort((a,b)=>b.round-a.round)}
-function isValidLine(nums){return nums.length===6&&nums.every(Number.isInteger)&&nums.every(n=>n>=1&&n<=45)&&new Set(nums).size===6}
+function normalizeDraws(arr) {
+  if(!Array.isArray(arr)||!arr.length) throw Error('유효한 추첨 데이터가 없습니다.');
+  const draws=new Map();
+  for(const d of arr) {
+    if(!d||typeof d!=='object') throw Error('추첨 데이터 형식이 올바르지 않습니다.');
+    const round=Number(d.round??d.drwNo);
+    const raw=d.numbers??[d.n1,d.n2,d.n3,d.n4,d.n5,d.n6];
+    if(!Array.isArray(raw)) throw Error('당첨번호는 6개 숫자 배열이어야 합니다.');
+    const numbers=raw.map(Number).sort((a,b)=>a-b);
+    const bonus=Number(d.bonus);
+    if(!Number.isInteger(round)||round<1||round>9999||!isValidLine(numbers)||!Number.isInteger(bonus)||bonus<1||bonus>45||numbers.includes(bonus)) {
+      throw Error('회차, 당첨번호 또는 보너스 번호가 올바르지 않습니다.');
+    }
+    if(draws.has(round)) throw Error(`${round}회 추첨 데이터가 중복되었습니다.`);
+    const expectedDate=datePlus('2002-12-07',(round-1)*7);
+    const date=d.date||d.drwNoDate||expectedDate;
+    if(date!==expectedDate||new Date(date+'T00:00:00+09:00').getTime()>Date.now()) throw Error(`${round}회 추첨 날짜가 올바르지 않습니다.`);
+    const prizes={};
+    if(d.prizes!=null&&(typeof d.prizes!=='object'||Array.isArray(d.prizes))) throw Error(`${round}회 당첨금 형식이 올바르지 않습니다.`);
+    for(const rank of [1,2,3,4,5]) {
+      const value=d.prizes?.[rank];
+      if(value==null||value==='') continue;
+      const amount=Number(value);
+      if(!Number.isSafeInteger(amount)||amount<0) throw Error(`${round}회 당첨금이 올바르지 않습니다.`);
+      prizes[rank]=amount;
+    }
+    draws.set(round,{round,date,numbers,bonus,prizes});
+  }
+  return [...draws.values()].sort((a,b)=>b.round-a.round);
+}
+
+function isValidLine(nums) {
+  return Array.isArray(nums)&&nums.length===6&&nums.every(Number.isInteger)&&nums.every(n=>n>=1&&n<=45)&&new Set(nums).size===6;
+}
+
+function normalizeTickets(tickets) {
+  if(!Array.isArray(tickets)) throw Error('구매 기록은 배열이어야 합니다.');
+  const ids=new Set();
+  return tickets.map((ticket,index)=>{
+    if(!ticket||typeof ticket!=='object') throw Error(`${index+1}번째 구매 기록 형식이 올바르지 않습니다.`);
+    const round=Number(ticket.round);
+    if(!Number.isInteger(round)||round<1||round>9999) throw Error(`${index+1}번째 구매 회차가 올바르지 않습니다.`);
+    if(!Array.isArray(ticket.lines)||ticket.lines.length<1||ticket.lines.length>5) throw Error(`${round}회 구매 기록은 1~5게임이어야 합니다.`);
+    const lines=ticket.lines.map((line,lineIndex)=>{
+      if(!line||!Array.isArray(line.numbers)) throw Error(`${round}회 번호 형식이 올바르지 않습니다.`);
+      const numbers=line.numbers.map(Number).sort((a,b)=>a-b);
+      if(!isValidLine(numbers)) throw Error(`${round}회 각 게임은 1~45 사이 중복 없는 6개 번호여야 합니다.`);
+      return {label:String(line.label??'ABCDE'[lineIndex]),type:String(line.type??'직접 입력'),numbers};
+    });
+    const id=ticket.id??`legacy-${index}`;
+    if(typeof id!=='string'||!/^[a-zA-Z0-9_-]{1,100}$/.test(id)||ids.has(id)) throw Error('구매 기록 식별자가 올바르지 않거나 중복되었습니다.');
+    ids.add(id);
+    return {id,round,lines,savedAt:String(ticket.savedAt??''),origin:String(ticket.origin??'직접 등록')};
+  });
+}
+
+function readBackup(backup) {
+  if(!backup||typeof backup!=='object'||(backup.schema&&backup.schema!=='lottolab-v1')) throw Error('지원하지 않는 백업 형식입니다.');
+  const draws=normalizeDraws(backup.draws);
+  const tickets=normalizeTickets(backup.tickets);
+  const serverUpdatedAt=typeof backup.serverUpdatedAt==='string'&&Number.isFinite(Date.parse(backup.serverUpdatedAt))?backup.serverUpdatedAt:null;
+  return {draws,tickets,source:String(backup.source||'백업 복원'),serverUpdatedAt};
+}
 function parseNums(s){return String(s).match(/\d+/g)?.map(Number)||[]}
 function grade(nums,draw){if(!draw)return {text:'결과 대기',klass:''};const matches=nums.filter(x=>draw.numbers.includes(x)).length;const bonus=nums.includes(draw.bonus);let g=matches===6?1:matches===5&&bonus?2:matches===5?3:matches===4?4:matches===3?5:0;const base={4:50000,5:5000};const payout=g>0?(draw.prizes?.[g]??base[g]??null):0;return {g,matches,bonus,payout,text:g?g+'등':'낙첨',klass:g?'good':'zero'}}
 function ticketStats(){let spent=0,paid=0,known=0,unknown=0,pending=0,drawMap=new Map(state.draws.map(d=>[d.round,d]));for(const t of state.tickets){spent+=(t.lines?.length||0)*1000;for(let line of t.lines||[]){let r=grade(line.numbers,drawMap.get(t.round));if(!drawMap.has(t.round))pending++;else if(r.payout==null)unknown++;else{paid+=r.payout;known++}}}return{spent,paid,unknown,pending,known,balance:paid-spent}}
 function topStats(){const rows=subset($('overviewRange').value);const s=summary(rows);const t=ticketStats();$('metrics').innerHTML=[['수집한 추첨 결과',fmt(state.draws.length)+'회',`${sorted().at(-1).round}~${latest().round}회`],['최근 기준 빈출 1위',`${s.high[0].n}번`,`${rows.length}회 중 ${s.high[0].c}회 등장`],['내 구매 지출',money(t.spent),`기록된 ${state.tickets.reduce((a,b)=>a+b.lines.length,0)}게임`],['현재 기록 순손익',(t.balance<0?'−':'')+money(Math.abs(t.balance)),t.unknown?'일부 당첨금 미확인':'추첨 대기 제외']].map(([k,v,d],i)=>`<div class="metric"><div class="tag">${k}</div><div class="value ${i===3?(t.balance<0?'negative':'positive'):''}">${v}</div><div class="desc">${d}</div></div>`).join('');
 $('hero').innerHTML=`<div class="eyebrow">DRAW RESULT REFERENCE · ${latest().date}</div><h1>제${latest().round}회 당첨 결과</h1><div class="sub">공개된 당첨 결과를 기준으로 분석합니다 · 보너스 번호 별도</div><div class="winner">${balls(latest().numbers)}<span class="bonuslabel">BONUS</span>${balls([latest().bonus])}</div><div class="hero-bottom"><div><div class="tiny">${latest().prizes?.[1]?'1등 1인당 당첨금':'마지막으로 수집한 추첨회차'}</div><div class="prize">${latest().prizes?.[1]?money(latest().prizes[1]):`제${latest().round}회 확정`}</div></div><div class="next">다음 분석 대상 <strong style="color:#fff">${nextDraw().round}회</strong><br>추첨일 ${nextDraw().date}</div></div>`;
-$('nextBrief').innerHTML=`<span class="chip">제${nextDraw().round}회 · ${nextDraw().date}</span> <span class="chip accent">추첨 전</span>`;
 $('overviewFreq').innerHTML=chartFreq(rows);
-const current=state.tickets.slice().sort((a,b)=>b.round-a.round)[0];$('overviewTicket').innerHTML=current?`<div class="inline"><span class="chip">${current.round}회 · ${current.lines.length}게임</span><span class="chip ${sorted().some(d=>d.round===current.round)?'warn':'accent'}">${sorted().some(d=>d.round===current.round)?'추첨 판정 완료':'결과 대기'}</span></div>${current.lines.map(l=>{let g=grade(l.numbers,state.draws.find(d=>d.round===current.round));return `<div class="generator-line"><div class="letter">${esc(l.label)}</div><div class="numbers">${balls(l.numbers,true)}</div><span class="rank ${g.klass}">${g.text}</span></div>`}).join('')}`:'<div class="empty">아직 구매 기록이 없습니다.</div>';
+const current=state.tickets.slice().reverse().sort((a,b)=>b.round-a.round)[0];$('overviewTicket').innerHTML=current?`<div class="inline"><span class="chip">${current.round}회 · ${current.lines.length}게임</span><span class="chip ${sorted().some(d=>d.round===current.round)?'warn':'accent'}">${sorted().some(d=>d.round===current.round)?'추첨 판정 완료':'결과 대기'}</span></div>${current.lines.map(l=>{let g=grade(l.numbers,state.draws.find(d=>d.round===current.round));return `<div class="generator-line"><div class="letter">${esc(l.label)}</div><div class="numbers">${balls(l.numbers,true)}</div><span class="rank ${g.klass}">${g.text}</span></div>`}).join('')}`:'<div class="empty">아직 구매 기록이 없습니다.</div>';
 $('insights').innerHTML=`<div class="tiny">최근 ${rows.length}회에서 번호 하나의 기대 등장 횟수는 <b style="color:var(--text)">${(rows.length*6/45).toFixed(1)}회</b>입니다.</div><div class="line"></div><div class="tiny">가장 많이 나온 번호</div><div class="numlist" style="margin:9px 0 15px">${s.high.slice(0,3).map(o=>`<span class="num-count">${balls([o.n],true)} ${o.c}회</span>`).join('')}</div><div class="tiny">가장 적게 나온 번호</div><div class="numlist" style="margin:9px 0 15px">${s.low.slice(0,3).map(o=>`<span class="num-count">${balls([o.n],true)} ${o.c}회</span>`).join('')}</div><hr class="line"><div class="tiny">최고·최저 빈도 차이는 <b>${s.high[0].c-s.low[0].c}회</b>. 단기간의 차이는 우연일 수 있어 다음 회차 우위 근거로 사용하지 않습니다.</div>`;
-$('dataStatus').innerHTML=`<i></i>최신 저장 ${latest().round}회 · ${state.draws.length}회 분석`;
+renderSyncStatus();
 }
 function chartFreq(rows){const s=summary(rows);const max=Math.max(...s.c.slice(1));const hs=new Set(s.high.slice(0,5).map(o=>o.n));const ls=new Set(s.low.slice(0,5).map(o=>o.n));return `<div class="freq-wrap"><div class="freq-chart">${Array.from({length:45},(_,i)=>{let n=i+1,c=s.c[n];return `<div class="freq-col ${hs.has(n)?'hot':ls.has(n)?'low':''}" title="${n}번: ${c}회"><div class="freq-count">${c}</div><div class="freq-bar" style="height:${Math.max(2,c/max*127)}px"></div><div class="freq-label">${n}</div></div>`}).join('')}</div></div>`}
 function renderStats(){const rows=subset($('statsRange').value);const s=summary(rows);$('statSubtitle').textContent=`${rows.at(-1).round}~${rows[0].round}회 · 총 ${rows.length}회 사용`;$('statsFreq').innerHTML=chartFreq(rows);$('hotList').innerHTML=s.high.slice(0,8).map(x=>`<span class="num-count">${balls([x.n],true)} ${x.c}회</span>`).join('');$('coldList').innerHTML=s.low.slice(0,8).map(x=>`<span class="num-count">${balls([x.n],true)} ${x.c}회</span>`).join('');$('expectedNote').textContent=`회차당 한 번호가 등장할 이론 확률은 6/45 (약 13.33%). 이 구간의 번호당 기대 출현은 ${ (rows.length*6/45).toFixed(2)}회이며, 개별 번호 차이는 통계적 유의성을 검증하지 않은 기술 통계입니다.`;
@@ -189,18 +296,96 @@ function backtest(){
 const comb=(n,k)=>{let x=1;for(let j=1;j<=k;j++)x=x*(n-j+1)/j;return x};const total=comb(45,6);let pr=[];for(let i=0;i<=6;i++)pr[i]=comb(6,i)*comb(39,6-i)/total;const rows=[['정확히 6개',pr[6]],['정확히 5개',pr[5]],['정확히 4개',pr[4]],['정확히 3개',pr[3]]];$('probabilityLeft').innerHTML=rows.map(([n,p])=>`<div class="barh"><span class="left">${n}</span><span class="track"><span style="width:${Math.min(100,Math.max(.8,p*500))}%"></span></span><span class="right" style="width:80px">${(p*100).toFixed(4)}%</span></div>`).join('');$('probabilityRight').innerHTML=`<div class="stat"><div class="k">수학적 기대 일치 수</div><div class="v">0.800개</div><div class="tiny">6개 중 6/45 비율</div></div><div class="stat" style="margin-top:9px"><div class="k">한 조합의 1등 확률</div><div class="v">1 / 8,145,060</div><div class="tiny">모든 6개 조합이 동일</div></div>`}
 function weightedSample(pool,weight){let total=pool.reduce((a,n)=>a+weight(n),0),r=Math.random()*total;for(const n of pool){r-=weight(n);if(r<=0)return n}return pool.at(-1)}
 function makeGenerated(){const mode=$('genMode').value,unique=$('genUnique').checked,rows=subset(50),f=frequency(rows);state.genMode=mode;const made=[],used=new Set();for(let k=0;k<4;k++){let nums=[];for(let j=0;j<6;j++){let pool=Array.from({length:45},(_,i)=>i+1).filter(n=>!nums.includes(n)&&(!unique||!used.has(n)));if(!pool.length)return;let n=mode==='hot'?weightedSample(pool,n=>Math.pow(f[n]+2,2)):mode==='cold'?weightedSample(pool,n=>Math.pow(60-f[n],2)):pool[Math.floor(Math.random()*pool.length)];nums.push(n);used.add(n)}made.push({label:'ABCD'[k],type:'수동',numbers:nums.sort((a,b)=>a-b)})}made.push({label:'E',type:'자동',numbers:shuffle(Array.from({length:45},(_,i)=>i+1)).slice(0,6).sort((a,b)=>a-b)});state.generator=made;renderGenerated()}
-function renderGenerated(){const next=nextDraw();$('genTarget').textContent=`제${next.round}회 · ${next.date}`;$('manualRound').value=next.round;$('generatedLines').innerHTML=state.generator.map((l,i)=>`<div class="generator-line"><div class="letter">${l.label}</div><div class="numbers">${balls(l.numbers)}</div><span class="chip">${l.type}</span><input aria-label="${l.label}번 조합 편집" data-gidx="${i}" value="${l.numbers.join(' ')}" spellcheck="false"></div>`).join('');renderDiagnostics()}
+function renderGenerated(){const next=nextDraw();$('genTarget').textContent=`제${next.round}회 · ${next.date}`;$('generatedLines').innerHTML=state.generator.map((l,i)=>`<div class="generator-line"><div class="letter">${l.label}</div><div class="numbers">${balls(l.numbers)}</div><span class="chip">${l.type}</span><input aria-label="${l.label}번 조합 편집" data-gidx="${i}" value="${l.numbers.join(' ')}" spellcheck="false"></div>`).join('');renderDiagnostics()}
 function genFromInputs(){let list=[];document.querySelectorAll('[data-gidx]').forEach(e=>{let nums=parseNums(e.value).sort((a,b)=>a-b);list.push({...state.generator[Number(e.dataset.gidx)],numbers:nums})});return list}
 function renderDiagnostics(){const lines=state.generator;const unique=new Set(lines.slice(0,4).flatMap(l=>l.numbers)),sums=lines.map(l=>l.numbers.reduce((a,b)=>a+b,0)),odds=lines.map(l=>l.numbers.filter(n=>n%2).length);$('genDiagnostics').innerHTML=`<div class="result-stats"><div class="stat"><div class="k">수동 숫자 커버</div><div class="v">${unique.size}/45</div></div><div class="stat"><div class="k">A~D 중복</div><div class="v">${24-unique.size}</div></div><div class="stat"><div class="k">게임 수</div><div class="v">${lines.length}</div></div></div><hr class="line"><div class="tiny">각 게임 번호 합계: <b>${sums.join(' · ')}</b></div><div class="tiny" style="margin-top:6px">각 게임 홀수 개수: <b>${odds.join(' · ')}</b></div>`}
-function createRecord(round,lines,origin){if(!Number.isInteger(round)||round<1)throw Error('회차가 올바르지 않습니다.');if(lines.length<1||lines.length>5||lines.some(l=>!isValidLine(l.numbers)))throw Error('각 게임은 1~45 사이 중복 없는 6개 번호여야 합니다.');const t={round,lines,savedAt:new Date().toISOString().slice(0,10),origin};state.tickets=state.tickets.filter(x=>x.round!==round).concat(t);save();renderAll();return t}
-function renderRecords(){const t=ticketStats(),lineCount=state.tickets.reduce((a,b)=>a+b.lines.length,0);$('recordMetrics').innerHTML=[['기록된 게임',fmt(lineCount)+'게임',`${state.tickets.length}개 회차`],['누적 지출',money(t.spent),'게임당 1,000원'],['확인된 당첨금',money(t.paid),t.unknown?`금액 미확인 ${t.unknown}건`:'수집한 공식 결과 기준'],['확정·미확정 포함 차액',(t.balance<0?'−':'')+money(Math.abs(t.balance)),t.pending?`${t.pending}게임 추첨 대기`:'현재 기록 기준']].map(([a,b,c],i)=>`<div class="metric"><div class="tag">${a}</div><div class="value ${i===3?(t.balance<0?'negative':'positive'):''}">${b}</div><div class="desc">${c}</div></div>`).join('');$('recordCount').textContent=`${state.tickets.length}개 회차`;
-let records=[...state.tickets].sort((a,b)=>b.round-a.round);$('recordList').innerHTML=records.length?records.map(t=>{const d=state.draws.find(d=>d.round===t.round);let result=t.lines.map(l=>grade(l.numbers,d));const amt=result.reduce((s,r)=>s+(r.payout||0),0),uncertain=result.some(r=>r.payout==null);return `<div class="record-block"><div class="record-meta"><div><b>${t.round}회</b><span class="tiny"> · ${esc(t.origin||'수동')} · ${t.lines.length}게임</span></div><div class="controls"><span class="chip ${d?'warn':'accent'}">${d?`당첨금 ${money(amt)}${uncertain?' + 미확인':''}`:'결과 대기'}</span><button class="btn tinybtn danger" data-del="${t.round}">삭제</button></div></div><div class="record-lines">${t.lines.map((l,i)=>`<div class="record-line"><strong>${esc(l.label)}</strong><span class="nums">${l.numbers.map(n=>String(n).padStart(2,'0')).join('  ')}</span><span class="rank ${result[i].klass}">${result[i].text}</span></div>`).join('')}</div><div class="smallprint">${d?`당첨번호 ${d.numbers.join(' · ')} + 보너스 ${d.bonus}`:`${t.round}회 추첨 데이터가 없으므로 결과를 판정하지 않습니다.`}</div></div>`}).join(''):'<div class="empty">구매 기록이 없습니다. 조합 생성 페이지에서 저장해 보세요.</div>'}
-function renderData(){let d=sorted();$('datasetTag').textContent=`${d.length}개 회차`;$('dataDetails').innerHTML=`<b>데이터 범위:</b> ${d.at(-1).round}회 (${d.at(-1).date}) ~ ${d[0].round}회 (${d[0].date})<br><b>사용 중인 데이터:</b> ${esc(state.source)}<br><b>내 구매 기록:</b> ${state.tickets.length}개 회차, ${state.tickets.reduce((a,t)=>a+t.lines.length,0)}게임<br><b>향후 추첨:</b> ${nextDraw().round}회 (${nextDraw().date})`}
-function renderAll(){topStats();renderStats();backtest();renderRecords();renderData();$('genTarget').textContent=`제${nextDraw().round}회 · ${nextDraw().date}`}
+async function createRecord(round,lines,origin,original=null) {
+  if(original&&!state.tickets.some(ticket=>ticket.id===original.id&&JSON.stringify(ticket)===JSON.stringify(original))) {
+    throw Error('수정 중인 기록이 변경되었습니다. 수정 취소 후 다시 열어 주세요.');
+  }
+  const [ticket]=normalizeTickets([{
+    id:original?.id??crypto.randomUUID(),round,lines,origin,
+    savedAt:original?.savedAt??new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Seoul'})
+  }]);
+  const tickets=original?state.tickets.map(item=>item.id===original.id?ticket:item):[...state.tickets,ticket];
+  await save({tickets});
+  renderAll();
+  return ticket;
+}
+
+function resetRecordForm() {
+  editingRecord=null;
+  $('recordFormTitle').textContent='수동 구매 기록 추가';
+  $('saveManual').textContent='추가 구매 저장';
+  $('cancelEdit').hidden=true;
+  $('manualRound').value=nextDraw().round;
+  $('manualLines').value='';
+}
+
+function renderRecords() {
+  const totals=ticketStats();
+  const lineCount=state.tickets.reduce((sum,ticket)=>sum+ticket.lines.length,0);
+  const roundCount=new Set(state.tickets.map(ticket=>ticket.round)).size;
+  $('recordMetrics').innerHTML=[
+    ['기록된 게임',fmt(lineCount)+'게임',`${roundCount}개 회차 · ${state.tickets.length}건 구매`],
+    ['누적 지출',money(totals.spent),'게임당 1,000원'],
+    ['확인된 당첨금',money(totals.paid),totals.unknown?`금액 미확인 ${totals.unknown}건`:'수집한 공식 결과 기준'],
+    ['확정·미확정 포함 차액',(totals.balance<0?'−':'')+money(Math.abs(totals.balance)),totals.pending?`${totals.pending}게임 추첨 대기`:'현재 기록 기준']
+  ].map(([label,value,detail],index)=>`<div class="metric"><div class="tag">${label}</div><div class="value ${index===3?(totals.balance<0?'negative':'positive'):''}">${value}</div><div class="desc">${detail}</div></div>`).join('');
+  $('recordCount').textContent=`${roundCount}개 회차 · ${state.tickets.length}건 구매`;
+  const records=state.tickets.slice().reverse().sort((a,b)=>b.round-a.round);
+  $('recordList').innerHTML=records.length?records.map(ticket=>{
+    const draw=state.draws.find(item=>item.round===ticket.round);
+    const results=ticket.lines.map(line=>grade(line.numbers,draw));
+    const amount=results.reduce((sum,result)=>sum+(result.payout||0),0);
+    const uncertain=results.some(result=>result.payout==null);
+    return `<div class="record-block">
+      <div class="record-meta"><div><b>${ticket.round}회</b><span class="tiny"> · ${esc(ticket.origin)} · ${ticket.lines.length}게임 · ${esc(ticket.savedAt)}</span></div>
+      <div class="controls"><span class="chip ${draw?'warn':'accent'}">${draw?`당첨금 ${money(amount)}${uncertain?' + 미확인':''}`:'결과 대기'}</span>
+      <button class="btn tinybtn" data-edit="${ticket.id}">수정</button><button class="btn tinybtn danger" data-del="${ticket.id}">삭제</button></div></div>
+      <div class="record-lines">${ticket.lines.map((line,index)=>`<div class="record-line"><strong>${esc(line.label)}</strong><span class="nums">${line.numbers.map(number=>String(number).padStart(2,'0')).join('  ')}</span><span class="rank ${results[index].klass}">${results[index].text}</span></div>`).join('')}</div>
+      <div class="smallprint">${draw?`당첨번호 ${draw.numbers.join(' · ')} + 보너스 ${draw.bonus}`:`${ticket.round}회 추첨 데이터가 없으므로 결과를 판정하지 않습니다.`}</div></div>`;
+  }).join(''):'<div class="empty">구매 기록이 없습니다. 조합 생성 페이지에서 저장해 보세요.</div>';
+}
+function renderData(){let d=sorted();$('datasetTag').textContent=`${d.length}개 회차`;$('dataDetails').innerHTML=`<b>데이터 범위:</b> ${d.at(-1).round}회 (${d.at(-1).date}) ~ ${d[0].round}회 (${d[0].date})<br><b>사용 중인 데이터:</b> ${esc(state.source)}<br><b>내 구매 기록:</b> ${new Set(state.tickets.map(t=>t.round)).size}개 회차 · ${state.tickets.length}건 구매, ${state.tickets.reduce((a,t)=>a+t.lines.length,0)}게임<br><b>향후 추첨:</b> ${nextDraw().round}회 (${nextDraw().date})`}
+function renderAll(){topStats();renderStats();backtest();renderRecords();renderData();$('genTarget').textContent=`제${nextDraw().round}회 · ${nextDraw().date}`;if(!editingRecord&&!$('manualLines').value.trim())$('manualRound').value=nextDraw().round}
 let toastTimer;function notify(s){const e=$('toast');e.textContent=s;e.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove('on'),3300)}
 function downloadBlob(text,name,type){const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200)}
 function parseCSV(text){const rows=text.replace(/^\uFEFF/,'').trim().split(/\r?\n/).filter(Boolean).map(s=>s.split(',').map(s=>s.replace(/^"|"$/g,'').trim()));if(!rows.length)throw Error('CSV 파일이 비어 있습니다');const hdr=rows[0];const find=(...names)=>names.map(n=>hdr.indexOf(n)).find(i=>i>=0)??-1;const ri=find('drwNo','round'),di=find('drwNoDate','date'),ni=[1,2,3,4,5,6].map(i=>find('n'+i,'drwtNo'+i)),bi=find('bonus','bnusNo');if(ri<0||ni.some(i=>i<0)||bi<0)throw Error('CSV 컬럼이 지원 형식과 다릅니다 (drwNo, n1~n6, bonus 필요)');const prizeKeys=[null,'firstWinamnt','secondWinamnt','thirdWinamnt','fourthWinamnt','fifthWinamnt'];return normalizeDraws(rows.slice(1).map(r=>({round:+r[ri],date:di>=0?r[di]:undefined,numbers:ni.map(i=>+r[i]),bonus:+r[bi],prizes:Object.fromEntries(prizeKeys.map((k,i)=>[i,k&&r[find(k)]?+r[find(k)]:undefined]).filter(([k,v])=>k&&Number.isFinite(v)&&v>=0))}))).filter(d=>d.round>=1)}
-function importDraws(rows,source){if(!rows.length)throw Error('올바른 당첨 데이터가 없습니다');const m=new Map(state.draws.map(d=>[d.round,d]));for(const r of rows){const old=m.get(r.round);m.set(r.round,{...old,...r,prizes:{...(old?.prizes||{}),...(r.prizes||{})}})}state.draws=normalizeDraws([...m.values()]);state.source=source;save();renderAll();notify(`당첨 데이터 ${rows.length}회 읽음 · 총 ${state.draws.length}회`)}
+async function importDraws(rows,source) {
+  const merged=new Map(state.draws.map(draw=>[draw.round,draw]));
+  for(const draw of rows) {
+    const old=merged.get(draw.round);
+    merged.set(draw.round,{...old,...draw,prizes:{...(old?.prizes||{}),...(draw.prizes||{})}});
+  }
+  await save({draws:normalizeDraws([...merged.values()]),source,serverUpdatedAt:null});
+  syncState={phase:'idle',checkedAt:null};
+  renderAll();
+  notify(`당첨 데이터 ${rows.length}회 읽음 · 총 ${state.draws.length}회`);
+}
+
+// Official schedule https://www.dhlottery.co.kr/lt645/intro (20:35 KST).
+function isResultPending() {
+  return Date.now()>=new Date(nextDraw().date+'T20:35:00+09:00').getTime();
+}
+
+function formatKstTime(value) {
+  if(!value) return '확인 정보 없음';
+  return new Date(value).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',hour12:false});
+}
+
+function renderSyncStatus() {
+  const pending=isResultPending();
+  $('nextBrief').innerHTML=`<span class="chip">제${nextDraw().round}회 · ${nextDraw().date}</span> <span class="chip ${pending?'warn':'accent'}">${pending?'결과 반영 대기':'추첨 전'}</span>`;
+  let message='저장 데이터 표시 중';
+  if(syncState.phase==='checking') message='최신 데이터 확인 중';
+  if(syncState.phase==='success') message='최신 데이터 확인 완료';
+  if(syncState.phase==='error') message='연결 실패 · 저장 데이터 표시 중';
+  if(pending) message+=` · ${nextDraw().round}회부터 결과 반영 대기`;
+  $('dataStatus').classList.toggle('warn',pending||syncState.phase==='error');
+  $('dataStatus').innerHTML=`<i></i>${pending?'결과 반영 대기':'마지막 반영'} · ${latest().round}회`;
+  $('syncOverview').innerHTML=`<div><p><b>${message}</b></p><p class="tiny">마지막 반영 ${latest().round}회 (${latest().date}) · ${state.draws.length}회 보유<br>서버 갱신 ${esc(formatKstTime(state.serverUpdatedAt))} · 한국시간<br>최근 연결 확인 ${esc(formatKstTime(syncState.checkedAt))}</p></div><button class="btn tinybtn" id="overviewSync" ${syncState.phase==='checking'?'disabled':''}>최신 결과 확인 ↻</button>`;
+}
 const builtin1249=EMBEDDED_DRAWS.find(d=>d.round===1249);if(builtin1249)builtin1249.prizes={1:2025045509,2:50807594,3:1331016,4:50000,5:5000};
 let first1249=state.draws.find(d=>d.round===1249);if(first1249)first1249.prizes={...(builtin1249?.prizes||{}),...(first1249.prizes||{})};
 
@@ -209,44 +394,163 @@ document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',(
 $('overviewRange').addEventListener('change',topStats);$('statsRange').addEventListener('change',renderStats);$('recentCount').addEventListener('change',renderHistory);$('rerunTest').addEventListener('click',()=>{backtest();notify('미래 데이터 누출 없는 검증을 다시 실행했어요')});$('makeNumbers').addEventListener('click',()=>{makeGenerated();notify('새로운 5게임을 생성했어요')});$('genMode').addEventListener('change',makeGenerated);$('genUnique').addEventListener('change',makeGenerated);
 $('generatedLines').addEventListener('change',e=>{if(e.target.matches('[data-gidx]')){let lines=genFromInputs();if(lines.some(l=>!isValidLine(l.numbers))){notify('1~45 사이 중복 없는 숫자 6개를 입력해 주세요');return}state.generator=lines;renderGenerated()}});
 $('copyNumbers').addEventListener('click',async()=>{let lines=genFromInputs();if(lines.some(l=>!isValidLine(l.numbers))){notify('번호 입력을 먼저 확인해 주세요');return}let str=lines.map(l=>`${l.label}(${l.type}) ${l.numbers.join(' ')}`).join('\n');try{await navigator.clipboard.writeText(str);notify('5게임을 복사했어요')}catch(e){const t=document.createElement('textarea');t.value=str;document.body.append(t);t.select();document.execCommand('copy');t.remove();notify('번호를 복사했어요')}});
-$('saveGenerated').addEventListener('click',()=>{try{let lines=genFromInputs();const limit=Number($('weeklyLimit').value);if(!Number.isFinite(limit)||limit<5000){notify('5게임(5,000원) 예산보다 상한이 낮아요');return}createRecord(nextDraw().round,lines,'조합 생성기');notify(`${nextDraw().round}회 5게임을 기록했어요`);document.querySelector('[data-tab="records"]').click()}catch(e){notify(e.message)}});
+$('saveGenerated').addEventListener('click',async()=>{
+  const button=$('saveGenerated');
+  button.disabled=true;
+  try {
+    const lines=genFromInputs();
+    const limit=Number($('weeklyLimit').value);
+    if(!Number.isFinite(limit)||limit<5000) throw Error('5게임(5,000원) 예산보다 상한이 낮아요');
+    const ticket=await createRecord(nextDraw().round,lines,'조합 생성기');
+    notify(`${ticket.round}회 5게임을 추가했어요`);
+    document.querySelector('[data-tab="records"]').click();
+  } catch(error) {notify(error.message)}
+  finally {button.disabled=false}
+});
 $('resetGenerated').addEventListener('click',makeGenerated);
-$('saveManual').addEventListener('click',()=>{try{const lines=$('manualLines').value.trim().split(/\r?\n/).filter(Boolean).map((s,i)=>({label:'ABCDE'[i],type:'직접 입력',numbers:parseNums(s).sort((a,b)=>a-b)}));createRecord(Number($('manualRound').value),lines,'직접 등록');$('manualLines').value='';notify('구매 기록을 저장했어요')}catch(e){notify(e.message)}});
-$('recordList').addEventListener('click',e=>{let b=e.target.closest('[data-del]');if(!b)return;let r=Number(b.dataset.del);if(confirm(`${r}회 기록을 삭제할까요?`)){state.tickets=state.tickets.filter(t=>t.round!==r);save();renderAll();notify('해당 회차 기록이 삭제되었습니다')}});
-let githubLastCheck=null;
-async function syncGithubData({silent=false}={}){
- const btn=$('onlineSync');btn.disabled=true;btn.textContent='GitHub 데이터 확인 중…';
- const status=$('syncMessage');if(!silent)status.textContent='GitHub 저장소에서 공개 추첨 데이터를 확인하는 중입니다.';
- try{
-  const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),12000);
-  let response;
-  try{response=await fetch('./data/draws.json?v='+Date.now(),{cache:'no-store',signal:ctl.signal})}
-  finally{clearTimeout(timer)}
-  if(!response.ok)throw Error('HTTP '+response.status);
-  const payload=await response.json();
-  if(!Array.isArray(payload.draws)||!payload.draws.length)throw Error('추첨 데이터 배열이 없습니다');
-  const incoming=normalizeDraws(payload.draws);
-  if(incoming.length!==payload.draws.length)throw Error('데이터 검증 실패: 올바르지 않은 회차');
-  const newest=incoming[0];
-  if(new Date(newest.date+'T00:00:00+09:00').getTime()>Date.now())throw Error('아직 추첨되지 않은 날짜가 포함됨');
-  const oldLatest=latest().round;
-  const map=new Map(state.draws.map(d=>[d.round,d]));
-  for(const d of incoming){let old=map.get(d.round);map.set(d.round,{...old,...d,prizes:{...(old?.prizes||{}),...(d.prizes||{})}})}
-  state.draws=normalizeDraws([...map.values()]);
-  state.source=`GitHub · ${payload.source||'검증된 추첨 데이터'}`;
-  githubLastCheck=new Date();save();renderAll();
-  status.textContent=`GitHub 읽기 성공 · 서버 ${incoming.length}회 / 화면 ${state.draws.length}회 · 최신 ${latest().round}회 · 서버 갱신 ${payload.updatedAt||'정보 없음'}${payload.status==='seed'?' (초기 100회)': ''}`;
-  if(!silent)notify(latest().round>oldLatest?'새 회차가 반영되었습니다!':'GitHub 데이터 확인 완료');
- }catch(err){status.textContent=`GitHub 연결 실패 · 저장된 데이터로 계속 표시합니다 (${err.message}). GitHub Pages 배포 전이면 정상적인 제한입니다.`;if(!silent)notify('GitHub 데이터를 읽지 못했습니다. CSV 수동 갱신은 가능합니다.');}
- finally{btn.disabled=false;btn.textContent='GitHub 최신 데이터 확인 ↻'}
+$('saveManual').addEventListener('click',async()=>{
+  const button=$('saveManual');
+  button.disabled=true;
+  try {
+    const original=editingRecord;
+    const lines=$('manualLines').value.trim().split(/\r?\n/).filter(Boolean).map((text,index)=>({
+      label:'ABCDE'[index],type:original?.lines[index]?.type??'직접 입력',numbers:parseNums(text).sort((a,b)=>a-b)
+    }));
+    await createRecord(Number($('manualRound').value),lines,original?.origin??'직접 등록',original);
+    resetRecordForm();
+    notify(original?'구매 기록을 수정했어요':'구매 기록을 추가했어요');
+  } catch(error) {notify(error.message)}
+  finally {button.disabled=false}
+});
+$('cancelEdit').addEventListener('click',resetRecordForm);
+$('recordList').addEventListener('click',async event=>{
+  const button=event.target.closest('[data-del],[data-edit]');
+  if(!button) return;
+  const ticket=state.tickets.find(item=>item.id===(button.dataset.del??button.dataset.edit));
+  if(!ticket) return;
+  if(button.dataset.edit) {
+    editingRecord=structuredClone(ticket);
+    $('recordFormTitle').textContent=`${ticket.round}회 구매 기록 수정`;
+    $('saveManual').textContent='수정 내용 저장';
+    $('cancelEdit').hidden=false;
+    $('manualRound').value=ticket.round;
+    $('manualLines').value=ticket.lines.map(line=>line.numbers.join(' ')).join('\n');
+    $('manualLines').focus();
+    return;
+  }
+  if(!confirm(`${ticket.round}회 선택한 구매 ${ticket.lines.length}게임을 삭제할까요?`)) return;
+  button.disabled=true;
+  try {
+    await save({tickets:state.tickets.filter(item=>item.id!==ticket.id)});
+    if(editingRecord?.id===ticket.id) resetRecordForm();
+    renderAll();
+    notify('선택한 구매 기록이 삭제되었습니다');
+  } catch(error) {notify(error.message);button.disabled=false}
+});
+$('syncOverview').addEventListener('click',event=>{
+  if(event.target.closest('#overviewSync')) syncGithubData();
+});
+async function syncGithubData({silent=false}={}) {
+  if(syncState.phase==='checking') return;
+  const button=$('onlineSync');
+  button.disabled=true;
+  button.textContent='GitHub 데이터 확인 중…';
+  syncState.phase='checking';
+  renderSyncStatus();
+  const status=$('syncMessage');
+  status.textContent='공개 추첨 데이터를 확인하는 중입니다.';
+  try {
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),12000);
+    let payload;
+    try {
+      const response=await fetch('./data/draws.json?v='+Date.now(),{cache:'no-store',signal:controller.signal});
+      if(!response.ok) throw Error('HTTP '+response.status);
+      payload=await response.json();
+    } finally {clearTimeout(timer)}
+    const incoming=normalizeDraws(payload.draws);
+    const previousRound=latest().round;
+    const merged=new Map(state.draws.map(draw=>[draw.round,draw]));
+    for(const draw of incoming) {
+      const old=merged.get(draw.round);
+      merged.set(draw.round,{...old,...draw,prizes:{...(old?.prizes||{}),...(draw.prizes||{})}});
+    }
+    await save({
+      draws:normalizeDraws([...merged.values()]),source:`GitHub · ${payload.source||'공개 추첨 데이터'}`,
+      serverUpdatedAt:typeof payload.updatedAt==='string'&&Number.isFinite(Date.parse(payload.updatedAt))?payload.updatedAt:null
+    });
+    syncState={phase:'success',checkedAt:new Date().toISOString()};
+    renderAll();
+    status.textContent=`GitHub 읽기 성공 · 서버 ${incoming.length}회 / 화면 ${state.draws.length}회 · 마지막 반영 ${latest().round}회`;
+    if(!silent) notify(latest().round>previousRound?'새 회차가 반영되었습니다!':'최신 데이터 확인 완료');
+  } catch(error) {
+    syncState.phase='error';
+    status.textContent=`최신 데이터 반영 실패 · 저장 데이터 표시 중 (${error.message})`;
+    renderSyncStatus();
+    if(!silent) notify('최신 데이터를 반영하지 못했습니다. 데이터 관리에서 내용을 확인해 주세요.');
+  } finally {
+    button.disabled=false;
+    button.textContent='GitHub 최신 데이터 확인 ↻';
+  }
 }
 $('onlineSync').addEventListener('click',()=>syncGithubData());
-$('csvUpload').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{let rows=parseCSV(await file.text());importDraws(rows,`CSV 업로드 (${file.name})`);$('syncMessage').textContent=`CSV 파일 ${rows.length}회 읽기 완료`}catch(err){notify(err.message)}finally{e.target.value=''}});
+$('csvUpload').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{let rows=parseCSV(await file.text());await importDraws(rows,`CSV 업로드 (${file.name})`);$('syncMessage').textContent=`CSV 파일 ${rows.length}회 읽기 완료`}catch(err){notify(err.message)}finally{e.target.value=''}});
 $('exportDraws').addEventListener('click',()=>{const header='drwNo,drwNoDate,n1,n2,n3,n4,n5,n6,bonus,firstWinamnt,secondWinamnt,thirdWinamnt,fourthWinamnt,fifthWinamnt';const rows=sorted().map(d=>[d.round,d.date,...d.numbers,d.bonus,...[1,2,3,4,5].map(i=>d.prizes?.[i]??'')].join(','));downloadBlob('\uFEFF'+[header,...rows].join('\r\n'),'lotto_draws_export.csv','text/csv;charset=utf-8')});
 $('exportTickets').addEventListener('click',()=>{let rows=['round,savedAt,label,type,n1,n2,n3,n4,n5,n6'];for(let t of state.tickets)for(let l of t.lines)rows.push([t.round,t.savedAt,l.label,l.type,...l.numbers].join(','));downloadBlob('\uFEFF'+rows.join('\r\n'),'lotto_tickets_export.csv','text/csv;charset=utf-8')});
-$('exportBackup').addEventListener('click',()=>{downloadBlob(JSON.stringify({schema:'lottolab-v1',draws:state.draws,tickets:state.tickets,source:state.source,exportedAt:new Date().toISOString()},null,2),'lotto_lab_backup.json','application/json')});
-$('jsonUpload').addEventListener('change',async e=>{let f=e.target.files?.[0];if(!f)return;try{let s=JSON.parse(await f.text());if(!Array.isArray(s.draws)||!Array.isArray(s.tickets))throw Error('백업 형식이 올바르지 않습니다');const draws=normalizeDraws(s.draws);if(!draws.length)throw Error('백업 파일에 유효한 추첨 데이터가 없습니다');state.draws=draws;state.tickets=s.tickets;state.source=s.source||'백업 복원';save();renderAll();notify('백업을 복원했습니다')}catch(e){notify(e.message)}finally{e.target.value=''}});
-$('resetAll').addEventListener('click',()=>{if(confirm('사용자 기록과 추가된 당첨 데이터를 초기화할까요?')){state.draws=structuredClone(EMBEDDED_DRAWS);let d=state.draws.find(d=>d.round===1249);if(d)d.prizes={1:2025045509,2:50807594,3:1331016,4:50000,5:5000};state.tickets=[];state.source='초기 100회';save();makeGenerated();renderAll();notify('로컬 초기화 완료 · GitHub 데이터는 새로고침을 눌러 다시 불러올 수 있습니다')}});
-makeGenerated();renderAll();syncGithubData({silent:true});
+$('exportBackup').addEventListener('click',()=>{
+  if(storageReadError&&storageSnapshot!==null) {
+    downloadBlob(storageSnapshot,'lotto_lab_original_backup.json','application/json');
+    return;
+  }
+  downloadBlob(JSON.stringify({schema:'lottolab-v1',draws:state.draws,tickets:state.tickets,source:state.source,serverUpdatedAt:state.serverUpdatedAt,exportedAt:new Date().toISOString()},null,2),'lotto_lab_backup.json','application/json');
+});
+$('jsonUpload').addEventListener('change',async event=>{
+  const file=event.target.files?.[0];
+  if(!file) return;
+  try {
+    const backup=readBackup(JSON.parse(await file.text()));
+    const games=backup.tickets.reduce((total,ticket)=>total+ticket.lines.length,0);
+    const expectedSnapshot=storageSnapshot;
+    if(!confirm(`당첨 데이터 ${backup.draws.length}회와 구매 ${backup.tickets.length}건 (${games}게임)을 확인했습니다.\n현재 구매 ${state.tickets.length}건을 이 백업으로 교체할까요?`)) return;
+    await save(backup,{allowUnreadable:true,expectedSnapshot});
+    syncState={phase:'idle',checkedAt:null};
+    resetRecordForm();
+    renderAll();
+    notify(`구매 ${backup.tickets.length}건 (${games}게임)을 복원했습니다`);
+  } catch(error) {notify(error.message)}
+  finally {event.target.value=''}
+});
+$('resetAll').addEventListener('click',async()=>{
+  if(!confirm('사용자 기록과 추가된 당첨 데이터를 초기화할까요?')) return;
+  try {
+    await save({draws:structuredClone(EMBEDDED_DRAWS),tickets:[],source:'초기 100회',serverUpdatedAt:null},{allowUnreadable:true});
+    syncState={phase:'idle',checkedAt:null};
+    resetRecordForm();
+    makeGenerated();
+    renderAll();
+    notify('로컬 초기화 완료 · 최신 결과 확인으로 당첨 데이터를 다시 불러올 수 있습니다');
+  } catch(error) {notify(error.message)}
+});
+window.addEventListener('storage',event=>{
+  if(event.key!==STORAGE&&event.key!==null) return;
+  try {
+    const raw=localStorage.getItem(STORAGE);
+    storageSnapshot=raw;
+    const saved=raw===null?{draws:structuredClone(EMBEDDED_DRAWS),tickets:[],source:'초기 100회',serverUpdatedAt:null}:readBackup(JSON.parse(raw));
+    Object.assign(state,saved);
+    storageReadError=false;
+    storageWarning='';
+    syncState={phase:'idle',checkedAt:null};
+    renderStorageNotice();
+    renderAll();
+  } catch(error) {
+    storageReadError=true;
+    storageWarning='다른 탭에서 저장된 기록을 읽지 못했습니다. 새로고침 후 원본 백업을 확인해 주세요.';
+    renderStorageNotice();
+  }
+});
+window.addEventListener('focus',renderSyncStatus);
+setInterval(renderSyncStatus,60000);
+makeGenerated();renderAll();renderStorageNotice();syncGithubData({silent:true});
 </script>
 </body></html>

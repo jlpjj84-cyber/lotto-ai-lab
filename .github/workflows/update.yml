@@ -24,7 +24,7 @@ on:
     paths:
       - 'index.html'
       - 'scripts/update_draws.py'
-      - 'tests/test_update.py'
+      - 'tests/**'
       - 'data/draws.json'
       - '.github/workflows/update.yml'
 
@@ -48,6 +48,8 @@ jobs:
           python-version: '3.11'
       - name: Regression tests
         run: python -m unittest discover -s tests -v
+      - name: Dashboard record and backup regression tests
+        run: node --test tests/test_dashboard.cjs
       - name: Update lottery results (no purchase records)
         env:
           MANUAL_ROUND: ${{ inputs.manual_round }}
