@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "evaluate": {
+    "status": "idle",
+    "round": null,
+    "reason": "평가할 새 확정 예측이 없습니다.",
+    "checkedAtUTC": "2026-11-14T09:10:15.827Z",
+    "workflow": "https://github.com/jlpjj84-cyber/lotto-ai-lab/actions/runs/43579253487"
+  }
+}
