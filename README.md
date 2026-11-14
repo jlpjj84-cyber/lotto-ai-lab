@@ -7,7 +7,8 @@
 | GitHub Actions UTC | 한국시간 | 처리 |
 |---|---|---|
 | `0 9 * * 6` | 토요일 18:00 | 대상 회차 조합 생성 및 GitHub 확인 |
-| `20 13 * * 6` | 토요일 22:20 | 공식 결과 갱신, 평가, Pages 반영 |
+| `0 12 * * 6` | 토요일 21:00 | 공식 결과 1차 갱신, 평가, Pages 반영 |
+| `20 13 * * 6` | 토요일 22:20 | 결과 갱신 재시도, 평가, Pages 반영 |
 | `20 0 * * 0` | 일요일 09:20 | 결과·당첨금 재확인 및 Pages 반영 |
 
 동일 워크플로와 동시 실행 그룹을 사용합니다. 수동 실행은 `predict` 또는 `update-evaluate`를 선택합니다. 추첨 전 모드는 토요일 18:00~20:00 KST만 신규 기록을 생성하며, 공식 최신 결과와 저장된 직전 회차가 일치해야 합니다. 20:00 KST는 공식 추첨 예정 시각보다 앞선 프로젝트 확정 마감입니다. 예약은 지연될 수 있으므로 화면에 미확정과 미반영을 표시합니다.
@@ -49,7 +50,7 @@ python -m http.server 8000 --directory _site
 2. 이 ZIP의 **폴더 내용**을 해당 저장소 `main` 브랜치에 업로드/커밋합니다. GitHub UI의 **Add file → Upload files** 화면에 압축 해제한 폴더 내용 전체를 드래그하거나, GitHub Desktop에서 커밋하세요. ZIP 파일 자체를 올리면 사이트로 배포되지 않습니다.
 3. 저장소 **Settings → Pages → Build and deployment → Source: GitHub Actions** (별도 브랜치 배포 아님).
 4. 배포 성공 후 주소: `https://<GitHub아이디>.github.io/lotto-ai-lab/` (계정명에 따라 바뀜). GitHub Actions의 `Publish latest dashboard + draw data` 작업이 웹 배포를 수행합니다.
-5. **Actions → Lotto results — update verified draw data → Run workflow** 한 번 실행해 전체 과거 데이터 확보를 시도하세요. 이후 토요일 밤 22:20, 일요일 09:20 KST 예약 실행됩니다. 자동 커밋 후 같은 워크플로의 배포 작업이 최신 JSON을 웹에 게시합니다. GitHub 예약 작업은 지연·누락될 수 있으므로 일요일 결과를 확인해 주세요.
+5. **Actions → Lotto results — update verified draw data → Run workflow** 한 번 실행해 전체 과거 데이터 확보를 시도하세요. 이후 토요일 밤 21:00(1차), 밤 22:20(재시도), 일요일 오전 09:20 KST 예약 실행됩니다. 자동 커밋 후 같은 워크플로의 배포 작업이 최신 JSON을 웹에 게시합니다. GitHub 예약 작업은 지연·누락될 수 있으므로 일요일 결과를 확인해 주세요.
 
 > GitHub에서 새 저장소를 만들고 이름을 알려주면, 연결된 GitHub 도구로 파일 업로드를 도와줄 수 있습니다. 현재 연동에서 새 저장소 생성 및 Pages 활성화 기능은 제공되지 않습니다.
 
