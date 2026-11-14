@@ -1,0 +1,29 @@
+name: LOTTO LAB review checks
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Public draw data regressions
+        run: python -m unittest discover -s tests -v
+      - name: Browser storage and research logic regressions
+        run: node --test tests/test_dashboard.cjs tests/test_research.cjs
+      - name: Check browser module syntax
+        run: for file in assets/*.js; do node --check "$file" || exit; done
+      - name: Build GitHub Pages artifact for review
+        run: python scripts/build_pages.py _site

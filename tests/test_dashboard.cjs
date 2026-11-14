@@ -7,6 +7,7 @@ const { test } = require('node:test');
 
 const html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+const picks = fs.readFileSync(path.join(__dirname, '../assets/lotto-picks.js'), 'utf8');
 const storageKey = 'lotto_lab_v3_private_records';
 const draw = { round: 1249, date: '2026-11-07', numbers: [2, 11, 16, 25, 34, 35], bonus: 14 };
 const line = { label: 'A', type: '직접 입력', numbers: [1, 2, 3, 4, 5, 6] };
@@ -49,6 +50,7 @@ async function dashboard(saved = legacy) {
     confirm(message) { dialogs.push(message); return true; }
   });
   const run = source => vm.runInContext(source, context);
+  run(picks);
   run(script);
   await new Promise(resolve => setImmediate(resolve));
   return { run, storage, element, dialogs, windowEvents, read: source => JSON.parse(run(`JSON.stringify(${source})`)) };

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="color-scheme" content="dark" />
 <meta name="theme-color" content="#0a1020" />
-<title>LOTTO LAB 3.0 · 웹 관제실</title>
+<title>LOTTO LAB 4.0 · 웹 관제실</title>
 <style>
 :root{--bg:#080f1d;--panel:#121d30;--panel2:#17243a;--border:#273752;--muted:#95a8c3;--text:#f0f6ff;--mint:#4ce3aa;--mint2:#163f37;--gold:#f3c76e;--red:#ff8b98;--blue:#7fb6ff;--shadow:0 18px 48px #0004;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;color-scheme:dark}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 60% -20%,#1a3853 0,transparent 47%),var(--bg);color:var(--text);min-width:320px}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:var(--mint);text-decoration:none}a:hover{text-decoration:underline}.app{max-width:1280px;padding:0 24px 80px;margin:0 auto}.top{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:28px 0 18px}.brand{display:flex;align-items:center;gap:14px}.logo{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;color:#071d18;background:linear-gradient(130deg,#5fe9b7,#0eaa82);font-size:24px;font-weight:900;box-shadow:0 4px 20px #13c48b33}.brand-title{font-size:23px;font-weight:900;letter-spacing:-1px}.brand-sub{color:var(--muted);font-size:12px;letter-spacing:.12em}.status{font-size:12px;color:var(--mint);background:#12382f;border:1px solid #236750;padding:9px 13px;border-radius:30px;white-space:nowrap}.status i{display:inline-block;width:7px;height:7px;border-radius:100%;background:var(--mint);margin-right:6px;box-shadow:0 0 10px var(--mint)}.tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 0 17px;scrollbar-width:none;position:sticky;top:0;z-index:15;background:linear-gradient(180deg,#0b1424 85%,#0b142400)}.tabs::-webkit-scrollbar{display:none}.tab{color:#a2b1c6;border:1px solid transparent;border-radius:10px;background:transparent;padding:11px 15px;white-space:nowrap;font-size:13px;font-weight:750}.tab.on{background:#1b3341;border-color:#2e635d;color:var(--mint)}.view{display:none}.view.active{display:block}.hero{border:1px solid #35566d;background:linear-gradient(120deg,#172e40,#11213a 60%,#1d2940);border-radius:22px;padding:27px 31px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:'◉';position:absolute;font-size:330px;line-height:1;color:#ffffff06;right:-55px;top:-120px;pointer-events:none}.hero > *{position:relative;z-index:1}.eyebrow{color:var(--mint);font-size:12px;letter-spacing:.12em;font-weight:800}.hero h1{font-size:clamp(26px,4vw,39px);letter-spacing:-.04em;margin:7px 0 6px}.sub{color:#b6c5da;font-size:13px;line-height:1.65}.winner{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:25px 0 18px}.ball{display:inline-grid;place-items:center;flex:none;width:43px;height:43px;border-radius:50%;font-weight:850;color:white;text-shadow:0 1px 2px #0004;box-shadow:inset -4px -4px 8px #0003,inset 3px 3px 8px #fff3;font-size:16px}.ball.sm{width:30px;height:30px;font-size:11px}.ball.xs{width:22px;height:22px;font-size:10px}.bonuslabel{font-size:12px;color:var(--muted);margin-left:6px}.hero-bottom{display:flex;justify-content:space-between;gap:12px;align-items:end;flex-wrap:wrap}.hero-bottom .prize{font-size:23px;font-weight:850;letter-spacing:-.03em}.hero-bottom .next{font-size:12px;color:#bfd1e6;text-align:right}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0 24px}.metric{border:1px solid var(--border);border-radius:16px;padding:21px;background:linear-gradient(145deg,#19253b,#111b2e)}.metric .tag{font-size:12px;color:var(--muted)}.metric .value{font-size:26px;font-weight:850;letter-spacing:-1px;margin:7px 0 2px;font-variant-numeric:tabular-nums}.metric .desc{font-size:11px;color:var(--muted)}.metric .value.negative{color:var(--red)}.metric .value.positive{color:var(--mint)}.cols{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:18px}.cols>div{min-width:0}.card{background:linear-gradient(145deg,#141f33,#111b2c);border:1px solid var(--border);border-radius:17px;padding:22px;box-shadow:0 7px 22px #0002;margin-bottom:18px;min-width:0}.card-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}.card h2{font-size:16px;letter-spacing:-.03em;margin:0}.card h3{font-size:14px;margin:15px 0 12px}.tiny{color:var(--muted);font-size:12px;line-height:1.7}.muted{color:var(--muted)}.line{border:0;border-top:1px solid var(--border);margin:17px 0}.inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.chip{border:1px solid #34536d;border-radius:30px;background:#1b3149;color:#cfe3f8;font-size:11px;padding:5px 10px;white-space:nowrap}.chip.accent{border-color:#306e5d;background:#133e35;color:var(--mint)}.chip.warn{border-color:#735a3d;background:#3d2d20;color:#ffce84}.chips{display:flex;gap:6px;flex-wrap:wrap}.select,select,input[type=number],input[type=text],textarea{border:1px solid #3a4d68;border-radius:10px;background:#0d1727;color:var(--text);padding:10px 11px;min-width:0}select{max-width:100%}.btn{border:1px solid #34516d;background:#21354b;color:var(--text);padding:11px 15px;border-radius:10px;font-size:12px;font-weight:800;display:inline-flex;gap:8px;align-items:center;justify-content:center}.btn:hover{filter:brightness(1.16)}.btn.primary{background:linear-gradient(140deg,#37d6a1,#18aa7c);border-color:#27b889;color:#051d17}.btn.gold{background:#493e27;border-color:#806a40;color:#ffda8e}.btn.danger{background:#442938;border-color:#6a4350;color:#ffb9bc}.btn.tinybtn{padding:6px 9px;font-size:11px}.controls{display:flex;flex-wrap:wrap;gap:9px;align-items:center}.freq-wrap{overflow-x:auto;max-width:100%;padding:16px 0 0}.freq-chart{display:flex;gap:5px;height:183px;align-items:end;min-width:715px;border-bottom:1px solid #41516a;padding:0 4px}.freq-col{height:100%;flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:5px;cursor:help}.freq-count{color:#8fa5c0;font-size:10px}.freq-bar{width:100%;max-width:18px;min-height:2px;background:linear-gradient(#7dafe7,#3b698c);border-radius:4px 4px 0 0}.freq-col.hot .freq-bar{background:linear-gradient(#68e6bf,#259d79)}.freq-col.low .freq-bar{background:linear-gradient(#ffce83,#aa8344)}.freq-label{font-size:9px;color:#93a8bf;padding:6px 0}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}.numlist{display:flex;flex-wrap:wrap;gap:7px}.num-count{display:flex;align-items:center;gap:5px;background:#1b2b42;padding:5px 8px 5px 5px;border-radius:20px;color:#afc3db;font-size:11px}.histogram{display:flex;gap:9px;align-items:end;height:150px;border-bottom:1px solid #3b4d66;padding:8px 1px 0}.histbar{display:flex;flex:1;height:100%;align-items:center;justify-content:end;flex-direction:column;gap:7px}.histbar .bar{background:linear-gradient(#74c6ff,#306e9f);width:100%;max-width:48px;border-radius:5px 5px 0 0;min-height:1px}.histbar .label{font-size:11px;color:#9eb2ca}.histbar .count{font-size:11px;color:#c9d5e5}.section-head{margin:12px 0 15px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.section-head h1{font-size:23px;margin:0}.tablewrap{overflow-x:auto}.datatable{width:100%;border-collapse:collapse;font-size:12px}.datatable th{text-align:left;color:#9eafc8;font-weight:600;border-bottom:1px solid #36506a;padding:11px 8px;white-space:nowrap}.datatable td{border-bottom:1px solid #28374d;padding:11px 8px;white-space:nowrap;color:#d7e5f7}.datatable tr:last-child td{border-bottom:0}.mini-balls{display:flex;gap:3px;align-items:center}.rank{font-size:11px;font-weight:800;border-radius:20px;padding:4px 8px;background:#263f52;color:#a7d9fe}.rank.zero{background:#44313c;color:#ffc1bd}.rank.good{background:#1c493b;color:#83edbe}.notice{border-left:3px solid #e8b561;background:#463b281a;padding:10px 12px;font-size:12px;color:#bbcadb;line-height:1.6;border-radius:3px 10px 10px 3px;margin:13px 0}.form-label{display:block;color:#9eb2ca;font-size:12px;margin:10px 0 6px}.optionrow{display:flex;justify-content:space-between;gap:15px;align-items:center;margin:13px 0;flex-wrap:wrap}.optionrow label{color:#d3e3f5;font-size:12px}.optionrow input[type=checkbox]{accent-color:#2bce9c}.generator-line{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #29394e;flex-wrap:wrap}.generator-line:last-child{border:0}.letter{background:#253c55;border:1px solid #385976;border-radius:9px;width:32px;height:32px;display:grid;place-items:center;font-weight:800}.generator-line .ball{width:36px;height:36px;font-size:14px}.generator-line .numbers{display:flex;gap:6px;flex:1;flex-wrap:wrap}.generator-line .how{color:#9cafc5;font-size:11px}.generator-line input{width:280px;max-width:100%;font-size:12px}.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:#16273b;border:1px solid #28425a;border-radius:10px;padding:15px}.stat .v{font-size:20px;font-weight:850;margin:7px 0}.stat .k{color:#91a7c0;font-size:11px}.record-block{border:1px solid #314864;border-radius:13px;background:#14263b;padding:17px;margin:14px 0}.record-meta{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.record-lines{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:13px 0}.record-line{border:1px solid #2a405a;border-radius:9px;padding:9px 10px;background:#101e30;display:flex;align-items:center;gap:7px;flex-wrap:wrap}.record-line strong{color:#cce6f7;width:16px;font-size:13px}.record-line .nums{font-variant-numeric:tabular-nums;letter-spacing:.1em;font-weight:700;font-size:12px}.record-line .rank{margin-left:auto}.smallprint{font-size:11px;color:#7892b2;line-height:1.7}.dangertext{color:var(--red)}.success{color:var(--mint)}.rangepill{padding:8px 11px;background:#152b3d;border:1px solid #30604f;border-radius:20px;color:#bce7da;font-size:12px}.foot{color:#7890ab;font-size:11px;line-height:1.8;padding:15px 0 0;border-top:1px solid #273752;margin-top:22px}.empty{padding:32px 15px;text-align:center;color:#93a7be;font-size:13px}.barh{display:flex;gap:10px;align-items:center;margin:10px 0}.barh .track{flex:1;height:10px;background:#263a53;border-radius:20px;overflow:hidden}.barh .track span{display:block;background:linear-gradient(90deg,#2594bf,#4bdfb0);height:100%;border-radius:20px}.barh .left{width:72px;font-size:11px;color:#b9c9de}.barh .right{width:37px;text-align:right;font-size:12px}.toast{position:fixed;bottom:23px;left:50%;transform:translate(-50%,12px);color:#0b2319;background:#78e6b9;padding:12px 19px;border-radius:12px;font-weight:750;font-size:13px;box-shadow:0 10px 40px #0009;opacity:0;transition:.2s;z-index:99;pointer-events:none;max-width:calc(100vw - 25px);text-align:center}.toast.on{opacity:1;transform:translate(-50%,0)}
@@ -23,13 +23,14 @@
 #syncOverview p{margin:0}
 #storageNotice[hidden],#cancelEdit[hidden]{display:none}
 </style>
+<link rel="stylesheet" href="./assets/research.css">
 </head>
 <body>
 <div class="app">
-<header class="top"><div class="brand"><div class="logo">✳</div><div><div class="brand-title">LOTTO <span style="color:var(--mint)">LAB</span></div><div class="brand-sub">NUMBER RESEARCH CONSOLE · 3.0</div></div></div><div id="dataStatus" class="status"><i></i>데이터 로드 중</div></header>
+<header class="top"><div class="brand"><div class="logo">✳</div><div><div class="brand-title">LOTTO <span style="color:var(--mint)">LAB</span></div><div class="brand-sub">NUMBER RESEARCH CONSOLE · 4.0</div></div></div><div id="dataStatus" class="status"><i></i>데이터 로드 중</div></header>
 <div id="storageNotice" class="notice dangertext" role="alert" hidden></div>
 <nav class="tabs" aria-label="대시보드 메뉴">
-<button class="tab on" data-tab="overview">◈ 개요</button><button class="tab" data-tab="statistics">▥ 통계 분석</button><button class="tab" data-tab="backtest">⌁ 전략 검증</button><button class="tab" data-tab="generator">✳ 조합 생성</button><button class="tab" data-tab="records">▤ 구매 기록</button><button class="tab" data-tab="data">⚙ 데이터 관리</button>
+<button class="tab on" data-tab="overview">◈ 개요</button><button class="tab" data-tab="statistics">▥ 통계 분석</button><button class="tab" data-tab="patterns">▧ 역대 패턴</button><button class="tab" data-tab="backtest">⌁ 전략 검증</button><button class="tab" data-tab="generator">✳ 조합 생성</button><button class="tab" data-tab="records">▤ 구매 기록</button><button class="tab" data-tab="data">⚙ 데이터 관리</button>
 </nav>
 <section id="overview" class="view active">
 <div id="hero" class="hero"></div>
@@ -46,28 +47,64 @@
 <div class="cols"><div><div class="card"><div class="card-title"><h2>상위·하위 번호</h2></div><div class="twocol"><div><h3>● 많이 등장한 번호</h3><div class="numlist" id="hotList"></div></div><div><h3>● 적게 등장한 번호</h3><div class="numlist" id="coldList"></div></div></div><hr class="line"><div class="tiny" id="expectedNote"></div></div><div class="card"><div class="card-title"><h2>홀수 개수별 분포</h2></div><div id="oddChart"></div></div></div><div><div class="card"><div class="card-title"><h2>함께 나온 번호 쌍</h2></div><div id="pairList"></div><div class="tiny">같이 나온 횟수일 뿐 당첨 연관성을 뜻하지 않습니다.</div></div><div class="card"><div class="card-title"><h2>당첨번호 합계 분포</h2></div><div id="sumChart"></div></div></div></div>
 <div class="card"><div class="card-title"><h2>최근 회차 조회</h2><select id="recentCount"><option value="10">10개 회차</option><option value="30" selected>30개 회차</option><option value="100">100개 회차</option></select></div><div class="tablewrap"><table class="datatable"><thead><tr><th>회차</th><th>날짜</th><th>당첨번호</th><th>보너스</th><th>합계</th><th>홀짝</th></tr></thead><tbody id="historyRows"></tbody></table></div></div>
 </section>
-<section id="backtest" class="view">
-<div class="section-head"><div><h1>전략 검증 2.0</h1><div class="tiny">8가지 후보를 과거 구간에서 선택한 뒤, 마지막 20%는 따로 평가합니다</div></div><button class="btn" id="rerunTest">검증 재실행 ↻</button></div>
-<div class="notice">실험 목적: 과거 성과가 <b>우연보다 유의미하게 높은지</b> 확인합니다. 실제 1등 확률의 개선을 뜻하지 않습니다. 기준 선택에 사용한 회차와 최종 평가 회차는 분리합니다.</div>
-<div class="card">
-<div class="card-title"><h2>데이터 범위 · 검증 설계</h2><span id="testRange" class="chip accent"></span></div>
-<div class="result-stats" id="testMetrics"></div>
-<div id="testCoverage" class="smallprint" style="margin-top:12px"></div>
-<div class="notice" style="margin-top:14px">초기에는 100회가 들어 있습니다. GitHub 자동 갱신 후 전체 회차가 확보되지 않았다면 <b>500~1,000회 이상 장기 검증</b>을 위해 <a href="https://cashlogy.kr/lotto/excel" target="_blank" rel="noopener" style="color:#77e4c2">전체 CSV 다운로드</a> 후 데이터 관리에서 불러오세요. 가져오면 분석 결과가 자동으로 다시 계산됩니다.</div>
-</div>
-<div class="card">
-<div class="card-title"><h2>1단계 · 과거 개발 구간에서 8개 전략 비교</h2><span class="chip">마지막 평가구간 제외</span></div>
-<div class="tablewrap"><table class="datatable"><thead><tr><th>전략</th><th>기준창</th><th>평균 일치</th><th>3개 이상</th><th>구간</th></tr></thead><tbody id="backtestRows"></tbody></table></div>
-<div class="tiny" style="margin-top:14px">직전 10·20·30·50회 기준으로 빈출·저빈출 각각 평가. 동점 순서는 고정 난수로 결정하며, 모든 예측은 해당 회차 이전 결과만 사용합니다.</div>
-</div>
-<div class="card">
-<div class="card-title"><h2>2단계 · 손대지 않은 마지막 회차 검증</h2><span class="chip accent">홀드아웃</span></div>
-<div id="holdoutVerdict" class="notice"></div>
-<div class="tablewrap"><table class="datatable"><thead><tr><th>비교 대상</th><th>평균 일치</th><th>3개 이상</th><th>평가 회차</th></tr></thead><tbody id="holdoutRows"></tbody></table></div>
-<div id="monteResults" style="margin-top:16px"></div>
-<div id="testCaveat" class="smallprint" style="margin-top:14px"></div>
-</div>
-<div class="card"><div class="card-title"><h2>확률은 변하지 않는다</h2><span class="chip">수학적 기준</span></div><div class="twocol"><div id="probabilityLeft"></div><div id="probabilityRight"></div></div><hr class="line"><div class="tiny">한 조합의 1등 확률은 1 / 8,145,060. 과거 빈도와 상관없이 모든 조합이 동일합니다. 검증 결과가 높아도 실전 우위는 별도 검증이 필요합니다.</div></div>
+<section id="patterns" class="view research-section">
+  <div class="section-head"><div><h1>역대 패턴 분석</h1><div class="tiny">당첨번호 6개 기준 · 보너스 제외</div></div></div>
+  <div class="card">
+    <div class="card-title"><h2>회차별 패턴</h2><label class="research-period">추첨 회차 <select id="patternRound"></select></label></div>
+    <p id="patternDrawNumbers" class="research-help"></p>
+    <div id="patternCards" class="research-cards"></div>
+    <div id="patternDrawDetail" class="research-detail" hidden></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><h2>기간별 관측과 이론 비교</h2></div>
+    <div class="research-control">
+      <label>기간 <select id="patternRange"><option value="20">최근 20회</option><option value="50">최근 50회</option><option value="100">최근 100회</option><option value="all" selected>전체</option></select></label>
+      <label>항목 <select id="patternGroup"></select></label>
+      <label id="patternComboLabel" hidden>조합 검색 <input id="patternCombo" type="text" maxlength="12" placeholder="예: 11 21"></label>
+    </div>
+    <p class="research-help research-status" id="patternScope"></p>
+    <div id="patternChart"></div>
+    <div id="patternPeriodDetail" class="research-detail" hidden></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><h2>통계적 특이성 검정</h2></div>
+    <p class="research-help">선택 기간과 같은 길이로 무작위 추첨 이력을 반복합니다. 10만 회 검정은 기기에 따라 시간이 걸릴 수 있습니다.</p>
+    <div class="research-control">
+      <label>반복 횟수 <select id="patternRepetitions"><option value="10000">10,000회 · 기본</option><option value="100000">100,000회 · 정밀</option></select></label>
+      <label>난수 시드 <input id="patternSeed" type="number" min="0" max="4294967295" step="1" value="645" required></label>
+      <button type="button" class="btn primary" id="patternRun">무작위 비교 실행</button>
+      <button type="button" class="btn" id="patternCancel" hidden>취소</button>
+    </div>
+    <div class="research-status">
+      <p class="research-help" id="patternStatus" role="status"></p>
+      <progress id="patternProgress" max="1" value="0" aria-label="무작위 비교 진행률" hidden></progress>
+    </div>
+    <div id="patternTests"></div>
+    <details class="research-method"><summary>검정 방법과 판정 기준</summary>
+      <p class="research-help">번호·번호쌍·3개 조합의 최댓값은 가능한 전체 후보 중 최댓값과 비교합니다. 최솟값은 아래쪽, 고정 패턴 빈도는 기대값 양쪽을 비교합니다. 극값의 기대는 시뮬레이션 평균이며, 편차는 관측에서 기대를 뺀 값입니다.</p>
+      <p class="research-help">경험적 p값은 (관측만큼 극단적인 반복 수 + 1) ÷ (반복 수 + 1)입니다. Holm 보정 후 기간 4개와 반복 횟수 2개도 보정합니다. 기본 시드 645에서 보정 p ≤ 0.05이면 유의한 편차, 보정 전 p ≤ 0.05이거나 95% 범위 밖이면 추가 검증으로 표시합니다. 사용자 시드는 탐색용입니다. 유의한 편차와 미래 예측력은 별개입니다.</p>
+    </details>
+  </div>
+</section>
+<section id="backtest" class="view research-section">
+  <div class="section-head"><div><h1>전략별 워크포워드 검증</h1><div class="tiny">회차당 5게임 · 각 추첨 전에 알 수 있었던 데이터로 비교</div></div>
+    <button type="button" class="btn" id="strategyRun">평가 실행 ↻</button>
+  </div>
+  <div class="card">
+    <div class="card-title"><h2>전략 성과 비교</h2></div>
+    <p class="research-help" id="strategyStatus" role="status"></p>
+    <p class="research-help" id="strategyBaseline"></p>
+    <div id="strategyResults"></div>
+    <details class="research-method"><summary>비교 조건과 해석</summary>
+      <p class="research-help">개발은 1,000회까지, 평가는 1,001회부터로 고정했습니다. 추첨 직전 연속 50회가 있는 회차를 사용합니다. 같은 회차의 5번째 게임은 전 전략이 공유하며, 나머지 4게임을 전략별로 생성합니다. 무작위 5게임은 각각 균등하게 생성합니다.</p>
+      <p class="research-help">빈출·저빈출 가중과 번호 분산은 조합 생성기의 규칙을 사용합니다. 장기 미출현은 마지막 등장 이후 회차 수 순서, 번호쌍은 동시 출현 횟수 순서로 선택합니다. 패턴 필터는 홀짝 3:3, 합계 100~149, 연속번호 1쌍 이상을 고정 적용합니다.</p>
+      <p class="research-help">평균 일치의 95% 추정 구간은 회차 단위 블록 부트스트랩입니다. 보정 p는 당회차의 게임 간 번호 중복을 반영한 단측 순차 검정에 Holm 보정을 적용한 값입니다. 이 평가는 과거 재현입니다. 미래 성과는 추첨 전에 조합을 기록하고 별도로 확인해야 합니다.</p>
+      <p class="research-help">모의 수익률은 해당 회차 게임 가격과 공시된 세전 1게임당 당첨금을 사용합니다. 5개 적중 등수는 보너스로 구분하며, 당첨금 자료가 빠진 경우 수익률을 표시하지 않습니다.</p>
+    </details>
+  </div>
+  <div class="card"><div class="card-title"><h2>무작위 추첨의 기준</h2></div>
+    <p class="research-help">6/45 한 조합의 기대 일치 수는 0.800개, 1등 확률은 1 / 8,145,060입니다. 당첨 패턴의 출현 빈도와 개별 조합의 당첨 확률은 별개입니다.</p>
+  </div>
 </section>
 <section id="generator" class="view">
 <div class="section-head"><div><h1>다음 회차 조합 연구실</h1><div class="tiny">수동 4게임 + 자동 1게임 · 중복 관리</div></div><span id="genTarget" class="rangepill"></span></div>
@@ -87,6 +124,7 @@
 <footer class="foot">LOTTO LAB · 오프라인 실행 가능한 단일 HTML · 기준일 2026.11.08 · 자료: <a href="https://cashlogy.kr/lotto/recent/100" target="_blank" rel="noopener">캐시로지 최근 100회</a> / <a href="https://www.dhlottery.co.kr/lt645/result" target="_blank" rel="noopener">동행복권 공식 확인</a><br>오락·기록·통계 도구이며 복권 구매, 자동 베팅, 수익 보장을 제공하지 않습니다. 복권은 19세 이상만 구매할 수 있습니다.</footer>
 </div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="./assets/lotto-picks.js"></script>
 <script>
 'use strict';
 const EMBEDDED_DRAWS=[{"round":1249,"date":"2026-11-07","numbers":[2,11,16,25,34,35],"bonus":14},{"round":1248,"date":"2026-10-31","numbers":[16,18,27,36,38,42],"bonus":22},{"round":1247,"date":"2026-10-24","numbers":[8,14,21,22,42,45],"bonus":24},{"round":1246,"date":"2026-10-17","numbers":[16,22,23,24,27,28],"bonus":6},{"round":1245,"date":"2026-10-10","numbers":[4,5,25,28,32,42],"bonus":12},{"round":1244,"date":"2026-10-03","numbers":[1,13,18,26,34,38],"bonus":25},{"round":1243,"date":"2026-09-26","numbers":[9,18,24,38,43,44],"bonus":35},{"round":1242,"date":"2026-09-19","numbers":[2,4,10,16,31,41],"bonus":9},{"round":1241,"date":"2026-09-12","numbers":[7,13,16,23,24,43],"bonus":9},{"round":1240,"date":"2026-09-05","numbers":[11,13,19,20,31,44],"bonus":27},{"round":1239,"date":"2026-08-29","numbers":[11,13,22,32,33,36],"bonus":8},{"round":1238,"date":"2026-08-22","numbers":[2,13,18,32,38,42],"bonus":22},{"round":1237,"date":"2026-08-15","numbers":[10,20,23,34,37,40],"bonus":36},{"round":1236,"date":"2026-08-08","numbers":[12,18,21,29,34,38],"bonus":10},{"round":1235,"date":"2026-08-01","numbers":[6,7,11,15,39,43],"bonus":20},{"round":1234,"date":"2026-07-25","numbers":[1,15,19,31,35,43],"bonus":27},{"round":1233,"date":"2026-07-18","numbers":[2,7,20,25,37,40],"bonus":29},{"round":1232,"date":"2026-07-11","numbers":[12,15,19,22,24,36],"bonus":3},{"round":1231,"date":"2026-07-04","numbers":[4,13,14,18,31,38],"bonus":15},{"round":1230,"date":"2026-06-27","numbers":[3,8,9,22,28,42],"bonus":45},{"round":1229,"date":"2026-06-20","numbers":[12,13,29,34,37,42],"bonus":16},{"round":1228,"date":"2026-06-13","numbers":[24,29,30,31,35,44],"bonus":1},{"round":1227,"date":"2026-06-06","numbers":[1,14,16,34,41,44],"bonus":13},{"round":1226,"date":"2026-05-30","numbers":[4,6,13,17,26,28],"bonus":41},{"round":1225,"date":"2026-05-23","numbers":[8,9,19,25,41,42],"bonus":33},{"round":1224,"date":"2026-05-16","numbers":[9,18,21,27,44,45],"bonus":28},{"round":1223,"date":"2026-05-09","numbers":[16,18,20,32,33,39],"bonus":26},{"round":1222,"date":"2026-05-02","numbers":[4,11,17,22,32,41],"bonus":34},{"round":1221,"date":"2026-04-25","numbers":[6,13,18,28,30,36],"bonus":9},{"round":1220,"date":"2026-04-18","numbers":[2,22,25,28,34,43],"bonus":16},{"round":1219,"date":"2026-04-11","numbers":[1,2,15,28,39,45],"bonus":31},{"round":1218,"date":"2026-04-04","numbers":[3,28,31,32,42,45],"bonus":25},{"round":1217,"date":"2026-03-28","numbers":[8,10,15,20,29,31],"bonus":41},{"round":1216,"date":"2026-03-21","numbers":[3,10,14,15,23,24],"bonus":25},{"round":1215,"date":"2026-03-14","numbers":[13,15,19,21,44,45],"bonus":39},{"round":1214,"date":"2026-03-07","numbers":[10,15,19,27,30,33],"bonus":14},{"round":1213,"date":"2026-02-28","numbers":[5,11,25,27,36,38],"bonus":2},{"round":1212,"date":"2026-02-21","numbers":[5,8,25,31,41,44],"bonus":45},{"round":1211,"date":"2026-02-14","numbers":[23,26,27,35,38,40],"bonus":10},{"round":1210,"date":"2026-02-07","numbers":[1,7,9,17,27,38],"bonus":31},{"round":1209,"date":"2026-01-31","numbers":[2,17,20,35,37,39],"bonus":24},{"round":1208,"date":"2026-01-24","numbers":[6,27,30,36,38,42],"bonus":25},{"round":1207,"date":"2026-01-17","numbers":[10,22,24,27,38,45],"bonus":11},{"round":1206,"date":"2026-01-10","numbers":[1,3,17,26,27,42],"bonus":23},{"round":1205,"date":"2026-01-03","numbers":[1,4,16,23,31,41],"bonus":2},{"round":1204,"date":"2025-12-27","numbers":[8,16,28,30,31,44],"bonus":27},{"round":1203,"date":"2025-12-20","numbers":[3,6,18,29,35,39],"bonus":24},{"round":1202,"date":"2025-12-13","numbers":[5,12,21,33,37,40],"bonus":7},{"round":1201,"date":"2025-12-06","numbers":[7,9,24,27,35,36],"bonus":37},{"round":1200,"date":"2025-11-29","numbers":[1,2,4,16,20,32],"bonus":45},{"round":1199,"date":"2025-11-22","numbers":[16,24,25,30,31,32],"bonus":7},{"round":1198,"date":"2025-11-15","numbers":[26,30,33,38,39,41],"bonus":21},{"round":1197,"date":"2025-11-08","numbers":[1,5,7,26,28,43],"bonus":30},{"round":1196,"date":"2025-11-01","numbers":[8,12,15,29,40,45],"bonus":14},{"round":1195,"date":"2025-10-25","numbers":[3,15,27,33,34,36],"bonus":37},{"round":1194,"date":"2025-10-18","numbers":[3,13,15,24,33,37],"bonus":2},{"round":1193,"date":"2025-10-11","numbers":[6,9,16,19,24,28],"bonus":17},{"round":1192,"date":"2025-10-04","numbers":[10,16,23,36,39,40],"bonus":11},{"round":1191,"date":"2025-09-27","numbers":[1,4,11,12,20,41],"bonus":2},{"round":1190,"date":"2025-09-20","numbers":[7,9,19,23,26,45],"bonus":33},{"round":1189,"date":"2025-09-13","numbers":[9,19,29,35,37,38],"bonus":31},{"round":1188,"date":"2025-09-06","numbers":[3,4,12,19,22,27],"bonus":9},{"round":1187,"date":"2025-08-30","numbers":[5,13,26,29,37,40],"bonus":42},{"round":1186,"date":"2025-08-23","numbers":[2,8,13,16,23,28],"bonus":35},{"round":1185,"date":"2025-08-16","numbers":[6,17,22,28,29,32],"bonus":38},{"round":1184,"date":"2025-08-09","numbers":[14,16,23,25,31,37],"bonus":42},{"round":1183,"date":"2025-08-02","numbers":[4,15,17,23,27,36],"bonus":31},{"round":1182,"date":"2025-07-26","numbers":[1,13,21,25,28,31],"bonus":22},{"round":1181,"date":"2025-07-19","numbers":[8,10,14,20,33,41],"bonus":28},{"round":1180,"date":"2025-07-12","numbers":[6,12,18,37,40,41],"bonus":3},{"round":1179,"date":"2025-07-05","numbers":[3,16,18,24,40,44],"bonus":21},{"round":1178,"date":"2025-06-28","numbers":[5,6,11,27,43,44],"bonus":17},{"round":1177,"date":"2025-06-21","numbers":[3,7,15,16,19,43],"bonus":21},{"round":1176,"date":"2025-06-14","numbers":[7,9,11,21,30,35],"bonus":29},{"round":1175,"date":"2025-06-07","numbers":[3,4,6,8,32,42],"bonus":31},{"round":1174,"date":"2025-05-31","numbers":[8,11,14,17,36,39],"bonus":22},{"round":1173,"date":"2025-05-24","numbers":[1,5,18,20,30,35],"bonus":3},{"round":1172,"date":"2025-05-17","numbers":[7,9,24,40,42,44],"bonus":45},{"round":1171,"date":"2025-05-10","numbers":[3,6,7,11,12,17],"bonus":19},{"round":1170,"date":"2025-05-03","numbers":[3,13,28,34,38,42],"bonus":25},{"round":1169,"date":"2025-04-26","numbers":[5,12,24,26,39,42],"bonus":20},{"round":1168,"date":"2025-04-19","numbers":[9,21,24,30,33,37],"bonus":29},{"round":1167,"date":"2025-04-12","numbers":[8,23,31,35,39,40],"bonus":24},{"round":1166,"date":"2025-04-05","numbers":[14,23,25,27,29,42],"bonus":16},{"round":1165,"date":"2025-03-29","numbers":[6,7,27,29,38,45],"bonus":17},{"round":1164,"date":"2025-03-22","numbers":[17,18,23,25,38,39],"bonus":22},{"round":1163,"date":"2025-03-15","numbers":[2,13,15,16,33,43],"bonus":4},{"round":1162,"date":"2025-03-08","numbers":[20,21,22,25,28,29],"bonus":6},{"round":1161,"date":"2025-03-01","numbers":[2,12,20,24,34,42],"bonus":37},{"round":1160,"date":"2025-02-22","numbers":[7,13,18,36,39,45],"bonus":19},{"round":1159,"date":"2025-02-15","numbers":[3,9,27,28,38,39],"bonus":7},{"round":1158,"date":"2025-02-08","numbers":[21,25,27,32,37,38],"bonus":20},{"round":1157,"date":"2025-02-01","numbers":[5,7,12,20,25,26],"bonus":28},{"round":1156,"date":"2025-01-25","numbers":[30,31,34,39,41,45],"bonus":7},{"round":1155,"date":"2025-01-18","numbers":[10,16,19,27,37,38],"bonus":13},{"round":1154,"date":"2025-01-11","numbers":[4,8,22,26,32,38],"bonus":27},{"round":1153,"date":"2025-01-04","numbers":[1,9,10,13,35,44],"bonus":5},{"round":1152,"date":"2024-12-28","numbers":[30,31,32,35,36,37],"bonus":5},{"round":1151,"date":"2024-12-21","numbers":[2,3,9,15,27,29],"bonus":8},{"round":1150,"date":"2024-12-14","numbers":[8,9,18,35,39,45],"bonus":25}];
@@ -227,75 +265,16 @@ function renderStats(){const rows=subset($('statsRange').value);const s=summary(
 const odds=Array(7).fill(0);const sums=Array(5).fill(0);rows.forEach(d=>{odds[d.numbers.filter(x=>x%2).length]++;let sum=d.numbers.reduce((a,b)=>a+b,0);sums[Math.max(0,Math.min(4,Math.floor(sum/50)-1))]++});$('oddChart').innerHTML=hist(odds,odds.map((_,i)=>`${i}:${6-i}`));$('sumChart').innerHTML=hist(sums,['~99','100~149','150~199','200~249','250+']);$('pairList').innerHTML=pairs(rows).map(([k,v])=>`<div class="barh"><span class="left">${k.replace('-', ' · ')}</span><span class="track"><span style="width:${Math.max(2,v/pairs(rows)[0][1]*100)}%"></span></span><span class="right">${v}회</span></div>`).join('');renderHistory()}
 function hist(vals,labs){const max=Math.max(...vals,1);return `<div class="histogram">${vals.map((v,i)=>`<div class="histbar"><span class="count">${v}</span><span class="bar" style="height:${Math.max(1,100*v/max)}px"></span><span class="label">${labs[i]}</span></div>`).join('')}</div>`}
 function renderHistory(){let n=Number($('recentCount').value);$('historyRows').innerHTML=subset(n).map(d=>`<tr><td><b>${d.round}</b></td><td>${shortDate(d.date)}</td><td><div class="mini-balls">${balls(d.numbers,true)}</div></td><td>${balls([d.bonus],true)}</td><td>${d.numbers.reduce((a,b)=>a+b,0)}</td><td>${d.numbers.filter(x=>x%2).length}:${d.numbers.filter(x=>x%2===0).length}</td></tr>`).join('')}
-function seedRandom(seed){let a=seed>>>0;return()=>{a+=0x6D2B79F5;let t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}}
-function chooseRank(rows,mode,seed){const rng=seedRandom(seed);const f=frequency(rows);let list=Array.from({length:45},(_,i)=>i+1);if(mode==='random')list.sort((a,b)=>a-b),list=shuffle(list,rng);else{let tie=Object.fromEntries(list.map(n=>[n,rng()]));list.sort((a,b)=>(mode==='hot'?f[b]-f[a]:f[a]-f[b])||tie[a]-tie[b])}return list.slice(0,6).sort((a,b)=>a-b)}
 function shuffle(a,rng=Math.random){for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-
-const TEST_WINDOWS=[10,20,30,50];
-const TEST_REPETITIONS=300;
-function testedSamples(asc,window,start,end,mode,seedTag){
- let score=0,three=0,counts=[];
- for(let i=start;i<end;i++){
-  let pick=chooseRank(asc.slice(i-window,i),mode,Math.imul(asc[i].round,131)+Math.imul(window,113)+seedTag);
-  let found=pick.reduce((s,n)=>s+(asc[i].numbers.includes(n)?1:0),0);
-  score+=found;three+=(found>=3);counts.push(found)
- }
- return{score,three,n:end-start,mean:score/(end-start),counts};
+function makeGenerated() {
+  const mode = $('genMode').value;
+  const lines = LottoPicks.generate({ mode, unique: $('genUnique').checked, counts: frequency(subset(50)) });
+  state.genMode = mode;
+  state.generator = lines.map((numbers, index) => ({
+    label: 'ABCDE'[index], type: index === 4 ? '자동' : '수동', numbers,
+  }));
+  renderGenerated();
 }
-function simulateRandom(asc,start,end,rep){
- let hits=0,three=0;
- const rng=seedRandom(0x9e3779b9^Math.imul(rep+1,2654435761));
- for(let i=start;i<end;i++){
-  // Six distinct numbers sampled uniformly without replacement.
-  let chosen=new Set();while(chosen.size<6)chosen.add(1+Math.floor(rng()*45));
-  let c=0;chosen.forEach(n=>{if(asc[i].numbers.includes(n))c++});
-  hits+=c;three+=(c>=3);
- }
- return {mean:hits/(end-start),three};
-}
-function quantile(nums,p){const arr=[...nums].sort((a,b)=>a-b);if(!arr.length)return NaN;let x=p*(arr.length-1),i=Math.floor(x),a=x-i;return arr[i]*(1-a)+(arr[Math.min(i+1,arr.length-1)])*a}
-function renderTestStats(items){$('testMetrics').innerHTML=items.map(([name,v,sub])=>`<div class="stat"><div class="k">${name}</div><div class="v">${v}</div><div class="tiny">${sub}</div></div>`).join('')}
-function backtest(){
- const asc=sorted().reverse();
- const maxWindow=Math.max(...TEST_WINDOWS);
- const eligible=Math.max(0,asc.length-maxWindow);
- const holdoutN=Math.max(15,Math.floor(eligible*.2));
- const devEnd=asc.length-holdoutN;
- if(eligible<35||devEnd-maxWindow<20){
-  $('testRange').textContent='데이터 부족';renderTestStats([['보유 회차',asc.length+'회','최소 85회 필요']]);
-  $('backtestRows').innerHTML='<tr><td colspan="5">검증을 위해 최소 85회 이상 데이터를 불러오세요.</td></tr>';
-  $('holdoutRows').innerHTML='';$('holdoutVerdict').textContent='검증 대상 부족';$('monteResults').innerHTML='';$('testCaveat').textContent='';$('testCoverage').textContent='';
- }else{
-  const devStart=maxWindow, holdStart=devEnd, holdN=asc.length-holdStart;
-  const candidates=[];
-  for(const mode of ['cold','hot'])for(const w of TEST_WINDOWS){
-   let row=testedSamples(asc,w,devStart,devEnd,mode,mode==='cold'?217:319);
-   candidates.push({...row,mode,window:w});
-  }
-  candidates.sort((a,b)=>b.mean-a.mean||b.three-a.three||a.window-b.window||a.mode.localeCompare(b.mode));
-  const best=candidates[0];
-  const bestHold=testedSamples(asc,best.window,holdStart,asc.length,best.mode,best.mode==='cold'?217:319);
-  const randHold=testedSamples(asc,best.window,holdStart,asc.length,'random',419);
-  const simulation=[];for(let k=0;k<TEST_REPETITIONS;k++)simulation.push(simulateRandom(asc,holdStart,asc.length,k));
-  const lo=quantile(simulation.map(s=>s.mean),.025),hi=quantile(simulation.map(s=>s.mean),.975);
-  const p=(1+simulation.filter(s=>s.mean>=bestHold.mean-1e-10).length)/(simulation.length+1);
-  const p3=(1+simulation.filter(s=>s.three>=bestHold.three).length)/(simulation.length+1);
-  let missing=0;for(let i=1;i<asc.length;i++)missing+=Math.max(0,asc[i].round-asc[i-1].round-1);
-  const startDev=asc[devStart].round,endDev=asc[devEnd-1].round,startHold=asc[holdStart].round,endHold=asc.at(-1).round;
-  $('testRange').textContent=`${fmt(asc.length)}회 보유 · ${fmt(devEnd-devStart)}회 개발 + ${fmt(holdN)}회 최종 검증`;
-  renderTestStats([['전략 선택 회차',fmt(devEnd-devStart)+'회',`${startDev}~${endDev}회`],['최종 평가 회차',fmt(holdN)+'회',`${startHold}~${endHold}회`],['무작위 대조 실험',`${TEST_REPETITIONS}회`,'각 회차 1게임씩']]);
-  $('testCoverage').innerHTML=`<b>학습창:</b> 해당 회차 직전 10·20·30·50회만 사용. <b>선택된 전략:</b> ${best.mode==='cold'?'저빈도':'빈출'} ${best.window}회. <b>데이터 누락:</b> ${missing}회 ${missing?'(백테스트 기간에 빈 구간이 포함될 수 있음)':'(연속 회차 확인)'}. 모든 결과는 보너스 번호를 제외합니다.`;
-  $('backtestRows').innerHTML=candidates.map((o,i)=>`<tr><td>${i===0?'<span class="chip accent">개발 구간 1위</span> ':''}<b>${o.mode==='cold'?'저빈도':'빈출'}</b></td><td>${o.window}회</td><td>${o.mean.toFixed(3)}개</td><td>${o.three}회 (${(o.three/o.n*100).toFixed(1)}%)</td><td>${o.n}회</td></tr>`).join('');
-  const makeLine=(name,o)=>`<tr><td><b>${name}</b></td><td>${o.mean.toFixed(3)}개</td><td>${o.three}회 (${(o.three/holdN*100).toFixed(1)}%)</td><td>${holdN}회</td></tr>`;
-  $('holdoutRows').innerHTML=makeLine(`선택 전략 (${best.mode==='cold'?'저빈도':'빈출'} ${best.window}회)`,bestHold)+makeLine('고정 난수 기준선',randHold)+`<tr><td><b>수학적 기대</b></td><td>0.800개</td><td>약 ${(holdN*.02383407857).toFixed(2)}회 (2.38%)</td><td>${holdN}회</td></tr>`;
-  let significant=p<=.05&&bestHold.mean>.8;
-  $('holdoutVerdict').innerHTML=`<b>${significant?'탐색적 신호 확인 — 추가 검증 필수':'예측 우위 미확인'}</b><br>홀드아웃 평균 ${bestHold.mean.toFixed(3)}개, 무작위 이론 기대 0.800개. 반복 무작위 대조에서 이 이상을 기록한 비율(보정 포함)은 약 ${(p*100).toFixed(1)}%입니다. ${significant?'단일 보류 구간 결과만으로 실전 예측 우위를 증명할 수는 없습니다.':'관측 차이가 우연일 가능성을 배제할 수 없습니다.'}`;
-  $('monteResults').innerHTML=`<div class="twocol"><div class="stat"><div class="k">무작위 실험 평균 일치수 · 가운데 95% 구간</div><div class="v">${lo.toFixed(3)} ~ ${hi.toFixed(3)}</div><div class="tiny">${TEST_REPETITIONS}회 시뮬레이션 · 1회차당 1게임</div></div><div class="stat"><div class="k">3개 이상 일치 · 대조 우측꼬리 빈도</div><div class="v">${(p3*100).toFixed(1)}%</div><div class="tiny">선택 전략 ${bestHold.three}회와 무작위 실험 비교</div></div></div><div class="tiny" style="margin-top:12px">무작위 기대 일치수 0.800개. 시뮬레이션 결과는 의사난수에 따른 비교값이며, <b>미래 추첨의 승률이나 수익률을 보장하지 않습니다.</b></div>`;
-  $('testCaveat').textContent=`방법: 개발 구간에서만 8개 후보 중 평균 일치가 가장 높은 전략을 1개 선정하고, 선택 후 최종 ${holdN}회에는 기준 변경 없이 적용했습니다. 동점 정렬은 고정 시드로 재현 가능하며, 무작위 대조는 ${TEST_REPETITIONS}개 독립 시드로 생성했습니다. 이 비교는 탐색적이며 숫자 6개 적중 수의 반복 관측은 재현성 검증이 필요합니다. 향후 1250회 이후 실제 구매 기록과 별도로 확인하세요.`;
- }
-const comb=(n,k)=>{let x=1;for(let j=1;j<=k;j++)x=x*(n-j+1)/j;return x};const total=comb(45,6);let pr=[];for(let i=0;i<=6;i++)pr[i]=comb(6,i)*comb(39,6-i)/total;const rows=[['정확히 6개',pr[6]],['정확히 5개',pr[5]],['정확히 4개',pr[4]],['정확히 3개',pr[3]]];$('probabilityLeft').innerHTML=rows.map(([n,p])=>`<div class="barh"><span class="left">${n}</span><span class="track"><span style="width:${Math.min(100,Math.max(.8,p*500))}%"></span></span><span class="right" style="width:80px">${(p*100).toFixed(4)}%</span></div>`).join('');$('probabilityRight').innerHTML=`<div class="stat"><div class="k">수학적 기대 일치 수</div><div class="v">0.800개</div><div class="tiny">6개 중 6/45 비율</div></div><div class="stat" style="margin-top:9px"><div class="k">한 조합의 1등 확률</div><div class="v">1 / 8,145,060</div><div class="tiny">모든 6개 조합이 동일</div></div>`}
-function weightedSample(pool,weight){let total=pool.reduce((a,n)=>a+weight(n),0),r=Math.random()*total;for(const n of pool){r-=weight(n);if(r<=0)return n}return pool.at(-1)}
-function makeGenerated(){const mode=$('genMode').value,unique=$('genUnique').checked,rows=subset(50),f=frequency(rows);state.genMode=mode;const made=[],used=new Set();for(let k=0;k<4;k++){let nums=[];for(let j=0;j<6;j++){let pool=Array.from({length:45},(_,i)=>i+1).filter(n=>!nums.includes(n)&&(!unique||!used.has(n)));if(!pool.length)return;let n=mode==='hot'?weightedSample(pool,n=>Math.pow(f[n]+2,2)):mode==='cold'?weightedSample(pool,n=>Math.pow(60-f[n],2)):pool[Math.floor(Math.random()*pool.length)];nums.push(n);used.add(n)}made.push({label:'ABCD'[k],type:'수동',numbers:nums.sort((a,b)=>a-b)})}made.push({label:'E',type:'자동',numbers:shuffle(Array.from({length:45},(_,i)=>i+1)).slice(0,6).sort((a,b)=>a-b)});state.generator=made;renderGenerated()}
 function renderGenerated(){const next=nextDraw();$('genTarget').textContent=`제${next.round}회 · ${next.date}`;$('generatedLines').innerHTML=state.generator.map((l,i)=>`<div class="generator-line"><div class="letter">${l.label}</div><div class="numbers">${balls(l.numbers)}</div><span class="chip">${l.type}</span><input aria-label="${l.label}번 조합 편집" data-gidx="${i}" value="${l.numbers.join(' ')}" spellcheck="false"></div>`).join('');renderDiagnostics()}
 function genFromInputs(){let list=[];document.querySelectorAll('[data-gidx]').forEach(e=>{let nums=parseNums(e.value).sort((a,b)=>a-b);list.push({...state.generator[Number(e.dataset.gidx)],numbers:nums})});return list}
 function renderDiagnostics(){const lines=state.generator;const unique=new Set(lines.slice(0,4).flatMap(l=>l.numbers)),sums=lines.map(l=>l.numbers.reduce((a,b)=>a+b,0)),odds=lines.map(l=>l.numbers.filter(n=>n%2).length);$('genDiagnostics').innerHTML=`<div class="result-stats"><div class="stat"><div class="k">수동 숫자 커버</div><div class="v">${unique.size}/45</div></div><div class="stat"><div class="k">A~D 중복</div><div class="v">${24-unique.size}</div></div><div class="stat"><div class="k">게임 수</div><div class="v">${lines.length}</div></div></div><hr class="line"><div class="tiny">각 게임 번호 합계: <b>${sums.join(' · ')}</b></div><div class="tiny" style="margin-top:6px">각 게임 홀수 개수: <b>${odds.join(' · ')}</b></div>`}
@@ -348,7 +327,20 @@ function renderRecords() {
   }).join(''):'<div class="empty">구매 기록이 없습니다. 조합 생성 페이지에서 저장해 보세요.</div>';
 }
 function renderData(){let d=sorted();$('datasetTag').textContent=`${d.length}개 회차`;$('dataDetails').innerHTML=`<b>데이터 범위:</b> ${d.at(-1).round}회 (${d.at(-1).date}) ~ ${d[0].round}회 (${d[0].date})<br><b>사용 중인 데이터:</b> ${esc(state.source)}<br><b>내 구매 기록:</b> ${new Set(state.tickets.map(t=>t.round)).size}개 회차 · ${state.tickets.length}건 구매, ${state.tickets.reduce((a,t)=>a+t.lines.length,0)}게임<br><b>향후 추첨:</b> ${nextDraw().round}회 (${nextDraw().date})`}
-function renderAll(){topStats();renderStats();backtest();renderRecords();renderData();$('genTarget').textContent=`제${nextDraw().round}회 · ${nextDraw().date}`;if(!editingRecord&&!$('manualLines').value.trim())$('manualRound').value=nextDraw().round}
+let lastResearchDraws;
+function renderAll() {
+  topStats();
+  renderStats();
+  renderRecords();
+  renderData();
+  $('genTarget').textContent = `제${nextDraw().round}회 · ${nextDraw().date}`;
+  if (!editingRecord && !$('manualLines').value.trim()) $('manualRound').value = nextDraw().round;
+  if (state.draws !== lastResearchDraws) {
+    lastResearchDraws = state.draws;
+    window.lottoResearchDraws = state.draws;
+    if (typeof CustomEvent === 'function') window.dispatchEvent(new CustomEvent('lotto-draws-changed', { detail: state.draws }));
+  }
+}
 let toastTimer;function notify(s){const e=$('toast');e.textContent=s;e.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove('on'),3300)}
 function downloadBlob(text,name,type){const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1200)}
 function parseCSV(text){const rows=text.replace(/^\uFEFF/,'').trim().split(/\r?\n/).filter(Boolean).map(s=>s.split(',').map(s=>s.replace(/^"|"$/g,'').trim()));if(!rows.length)throw Error('CSV 파일이 비어 있습니다');const hdr=rows[0];const find=(...names)=>names.map(n=>hdr.indexOf(n)).find(i=>i>=0)??-1;const ri=find('drwNo','round'),di=find('drwNoDate','date'),ni=[1,2,3,4,5,6].map(i=>find('n'+i,'drwtNo'+i)),bi=find('bonus','bnusNo');if(ri<0||ni.some(i=>i<0)||bi<0)throw Error('CSV 컬럼이 지원 형식과 다릅니다 (drwNo, n1~n6, bonus 필요)');const prizeKeys=[null,'firstWinamnt','secondWinamnt','thirdWinamnt','fourthWinamnt','fifthWinamnt'];return normalizeDraws(rows.slice(1).map(r=>({round:+r[ri],date:di>=0?r[di]:undefined,numbers:ni.map(i=>+r[i]),bonus:+r[bi],prizes:Object.fromEntries(prizeKeys.map((k,i)=>[i,k&&r[find(k)]?+r[find(k)]:undefined]).filter(([k,v])=>k&&Number.isFinite(v)&&v>=0))}))).filter(d=>d.round>=1)}
@@ -391,7 +383,7 @@ let first1249=state.draws.find(d=>d.round===1249);if(first1249)first1249.prizes=
 
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab));window.scrollTo({top:0,behavior:'smooth'})}));
 document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>document.querySelector(`.tab[data-tab="${b.dataset.jump}"]`).click()));
-$('overviewRange').addEventListener('change',topStats);$('statsRange').addEventListener('change',renderStats);$('recentCount').addEventListener('change',renderHistory);$('rerunTest').addEventListener('click',()=>{backtest();notify('미래 데이터 누출 없는 검증을 다시 실행했어요')});$('makeNumbers').addEventListener('click',()=>{makeGenerated();notify('새로운 5게임을 생성했어요')});$('genMode').addEventListener('change',makeGenerated);$('genUnique').addEventListener('change',makeGenerated);
+$('overviewRange').addEventListener('change',topStats);$('statsRange').addEventListener('change',renderStats);$('recentCount').addEventListener('change',renderHistory);$('makeNumbers').addEventListener('click',()=>{makeGenerated();notify('새로운 5게임을 생성했어요')});$('genMode').addEventListener('change',makeGenerated);$('genUnique').addEventListener('change',makeGenerated);
 $('generatedLines').addEventListener('change',e=>{if(e.target.matches('[data-gidx]')){let lines=genFromInputs();if(lines.some(l=>!isValidLine(l.numbers))){notify('1~45 사이 중복 없는 숫자 6개를 입력해 주세요');return}state.generator=lines;renderGenerated()}});
 $('copyNumbers').addEventListener('click',async()=>{let lines=genFromInputs();if(lines.some(l=>!isValidLine(l.numbers))){notify('번호 입력을 먼저 확인해 주세요');return}let str=lines.map(l=>`${l.label}(${l.type}) ${l.numbers.join(' ')}`).join('\n');try{await navigator.clipboard.writeText(str);notify('5게임을 복사했어요')}catch(e){const t=document.createElement('textarea');t.value=str;document.body.append(t);t.select();document.execCommand('copy');t.remove();notify('번호를 복사했어요')}});
 $('saveGenerated').addEventListener('click',async()=>{
@@ -553,4 +545,5 @@ window.addEventListener('focus',renderSyncStatus);
 setInterval(renderSyncStatus,60000);
 makeGenerated();renderAll();renderStorageNotice();syncGithubData({silent:true});
 </script>
+<script type="module" src="./assets/research-ui.js"></script>
 </body></html>

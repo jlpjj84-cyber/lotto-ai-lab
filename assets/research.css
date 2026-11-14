@@ -1,0 +1,49 @@
+.research-help { color: var(--muted); line-height: 1.65; font-size: 13px; margin: 0 0 14px; }
+.research-period { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: 13px; }
+.research-control { display: flex; align-items: center; flex-wrap: wrap; gap: 9px 13px; }
+.research-control label { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+.research-control input[type="number"] { width: 8.5em; }
+.research-section [hidden] { display: none !important; }
+.research-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 152px), 1fr)); gap: 8px; margin: 15px 0; }
+.research-chip { display: flex; flex-direction: column; align-items: flex-start; text-align: left; gap: 5px; width: 100%; min-width: 0; background: var(--panel2); color: var(--text); border: 1px solid var(--border); padding: 10px 12px; border-radius: 10px; }
+.research-chip:hover, .research-chip[aria-pressed="true"] { border-color: var(--mint); }
+.research-chip:disabled { opacity: .65; cursor: default; }
+.research-chip span { color: var(--muted); font-size: 12px; }
+.research-chip strong { font-size: 14px; overflow-wrap: anywhere; }
+.research-chart { display: grid; gap: 8px; margin: 12px 0; }
+.research-row { display: grid; grid-template-columns: minmax(5.3rem, 10rem) minmax(60px, 1fr) minmax(12.5rem, auto); align-items: center; gap: 8px 12px; }
+.research-row > button { border: 0; background: none; color: var(--text); text-align: left; padding: 3px 0; }
+.research-row > button:hover { color: var(--mint); text-decoration: underline; }
+.research-numbers { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.research-track { position: relative; height: 12px; border-radius: 3px; background: #080f1d; }
+.research-band { position: absolute; top: 0; height: 100%; background: #5379a66e; border-radius: 2px; }
+.research-observed { position: absolute; top: 4px; height: 4px; background: var(--mint); border-radius: 2px; }
+.research-expected { position: absolute; top: -2px; height: 16px; border-left: 2px solid var(--gold); }
+.research-legend { display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 10px 0; color: var(--muted); font-size: 12px; }
+.research-legend i { display: inline-block; width: 11px; height: 5px; margin-right: 5px; vertical-align: middle; background: var(--mint); }
+.research-legend i.expected { background: var(--gold); }
+.research-legend i.band { background: #5379a6; }
+.research-detail { margin-top: 12px; border-left: 3px solid var(--mint); padding: 9px 12px; background: #0d1829; border-radius: 4px 9px 9px 4px; }
+.research-detail p { margin: 0 0 6px; font-size: 13px; line-height: 1.55; }
+.research-detail summary, .research-method summary { color: var(--mint); cursor: pointer; font-size: 13px; }
+.research-rounds { max-height: 144px; overflow: auto; overflow-wrap: anywhere; color: var(--muted); margin-top: 8px; font-size: 12px; line-height: 1.8; }
+.research-table { max-width: 100%; }
+.research-table .datatable { font-variant-numeric: tabular-nums; }
+.research-table .datatable th, .research-table .datatable td { white-space: normal; }
+.research-table .datatable td:first-child { min-width: 10rem; }
+.research-table .datatable td:not(:first-child) { min-width: 5.1rem; }
+.research-table .datatable .research-verdict { min-width: 10rem; }
+.research-table details summary { cursor: pointer; }
+.research-table details p { color: var(--muted); font-size: 11px; margin: 6px 0 0; }
+.research-method { margin: 14px 0 0; }
+.research-method p { margin: 8px 0 0; }
+.research-status { min-height: 1.5em; margin: 12px 0 0; }
+.research-status progress { display: block; width: min(100%, 300px); height: 12px; margin: 8px 0; accent-color: var(--mint); }
+.research-gap { color: var(--gold); }
+.research-above { color: var(--mint); }
+.research-below { color: var(--red); }
+@media (max-width: 680px) {
+  .research-row { grid-template-columns: minmax(5.5rem, 8rem) minmax(0, 1fr); gap: 4px 9px; }
+  .research-row .research-numbers { grid-column: 1 / -1; padding: 0 0 5px; }
+  .research-control { gap: 8px 10px; }
+}
