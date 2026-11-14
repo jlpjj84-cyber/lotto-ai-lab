@@ -23,7 +23,9 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'assets/**'
       - 'scripts/update_draws.py'
+      - 'scripts/build_pages.py'
       - 'tests/**'
       - 'data/draws.json'
       - '.github/workflows/update.yml'
@@ -37,6 +39,7 @@ concurrency:
 
 jobs:
   update:
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
@@ -46,10 +49,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
       - name: Regression tests
         run: python -m unittest discover -s tests -v
-      - name: Dashboard record and backup regression tests
-        run: node --test tests/test_dashboard.cjs
+      - name: Dashboard and research regression tests
+        run: node --test tests/test_dashboard.cjs tests/test_research.cjs
       - name: Update lottery results (no purchase records)
         env:
           MANUAL_ROUND: ${{ inputs.manual_round }}
@@ -77,7 +83,7 @@ jobs:
   deploy:
     name: Publish latest dashboard + draw data
     needs: update
-    if: ${{ needs.update.result == 'success' }}
+    if: ${{ github.ref == 'refs/heads/main' && needs.update.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -92,11 +98,7 @@ jobs:
           ref: main
       - uses: actions/configure-pages@v5
       - name: Prepare public artifacts only
-        run: |
-          mkdir -p _site/data
-          cp index.html _site/index.html
-          cp data/draws.json _site/data/draws.json
-          touch _site/.nojekyll
+        run: python3 scripts/build_pages.py _site
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
