@@ -4,7 +4,8 @@ on:
   schedule:
     # Saturday 18:00 KST (09:00 UTC), before the 20:00 KST evidence cutoff.
     - cron: '0 9 * * 6'
-    # Saturday 22:20 KST and Sunday 09:20 KST
+    # Saturday 21:00 KST primary update, 22:20 KST retry, Sunday 09:20 KST recheck
+    - cron: '0 12 * * 6'
     - cron: '20 13 * * 6'
     - cron: '20 0 * * 0'
   workflow_dispatch:
