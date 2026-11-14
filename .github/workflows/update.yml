@@ -2,11 +2,18 @@ name: Lotto results — update verified draw data
 
 on:
   schedule:
+    # Saturday 18:00 KST (09:00 UTC), before the 20:00 KST evidence cutoff.
+    - cron: '0 9 * * 6'
     # Saturday 22:20 KST and Sunday 09:20 KST
     - cron: '20 13 * * 6'
     - cron: '20 0 * * 0'
   workflow_dispatch:
     inputs:
+      mode:
+        description: 'Update draws and evaluate, or freeze this Saturday’s prediction'
+        type: choice
+        options: [update-evaluate, predict]
+        default: update-evaluate
       manual_round:
         description: 'Optional manual official draw round'
         required: false
@@ -25,6 +32,7 @@ on:
       - 'index.html'
       - 'assets/**'
       - 'scripts/update_draws.py'
+      - 'scripts/live*'
       - 'scripts/build_pages.py'
       - 'tests/**'
       - 'data/draws.json'
@@ -32,6 +40,8 @@ on:
 
 permissions:
   contents: write
+  statuses: write
+  actions: read
 
 concurrency:
   group: lotto-public-data-updater
@@ -41,10 +51,14 @@ jobs:
   update:
     if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
+    env:
+      LOTTO_MODE: ${{ (github.event.schedule == '0 9 * * 6' || inputs.mode == 'predict') && 'predict' || 'update-evaluate' }}
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
+          fetch-depth: 0
           persist-credentials: true
       - uses: actions/setup-python@v5
         with:
@@ -55,8 +69,13 @@ jobs:
       - name: Regression tests
         run: python -m unittest discover -s tests -v
       - name: Dashboard and research regression tests
-        run: node --test tests/test_dashboard.cjs tests/test_research.cjs
+        run: node --test tests/*.cjs
+      - name: Configure archive commit identity
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Update lottery results (no purchase records)
+        if: env.LOTTO_MODE == 'update-evaluate'
         env:
           MANUAL_ROUND: ${{ inputs.manual_round }}
           MANUAL_DATE: ${{ inputs.manual_date }}
@@ -68,17 +87,29 @@ jobs:
             args+=(--manual-round "$MANUAL_ROUND" --manual-date "$MANUAL_DATE" --manual-numbers "$MANUAL_NUMBERS" --manual-bonus "$MANUAL_BONUS")
           fi
           python scripts/update_draws.py "${args[@]}"
-      - name: Commit new verified draws
+      - name: Generate or evaluate timestamped predictions
+        id: live
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- data/draws.json; then
-            echo 'No new valid data.'
-            exit 0
+          if [[ "$LOTTO_MODE" == 'predict' ]]; then
+            node scripts/live-predictions.mjs predict
+          else
+            node scripts/live-predictions.mjs evaluate
           fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      - name: Commit archive, receipts, evaluation results and health
+        run: |
           git add data/draws.json
-          git commit -m 'data: update lotto draw archive'
+          for path in data/prediction-receipts data/evaluations data/evaluation-revisions data/live-health.json; do
+            if [[ -e "$path" ]]; then git add -- "$path"; fi
+          done
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'data: archive lotto results and live evaluation'
           git push
+      - name: Report live processing issue
+        if: steps.live.outcome == 'failure'
+        run: echo '::warning::Live prediction verification did not complete. See the live processing log and health record.'
 
   deploy:
     name: Publish latest dashboard + draw data
