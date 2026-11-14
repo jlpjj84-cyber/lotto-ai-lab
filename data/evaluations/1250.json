@@ -1,0 +1,534 @@
+{
+  "schema": 1,
+  "round": 1250,
+  "evaluatedAtUTC": "2026-11-14T12:58:00.213Z",
+  "predictionSha256": "14ab61b7849f4f07d300c411df0bf530df2ceb9e29f16306fb3768d7d4504a7d",
+  "commit": "b8a39deb969ee14cd4b3569a4c30077fa106798b",
+  "official": {
+    "round": 1250,
+    "date": "2026-11-14",
+    "numbers": [
+      1,
+      5,
+      18,
+      23,
+      27,
+      28
+    ],
+    "bonus": 8,
+    "prizes": {
+      "1": 3103164459,
+      "2": 46547467,
+      "3": 1491906,
+      "4": 50000,
+      "5": 5000
+    }
+  },
+  "strategies": [
+    {
+      "id": "all-hot",
+      "hits": [
+        2,
+        2,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ranks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "games": [
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 2,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        }
+      ],
+      "totalHits": 4,
+      "prize": 0,
+      "unpriced": 0,
+      "spent": 5000
+    },
+    {
+      "id": "hot-30",
+      "hits": [
+        1,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ranks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "games": [
+        {
+          "matches": 1,
+          "bonus": true,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        }
+      ],
+      "totalHits": 4,
+      "prize": 0,
+      "unpriced": 0,
+      "spent": 5000
+    },
+    {
+      "id": "hot-50",
+      "hits": [
+        1,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ranks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "games": [
+        {
+          "matches": 2,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        }
+      ],
+      "totalHits": 5,
+      "prize": 0,
+      "unpriced": 0,
+      "spent": 5000
+    },
+    {
+      "id": "cold-50",
+      "hits": [
+        2,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ranks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "games": [
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        }
+      ],
+      "totalHits": 3,
+      "prize": 0,
+      "unpriced": 0,
+      "spent": 5000
+    },
+    {
+      "id": "overdue",
+      "hits": [
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ranks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "games": [
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        }
+      ],
+      "totalHits": 2,
+      "prize": 0,
+      "unpriced": 0,
+      "spent": 5000
+    },
+    {
+      "id": "pairs",
+      "hits": [
+        2,
+        2,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ranks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "games": [
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 2,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        }
+      ],
+      "totalHits": 4,
+      "prize": 0,
+      "unpriced": 0,
+      "spent": 5000
+    },
+    {
+      "id": "pattern",
+      "hits": [
+        2,
+        1,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ranks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "games": [
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 2,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 2,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        }
+      ],
+      "totalHits": 5,
+      "prize": 0,
+      "unpriced": 0,
+      "spent": 5000
+    },
+    {
+      "id": "spread",
+      "hits": [
+        2,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ranks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "games": [
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": true,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        }
+      ],
+      "totalHits": 3,
+      "prize": 0,
+      "unpriced": 0,
+      "spent": 5000
+    },
+    {
+      "id": "random",
+      "hits": [
+        1,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "ranks": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "games": [
+        {
+          "matches": 0,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        },
+        {
+          "matches": 1,
+          "bonus": false,
+          "rank": null,
+          "prize": 0
+        }
+      ],
+      "totalHits": 4,
+      "prize": 0,
+      "unpriced": 0,
+      "spent": 5000
+    }
+  ],
+  "sha256": "cc61fd623edc3cdea8dc0d5714223abaca1c6949de2d0dc283da64cd04480679"
+}
