@@ -272,8 +272,14 @@ function startBacktest() {
         (candidates.length ? ` · 추가 미래 평가 후보 ${candidates.length}개` : ' · 기준선 대비 통계적 우위 확인 없음')
         : '고정 평가 구간의 결과가 쌓이면 기준선과 비교합니다.';
       $('strategyResults').innerHTML = strategyTable(result);
+      window.lottoBacktestResult = result;
+      window.dispatchEvent(new CustomEvent('lotto-backtest-result', { detail: result }));
     },
-    fail: message => { $('strategyRun').disabled = false; $('strategyStatus').textContent = message; },
+    fail: message => {
+      $('strategyRun').disabled = false;
+      $('strategyStatus').textContent = message;
+      window.dispatchEvent(new CustomEvent('lotto-backtest-result', { detail: null }));
+    },
   });
 }
 
@@ -294,6 +300,8 @@ function updateDraws(draws) {
   renderDraw();
   renderPeriod();
   strategyJobs.cancel();
+  window.lottoBacktestResult = null;
+  window.dispatchEvent(new CustomEvent('lotto-backtest-result', { detail: null }));
   $('strategyRun').disabled = false;
   $('strategyResults').innerHTML = '';
   $('strategyBaseline').textContent = '';
@@ -329,4 +337,5 @@ document.querySelector('[data-tab="backtest"]').addEventListener('click', () => 
   if (!$('strategyResults').innerHTML && !$('strategyRun').disabled) startBacktest();
 });
 window.addEventListener('lotto-draws-changed', event => updateDraws(event.detail));
+window.addEventListener('lotto-backtest-request', () => { if (!$('strategyRun').disabled) startBacktest(); });
 if (window.lottoResearchDraws) updateDraws(window.lottoResearchDraws);

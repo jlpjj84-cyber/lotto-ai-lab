@@ -42,6 +42,21 @@
 .research-gap { color: var(--gold); }
 .research-above { color: var(--mint); }
 .research-below { color: var(--red); }
+.live-target { color: var(--mint); font-weight: 800; font-size: 18px; }
+.live-graph { width: min(100%, 620px); display: block; margin: 10px 0 18px; }
+.research-legend i.baseline { background: var(--blue); }
+.live-ticket-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 255px), 1fr)); gap: 8px; }
+.live-ticket-grid details { min-width: 0; background: var(--panel2); border: 1px solid var(--border); padding: 10px; border-radius: 9px; }
+.live-ticket-grid summary { cursor: pointer; font-size: 13px; font-weight: 750; }
+.live-ticket-grid small { color: var(--muted); font-weight: 500; }
+.live-game { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 10px; color: var(--muted); font-size: 12px; padding-top: 7px; }
+.live-game > span:first-child { color: var(--text); font-variant-numeric: tabular-nums; }
+.manual-history-item { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.manual-history-item summary { cursor: pointer; color: var(--text); font-size: 13px; }
+.manual-history-item .research-help, #manualEvidence { margin-top: 10px; }
+#manualGenMore { margin-top: 12px; }
+.legacy-generator > summary { cursor: pointer; font-weight: 750; }
+.legacy-generator > .cols { margin-top: 14px; }
 @media (max-width: 680px) {
   .research-row { grid-template-columns: minmax(5.5rem, 8rem) minmax(0, 1fr); gap: 4px 9px; }
   .research-row .research-numbers { grid-column: 1 / -1; padding: 0 0 5px; }
