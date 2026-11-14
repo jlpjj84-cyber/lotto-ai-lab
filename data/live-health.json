@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "evaluate": {
-    "status": "checked",
+    "status": "idle",
     "round": 1250,
-    "reason": "1회 평가",
-    "checkedAtUTC": "2026-11-14T12:58:00.215Z",
-    "workflow": "https://github.com/jlpjj84-cyber/lotto-ai-lab/actions/runs/43597348661"
+    "reason": "평가할 새 확정 예측이 없습니다.",
+    "checkedAtUTC": "2026-11-14T18:44:57.076Z",
+    "workflow": "https://github.com/jlpjj84-cyber/lotto-ai-lab/actions/runs/43628307554"
   },
   "predict": {
     "status": "confirmed",
