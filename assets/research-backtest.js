@@ -57,7 +57,7 @@ function addScore(target, tickets, row, evaluate) {
   }
 }
 
-function bootstrap(points, random) {
+export function bootstrapRoundMean(points, random) {
   if (points.length < 20) return null;
   const n = points.length;
   const block = Math.min(10, n);
@@ -87,7 +87,7 @@ function summarize(scores, index, evaluation) {
   return {
     ...stats, mean: stats.games ? stats.totalHits / stats.games : null,
     roi: stats.games && !stats.unpriced ? (stats.prize - stats.spent) / stats.spent : null,
-    interval: evaluation ? bootstrap(points, randomFor(index + 1, 41)) : null,
+    interval: evaluation ? bootstrapRoundMean(points, randomFor(index + 1, 41)) : null,
     pValue: evaluation && stats.draws >= 20 ? Math.min(1, Math.exp(-logMeanWealth)) : null,
   };
 }

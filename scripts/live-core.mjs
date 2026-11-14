@@ -3,27 +3,13 @@ import { createHash } from 'node:crypto';
 import { DEFAULT_SEED } from '../assets/research-math.js';
 import { forecastAt, GAMES_PER_DRAW, STRATEGIES, STRATEGY_VERSION } from '../assets/lotto-strategies.js';
 import { scoreTickets } from '../assets/lotto-scoring.js';
+import { KST, roundOnSaturday, scheduleFor } from '../assets/lotto-calendar.js';
 
-const WEEK = 7 * 24 * 3600 * 1000;
-const KST = 9 * 3600 * 1000;
-const EPOCH = Date.parse('2002-12-07T00:00:00Z');
+export { roundOnSaturday, scheduleFor } from '../assets/lotto-calendar.js';
 export const REPO = 'jlpjj84-cyber/lotto-ai-lab';
 export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const digest = value => sha256(JSON.stringify(value));
 const fixedSettings = Object.freeze({ seed: DEFAULT_SEED, gamesPerStrategy: GAMES_PER_DRAW, sharedFifthGame: true, version: STRATEGY_VERSION });
-
-export function scheduleFor(round) {
-  assert(Number.isInteger(round) && round > 0 && round <= 9999, '유효한 회차가 필요합니다.');
-  const date = new Date(EPOCH + (round - 1) * WEEK).toISOString().slice(0, 10);
-  return { round, date, cutoffUTC: `${date}T11:00:00.000Z`, opensUTC: `${date}T09:00:00.000Z` };
-}
-
-export function roundOnSaturday(now) {
-  const local = new Date(now.getTime() + KST);
-  const midnight = Date.parse(local.toISOString().slice(0, 10));
-  if (local.getUTCDay() !== 6 || midnight < EPOCH) return null;
-  return scheduleFor(1 + (midnight - EPOCH) / WEEK);
-}
 
 export function predictionPath(round) { return `data/predictions/${round}.json`; }
 export function receiptPath(round) { return `data/prediction-receipts/${round}.json`; }

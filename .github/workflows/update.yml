@@ -33,6 +33,7 @@ on:
       - 'assets/**'
       - 'scripts/update_draws.py'
       - 'scripts/live*'
+      - 'scripts/build-live-index.mjs'
       - 'scripts/build_pages.py'
       - 'tests/**'
       - 'data/draws.json'
@@ -74,24 +75,15 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-      - name: Update lottery results (no purchase records)
-        if: env.LOTTO_MODE == 'update-evaluate'
-        env:
-          MANUAL_ROUND: ${{ inputs.manual_round }}
-          MANUAL_DATE: ${{ inputs.manual_date }}
-          MANUAL_NUMBERS: ${{ inputs.manual_numbers }}
-          MANUAL_BONUS: ${{ inputs.manual_bonus }}
-        run: |
-          args=()
-          if [[ -n "$MANUAL_ROUND" ]]; then
-            args+=(--manual-round "$MANUAL_ROUND" --manual-date "$MANUAL_DATE" --manual-numbers "$MANUAL_NUMBERS" --manual-bonus "$MANUAL_BONUS")
-          fi
-          python scripts/update_draws.py "${args[@]}"
-      - name: Generate or evaluate timestamped predictions
+      - name: Freeze predictions or update and evaluate official results
         id: live
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
+          MANUAL_ROUND: ${{ inputs.manual_round }}
+          MANUAL_DATE: ${{ inputs.manual_date }}
+          MANUAL_NUMBERS: ${{ inputs.manual_numbers }}
+          MANUAL_BONUS: ${{ inputs.manual_bonus }}
         run: |
           if [[ "$LOTTO_MODE" == 'predict' ]]; then
             node scripts/live-predictions.mjs predict
@@ -127,6 +119,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
       - uses: actions/configure-pages@v5
       - name: Prepare public artifacts only
         run: python3 scripts/build_pages.py _site

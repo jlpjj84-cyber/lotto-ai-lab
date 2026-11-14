@@ -42,11 +42,11 @@ export function addDraw(history, row) {
   history.lastRound = row.round;
 }
 
-function pairLines(history, random) {
-  const pool = new Set(allNumbers);
+function pairLines(history, random, available, games) {
+  const pool = new Set(available);
   const tie = [0, ...allNumbers.map(() => random())];
   const result = [];
-  for (let game = 0; game < 4; game++) {
+  for (let game = 0; game < games; game++) {
     let first = 0, second = 0, best = -1, bestTie = -1;
     PAIRS.forEach(([a, b], index) => {
       const count = history.pairs[index];
@@ -77,12 +77,12 @@ function pairLines(history, random) {
   return result;
 }
 
-function patternLines(random) {
+function patternLines(random, available, games) {
   const result = [];
   const seen = new Set();
   // Fixed before evaluation: 3 odds, sum 100–149, at least one adjacent pair.
-  for (let attempt = 0; attempt < 2048 && result.length < 4; attempt++) {
-    const line = uniformLine(random);
+  for (let attempt = 0; attempt < 2048 && result.length < games; attempt++) {
+    const line = uniformLine(random, available);
     const key = line.join(',');
     const sum = line.reduce((total, number) => total + number, 0);
     const odds = line.reduce((total, number) => total + (number & 1), 0);
@@ -91,30 +91,28 @@ function patternLines(random) {
       result.push(line);
     }
   }
-  if (result.length !== 4) throw Error('고정 패턴을 만족하는 4게임을 구성하지 못했습니다.');
-  return result;
+  return result.length === games ? result : null;
+}
+
+function strategyLines(history, id, random, available = allNumbers, games = 4) {
+  if (id === 'overdue') {
+    const tailStart = history.lastRound - history.contiguous + 1;
+    const age = number => history.lastRound - Math.max(tailStart - 1, history.lastSeen[number]);
+    const ranked = available.map(number => ({ number, age: age(number), tie: random() }))
+      .sort((a, b) => b.age - a.age || a.tie - b.tie).map(item => item.number);
+    return Array.from({ length: games }, (_, i) => ordered(ranked.slice(i * 6, i * 6 + 6)));
+  }
+  if (id === 'pairs') return pairLines(history, random, available, games);
+  if (id === 'pattern') return patternLines(random, available, games);
+  const counts = id === 'all-hot' ? history.totals : id === 'hot-30' ? history.recent30 : history.recent50;
+  const mode = id.endsWith('hot') || id.startsWith('hot-') ? 'hot' : id === 'cold-50' ? 'cold' : id;
+  return generateManual({ mode, unique: id !== 'random', counts, random, available, games });
 }
 
 function picksFor(history, round, index, seed) {
-    const id = STRATEGIES[index][0];
-    const random = randomFor(round, index + 2, seed);
-    let manual;
-    if (id === 'overdue') {
-      const tailStart = history.lastRound - history.contiguous + 1;
-      const age = number => history.lastRound - Math.max(tailStart - 1, history.lastSeen[number]);
-      const ranked = allNumbers.map(number => ({ number, age: age(number), tie: random() }))
-        .sort((a, b) => b.age - a.age || a.tie - b.tie).map(item => item.number);
-      manual = Array.from({ length: 4 }, (_, i) => ordered(ranked.slice(i * 6, i * 6 + 6)));
-    } else if (id === 'pairs') {
-      manual = pairLines(history, random);
-    } else if (id === 'pattern') {
-      manual = patternLines(random);
-    } else {
-      const counts = id === 'all-hot' ? history.totals : id === 'hot-30' ? history.recent30 : history.recent50;
-      const mode = id.endsWith('hot') || id.startsWith('hot-') ? 'hot' : id === 'cold-50' ? 'cold' : id;
-      manual = generateManual({ mode, unique: id !== 'random', counts, random });
-    }
-    return [...manual, uniformLine(randomFor(round, 1, seed))];
+  const manual = strategyLines(history, STRATEGIES[index][0], randomFor(round, index + 2, seed));
+  if (!manual) throw Error('고정 패턴을 만족하는 4게임을 구성하지 못했습니다.');
+  return [...manual, uniformLine(randomFor(round, 1, seed))];
 }
 
 export function makePicks(history, round) {
@@ -145,27 +143,41 @@ export function generateForStrategy(rows, round, id, {
   }
   const history = priorHistory(rows, round);
   if (!history) return null;
-  const base = picksFor(history, round, index, seed);
-  const result = [];
-  const seen = new Set();
-  const used = new Set();
-  const pool = [...base];
-  if (spread && games > 7) throw Error('게임 간 번호 중복을 금지하면 최대 7게임까지 가능합니다.');
-  for (let batch = 0; batch < 256; batch++) {
-    for (const line of pool.splice(0)) {
-      const key = line.join(',');
-      if ((uniqueLines && seen.has(key)) || (spread && line.some(number => used.has(number)))) continue;
-      result.push(line);
-      seen.add(key);
-      line.forEach(number => used.add(number));
-      if (result.length === games) {
-        const length = id === 'hot-30' ? 30 : ['hot-50', 'cold-50'].includes(id) ? 50 :
-          id === 'overdue' ? history.contiguous : ['all-hot', 'pairs'].includes(id) ? history.rows.length : 0;
-        return { lines: result, latest: history.lastRound, historyFirst: length ? history.rows.at(-length).round : null,
-          historyCount: length, comparable: games === GAMES_PER_DRAW && !uniqueLines && !spread };
+  let lines;
+  if (spread) {
+    if (games > 7) throw Error('게임 간 번호 중복을 금지하면 최대 7게임까지 가능합니다.');
+    // Restrict the actual candidate pool so that even seven disjoint games can be generated.
+    for (let attempt = 0; attempt < 20 && !lines; attempt++) {
+      const random = randomFor(round, index + 20 + attempt, seed);
+      let available = allNumbers;
+      const batch = [];
+      for (let game = 0; game < games; game++) {
+        const line = (game + 1) % GAMES_PER_DRAW === 0 ? uniformLine(random, available)
+          : strategyLines(history, id, random, available, 1)?.[0];
+        if (!line) break;
+        batch.push(line);
+        available = available.filter(number => !line.includes(number));
+      }
+      if (batch.length === games) lines = batch;
+    }
+  } else {
+    const result = [];
+    const seen = new Set();
+    for (let batch = 0; batch < 256 && result.length < games; batch++) {
+      const batchSeed = (seed + Math.imul(batch, 0x9e3779b1)) >>> 0;
+      for (const line of picksFor(history, round, index, batchSeed)) {
+        const key = line.join(',');
+        if (uniqueLines && seen.has(key)) continue;
+        result.push(line);
+        seen.add(key);
+        if (result.length === games) break;
       }
     }
-    pool.push(...picksFor(history, round, index, (seed + Math.imul(batch + 1, 0x9e3779b1)) >>> 0));
+    if (result.length === games) lines = result;
   }
-  throw Error('이 전략으로 선택한 분산 조건을 충족할 수 없습니다. 게임 수나 옵션을 조정해 주세요.');
+  if (!lines) throw Error('이 전략으로 선택한 제약을 충족할 수 없습니다. 게임 수나 옵션을 조정해 주세요.');
+  const length = id === 'hot-30' ? 30 : ['hot-50', 'cold-50'].includes(id) ? 50 :
+    id === 'overdue' ? history.contiguous : ['all-hot', 'pairs'].includes(id) ? history.rows.length : 0;
+  return { lines, latest: history.lastRound, historyFirst: length ? history.rows.at(-length).round : null,
+    historyCount: length, comparable: games === GAMES_PER_DRAW && !uniqueLines && !spread };
 }

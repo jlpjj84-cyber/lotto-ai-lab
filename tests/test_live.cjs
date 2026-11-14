@@ -1,6 +1,7 @@
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
-const { mkdtempSync, readFileSync, rmSync } = require('node:fs');
+const { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } = require('node:fs');
+const { execFileSync } = require('node:child_process');
 const { tmpdir } = require('node:os');
 const { join } = require('node:path');
 
@@ -106,4 +107,98 @@ test('scoring distinguishes all prize ranks, bonus match, and unknown prize', as
   assert.deepEqual(result.ranks, [0, 1, 1, 1, 1, 1]);
   assert.equal(result.unpriced, 1);
   assert.equal(result.prize, 2235);
+});
+
+test('manual strategies reproduce default forecasts and separate seed, spread and game-count variants', async () => {
+  const { rows } = await fixture();
+  const s = await strategies;
+  const { createManualRecord, manualOutcome, readManualRecords, MANUAL_KEY } = await import('../assets/manual-generation.js');
+  const reference = s.forecastAt(rows, 1250);
+  const base = { games: 5, uniqueLines: false, spread: false, seed: 645, id: 'example-1', now: generated };
+  for (let i = 0; i < s.STRATEGIES.length; i++) {
+    const strategy = s.STRATEGIES[i][0];
+    const record = createManualRecord(rows, { ...base, strategy });
+    assert.deepEqual(record.lines, reference[i]);
+    assert.equal(record.comparable, true);
+    assert.equal(record.source, 'manual');
+    assert.equal(record.dataRound, 1249);
+    assert.equal(record.version, s.STRATEGY_VERSION);
+  }
+  const thirty = createManualRecord(rows, { ...base, strategy: 'hot-30' });
+  assert.equal(thirty.historyCount, 30);
+  assert.equal(thirty.historyFirst, 1220);
+  const spread = createManualRecord(rows, { ...base, strategy: 'hot-50', games: 7, spread: true, uniqueLines: true });
+  assert.equal(new Set(spread.lines.flat()).size, 42);
+  assert.equal(spread.comparable, false);
+  const twelve = createManualRecord(rows, { ...base, strategy: 'pairs', games: 12, uniqueLines: true, seed: 5 });
+  assert.equal(new Set(twelve.lines.map(line => line.join(','))).size, 12);
+  assert.equal(twelve.comparable, false);
+  assert.throws(() => createManualRecord(rows, { ...base, strategy: 'random', games: 8, spread: true }), /최대 7게임/);
+  assert.throws(() => createManualRecord(rows, { ...base, strategy: 'hot-30', now: new Date('2026-11-14T11:00:00Z') }), /시간이 지났습니다/);
+  assert.throws(() => createManualRecord([...rows, official1250], { ...base, strategy: 'hot-30' }), /확정 시각/);
+  assert.deepEqual(readManualRecords(JSON.stringify({ schema: 1, records: [spread] })), [spread]);
+  assert.throws(() => readManualRecords(JSON.stringify({ schema: 1, records: [spread, spread] })), /읽을 수 없습니다/);
+  assert.equal(manualOutcome(spread, null), null);
+  assert.equal(manualOutcome(spread, official1250).games.length, 7);
+  assert.notEqual(MANUAL_KEY, 'lotto_lab_v3_private_records');
+});
+
+test('live comparison pairs whole rounds, keeps unknown money separate, and declines tiny intervals', async () => {
+  const { c, record, receipt } = await fixture();
+  const { summarizeLive } = await import('../assets/live-summary.js');
+  const a = c.evaluatePrediction(record, receipt, official1250, official1250, resultTime);
+  const b = structuredClone(a);
+  b.round = 1251;
+  b.strategies[0].unpriced = 1;
+  const data = summarizeLive([b, a]);
+  assert.deepEqual(data.rounds, [1250, 1251]);
+  assert.ok(data.strategies.every(row => row.games === 10 && row.draws === 2 && row.interval === null));
+  assert.equal(data.strategies[0].roi, null);
+  assert.equal(data.strategies.at(-1).pairedDelta, 0);
+  assert.ok(Math.abs(data.strategies[0].pairedDelta - (data.strategies[0].mean - data.strategies.at(-1).mean)) < 1e-12);
+  assert.throws(() => summarizeLive([a, a]), /회차 또는/);
+  b.strategies[0].games.pop();
+  assert.throws(() => summarizeLive([a, b]), /회차 또는/);
+});
+
+test('Pages uses commit-bound records and removes a later-edited prediction from the aggregate', async () => {
+  const { c, archive, record, rows, status } = await fixture();
+  const { buildLivePages } = await import('../scripts/build-live-index.mjs');
+  const { writeNew } = await import('../scripts/live-predictions.mjs');
+  const temp = mkdtempSync(join(__dirname, '.lotto-pages-test-'));
+  const git = (...args) => execFileSync('git', args, { cwd: temp, encoding: 'utf8',
+    env: { ...process.env, GIT_CONFIG_NOSYSTEM: '1', GIT_CONFIG_GLOBAL: join(temp, 'no-global-git-config') } }).trim();
+  try {
+    mkdirSync(join(temp, 'template'));
+    git('init', '-q', '--template=template');
+    git('config', 'user.email', 'lotto-fixture@example.invalid');
+    git('config', 'user.name', 'Lotto test fixture');
+    git('config', 'core.autocrlf', 'false');
+    mkdirSync(join(temp, 'data'));
+    const drawFile = join(temp, 'data/draws.json');
+    writeFileSync(drawFile, archive);
+    git('add', 'data/draws.json');
+    git('commit', '-qm', 'Draw history');
+    const prediction = join(temp, c.predictionPath(1250));
+    writeNew(prediction, record);
+    git('add', c.predictionPath(1250));
+    git('commit', '-qm', 'Freeze fixture');
+    const receipt = c.verifyStatus(record, git('rev-parse', 'HEAD'), status);
+    writeNew(join(temp, c.receiptPath(1250)), receipt);
+    writeFileSync(drawFile, JSON.stringify({ draws: [...rows, official1250] }));
+    writeNew(join(temp, c.evaluationPath(1250)), c.evaluatePrediction(record, receipt, official1250, official1250, resultTime));
+    const output = join(temp, 'public');
+    buildLivePages(output, temp);
+    const index = () => JSON.parse(readFileSync(join(output, 'index.json')));
+    assert.deepEqual(index().summary.rounds, [1250]);
+    assert.equal(index().rounds[0].state, 'evaluated');
+    assert.equal(JSON.parse(readFileSync(join(output, '1250.json'))).prediction.sha256, record.sha256);
+    writeFileSync(prediction, JSON.stringify({ ...record, note: 'edited after confirmation' }));
+    git('add', c.predictionPath(1250));
+    git('commit', '-qm', 'Attempt to alter a frozen record');
+    buildLivePages(output, temp);
+    assert.deepEqual(index().summary.rounds, []);
+    assert.equal(index().rounds[0].state, 'invalid');
+    assert.equal(JSON.parse(readFileSync(join(output, '1250.json'))).prediction, null);
+  } finally { rmSync(temp, { recursive: true, force: true }); }
 });
