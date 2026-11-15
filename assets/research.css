@@ -55,6 +55,12 @@
 .manual-history-item summary { cursor: pointer; color: var(--text); font-size: 13px; }
 .manual-history-item .research-help, #manualEvidence { margin-top: 10px; }
 #manualGenMore { margin-top: 12px; }
+.study-historical { position: absolute; top: 0; height: 12px; border-left: 2px dashed var(--blue); }
+.study-digest { overflow-wrap: anywhere; }
+#mcScope { margin-top: 12px; }
+.recommendation-detail { margin: 7px 0 14px; }
+.live-ticket-grid .recommendation-detail { padding: 7px; }
+.live-ticket-grid > details > .research-help { margin-top: 9px; overflow-wrap: anywhere; }
 .legacy-generator > summary { cursor: pointer; font-weight: 750; }
 .legacy-generator > .cols { margin-top: 14px; }
 @media (max-width: 680px) {

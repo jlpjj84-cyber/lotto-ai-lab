@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="color-scheme" content="dark" />
 <meta name="theme-color" content="#0a1020" />
-<title>LOTTO LAB 4.1 · 웹 관제실</title>
+<title>LOTTO LAB 5.0 · 웹 관제실</title>
 <style>
 :root{--bg:#080f1d;--panel:#121d30;--panel2:#17243a;--border:#273752;--muted:#95a8c3;--text:#f0f6ff;--mint:#4ce3aa;--mint2:#163f37;--gold:#f3c76e;--red:#ff8b98;--blue:#7fb6ff;--shadow:0 18px 48px #0004;font-family:system-ui,-apple-system,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;color-scheme:dark}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 60% -20%,#1a3853 0,transparent 47%),var(--bg);color:var(--text);min-width:320px}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:var(--mint);text-decoration:none}a:hover{text-decoration:underline}.app{max-width:1280px;padding:0 24px 80px;margin:0 auto}.top{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:28px 0 18px}.brand{display:flex;align-items:center;gap:14px}.logo{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;color:#071d18;background:linear-gradient(130deg,#5fe9b7,#0eaa82);font-size:24px;font-weight:900;box-shadow:0 4px 20px #13c48b33}.brand-title{font-size:23px;font-weight:900;letter-spacing:-1px}.brand-sub{color:var(--muted);font-size:12px;letter-spacing:.12em}.status{font-size:12px;color:var(--mint);background:#12382f;border:1px solid #236750;padding:9px 13px;border-radius:30px;white-space:nowrap}.status i{display:inline-block;width:7px;height:7px;border-radius:100%;background:var(--mint);margin-right:6px;box-shadow:0 0 10px var(--mint)}.tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 0 17px;scrollbar-width:none;position:sticky;top:0;z-index:15;background:linear-gradient(180deg,#0b1424 85%,#0b142400)}.tabs::-webkit-scrollbar{display:none}.tab{color:#a2b1c6;border:1px solid transparent;border-radius:10px;background:transparent;padding:11px 15px;white-space:nowrap;font-size:13px;font-weight:750}.tab.on{background:#1b3341;border-color:#2e635d;color:var(--mint)}.view{display:none}.view.active{display:block}.hero{border:1px solid #35566d;background:linear-gradient(120deg,#172e40,#11213a 60%,#1d2940);border-radius:22px;padding:27px 31px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:'◉';position:absolute;font-size:330px;line-height:1;color:#ffffff06;right:-55px;top:-120px;pointer-events:none}.hero > *{position:relative;z-index:1}.eyebrow{color:var(--mint);font-size:12px;letter-spacing:.12em;font-weight:800}.hero h1{font-size:clamp(26px,4vw,39px);letter-spacing:-.04em;margin:7px 0 6px}.sub{color:#b6c5da;font-size:13px;line-height:1.65}.winner{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:25px 0 18px}.ball{display:inline-grid;place-items:center;flex:none;width:43px;height:43px;border-radius:50%;font-weight:850;color:white;text-shadow:0 1px 2px #0004;box-shadow:inset -4px -4px 8px #0003,inset 3px 3px 8px #fff3;font-size:16px}.ball.sm{width:30px;height:30px;font-size:11px}.ball.xs{width:22px;height:22px;font-size:10px}.bonuslabel{font-size:12px;color:var(--muted);margin-left:6px}.hero-bottom{display:flex;justify-content:space-between;gap:12px;align-items:end;flex-wrap:wrap}.hero-bottom .prize{font-size:23px;font-weight:850;letter-spacing:-.03em}.hero-bottom .next{font-size:12px;color:#bfd1e6;text-align:right}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0 24px}.metric{border:1px solid var(--border);border-radius:16px;padding:21px;background:linear-gradient(145deg,#19253b,#111b2e)}.metric .tag{font-size:12px;color:var(--muted)}.metric .value{font-size:26px;font-weight:850;letter-spacing:-1px;margin:7px 0 2px;font-variant-numeric:tabular-nums}.metric .desc{font-size:11px;color:var(--muted)}.metric .value.negative{color:var(--red)}.metric .value.positive{color:var(--mint)}.cols{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:18px}.cols>div{min-width:0}.card{background:linear-gradient(145deg,#141f33,#111b2c);border:1px solid var(--border);border-radius:17px;padding:22px;box-shadow:0 7px 22px #0002;margin-bottom:18px;min-width:0}.card-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}.card h2{font-size:16px;letter-spacing:-.03em;margin:0}.card h3{font-size:14px;margin:15px 0 12px}.tiny{color:var(--muted);font-size:12px;line-height:1.7}.muted{color:var(--muted)}.line{border:0;border-top:1px solid var(--border);margin:17px 0}.inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.chip{border:1px solid #34536d;border-radius:30px;background:#1b3149;color:#cfe3f8;font-size:11px;padding:5px 10px;white-space:nowrap}.chip.accent{border-color:#306e5d;background:#133e35;color:var(--mint)}.chip.warn{border-color:#735a3d;background:#3d2d20;color:#ffce84}.chips{display:flex;gap:6px;flex-wrap:wrap}.select,select,input[type=number],input[type=text],textarea{border:1px solid #3a4d68;border-radius:10px;background:#0d1727;color:var(--text);padding:10px 11px;min-width:0}select{max-width:100%}.btn{border:1px solid #34516d;background:#21354b;color:var(--text);padding:11px 15px;border-radius:10px;font-size:12px;font-weight:800;display:inline-flex;gap:8px;align-items:center;justify-content:center}.btn:hover{filter:brightness(1.16)}.btn.primary{background:linear-gradient(140deg,#37d6a1,#18aa7c);border-color:#27b889;color:#051d17}.btn.gold{background:#493e27;border-color:#806a40;color:#ffda8e}.btn.danger{background:#442938;border-color:#6a4350;color:#ffb9bc}.btn.tinybtn{padding:6px 9px;font-size:11px}.controls{display:flex;flex-wrap:wrap;gap:9px;align-items:center}.freq-wrap{overflow-x:auto;max-width:100%;padding:16px 0 0}.freq-chart{display:flex;gap:5px;height:183px;align-items:end;min-width:715px;border-bottom:1px solid #41516a;padding:0 4px}.freq-col{height:100%;flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:5px;cursor:help}.freq-count{color:#8fa5c0;font-size:10px}.freq-bar{width:100%;max-width:18px;min-height:2px;background:linear-gradient(#7dafe7,#3b698c);border-radius:4px 4px 0 0}.freq-col.hot .freq-bar{background:linear-gradient(#68e6bf,#259d79)}.freq-col.low .freq-bar{background:linear-gradient(#ffce83,#aa8344)}.freq-label{font-size:9px;color:#93a8bf;padding:6px 0}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}.numlist{display:flex;flex-wrap:wrap;gap:7px}.num-count{display:flex;align-items:center;gap:5px;background:#1b2b42;padding:5px 8px 5px 5px;border-radius:20px;color:#afc3db;font-size:11px}.histogram{display:flex;gap:9px;align-items:end;height:150px;border-bottom:1px solid #3b4d66;padding:8px 1px 0}.histbar{display:flex;flex:1;height:100%;align-items:center;justify-content:end;flex-direction:column;gap:7px}.histbar .bar{background:linear-gradient(#74c6ff,#306e9f);width:100%;max-width:48px;border-radius:5px 5px 0 0;min-height:1px}.histbar .label{font-size:11px;color:#9eb2ca}.histbar .count{font-size:11px;color:#c9d5e5}.section-head{margin:12px 0 15px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.section-head h1{font-size:23px;margin:0}.tablewrap{overflow-x:auto}.datatable{width:100%;border-collapse:collapse;font-size:12px}.datatable th{text-align:left;color:#9eafc8;font-weight:600;border-bottom:1px solid #36506a;padding:11px 8px;white-space:nowrap}.datatable td{border-bottom:1px solid #28374d;padding:11px 8px;white-space:nowrap;color:#d7e5f7}.datatable tr:last-child td{border-bottom:0}.mini-balls{display:flex;gap:3px;align-items:center}.rank{font-size:11px;font-weight:800;border-radius:20px;padding:4px 8px;background:#263f52;color:#a7d9fe}.rank.zero{background:#44313c;color:#ffc1bd}.rank.good{background:#1c493b;color:#83edbe}.notice{border-left:3px solid #e8b561;background:#463b281a;padding:10px 12px;font-size:12px;color:#bbcadb;line-height:1.6;border-radius:3px 10px 10px 3px;margin:13px 0}.form-label{display:block;color:#9eb2ca;font-size:12px;margin:10px 0 6px}.optionrow{display:flex;justify-content:space-between;gap:15px;align-items:center;margin:13px 0;flex-wrap:wrap}.optionrow label{color:#d3e3f5;font-size:12px}.optionrow input[type=checkbox]{accent-color:#2bce9c}.generator-line{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #29394e;flex-wrap:wrap}.generator-line:last-child{border:0}.letter{background:#253c55;border:1px solid #385976;border-radius:9px;width:32px;height:32px;display:grid;place-items:center;font-weight:800}.generator-line .ball{width:36px;height:36px;font-size:14px}.generator-line .numbers{display:flex;gap:6px;flex:1;flex-wrap:wrap}.generator-line .how{color:#9cafc5;font-size:11px}.generator-line input{width:280px;max-width:100%;font-size:12px}.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:#16273b;border:1px solid #28425a;border-radius:10px;padding:15px}.stat .v{font-size:20px;font-weight:850;margin:7px 0}.stat .k{color:#91a7c0;font-size:11px}.record-block{border:1px solid #314864;border-radius:13px;background:#14263b;padding:17px;margin:14px 0}.record-meta{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.record-lines{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:13px 0}.record-line{border:1px solid #2a405a;border-radius:9px;padding:9px 10px;background:#101e30;display:flex;align-items:center;gap:7px;flex-wrap:wrap}.record-line strong{color:#cce6f7;width:16px;font-size:13px}.record-line .nums{font-variant-numeric:tabular-nums;letter-spacing:.1em;font-weight:700;font-size:12px}.record-line .rank{margin-left:auto}.smallprint{font-size:11px;color:#7892b2;line-height:1.7}.dangertext{color:var(--red)}.success{color:var(--mint)}.rangepill{padding:8px 11px;background:#152b3d;border:1px solid #30604f;border-radius:20px;color:#bce7da;font-size:12px}.foot{color:#7890ab;font-size:11px;line-height:1.8;padding:15px 0 0;border-top:1px solid #273752;margin-top:22px}.empty{padding:32px 15px;text-align:center;color:#93a7be;font-size:13px}.barh{display:flex;gap:10px;align-items:center;margin:10px 0}.barh .track{flex:1;height:10px;background:#263a53;border-radius:20px;overflow:hidden}.barh .track span{display:block;background:linear-gradient(90deg,#2594bf,#4bdfb0);height:100%;border-radius:20px}.barh .left{width:72px;font-size:11px;color:#b9c9de}.barh .right{width:37px;text-align:right;font-size:12px}.toast{position:fixed;bottom:23px;left:50%;transform:translate(-50%,12px);color:#0b2319;background:#78e6b9;padding:12px 19px;border-radius:12px;font-weight:750;font-size:13px;box-shadow:0 10px 40px #0009;opacity:0;transition:.2s;z-index:99;pointer-events:none;max-width:calc(100vw - 25px);text-align:center}.toast.on{opacity:1;transform:translate(-50%,0)}
@@ -27,10 +27,10 @@
 </head>
 <body>
 <div class="app">
-<header class="top"><div class="brand"><div class="logo">✳</div><div><div class="brand-title">LOTTO <span style="color:var(--mint)">LAB</span></div><div class="brand-sub">NUMBER RESEARCH CONSOLE · 4.1</div></div></div><div id="dataStatus" class="status"><i></i>데이터 로드 중</div></header>
+<header class="top"><div class="brand"><div class="logo">✳</div><div><div class="brand-title">LOTTO <span style="color:var(--mint)">LAB</span></div><div class="brand-sub">NUMBER RESEARCH CONSOLE · 5.0</div></div></div><div id="dataStatus" class="status"><i></i>데이터 로드 중</div></header>
 <div id="storageNotice" class="notice dangertext" role="alert" hidden></div>
 <nav class="tabs" aria-label="대시보드 메뉴">
-<button class="tab on" data-tab="overview">◈ 개요</button><button class="tab" data-tab="statistics">▥ 통계 분석</button><button class="tab" data-tab="patterns">▧ 역대 패턴</button><button class="tab" data-tab="backtest">⌁ 전략 검증</button><button class="tab" data-tab="live">◉ 실전 예측 검증</button><button class="tab" data-tab="generator">✳ 조합 생성</button><button class="tab" data-tab="records">▤ 구매 기록</button><button class="tab" data-tab="data">⚙ 데이터 관리</button>
+<button class="tab on" data-tab="overview">◈ 개요</button><button class="tab" data-tab="statistics">▥ 통계 분석</button><button class="tab" data-tab="patterns">▧ 역대 패턴</button><button class="tab" data-tab="backtest">⌁ 전략 검증</button><button class="tab" data-tab="montecarlo">몬테카를로</button><button class="tab" data-tab="live">◉ 실전 예측 검증</button><button class="tab" data-tab="generator">✳ 조합 생성</button><button class="tab" data-tab="archive">연구 아카이브</button><button class="tab" data-tab="records">▤ 구매 기록</button><button class="tab" data-tab="data">⚙ 데이터 관리</button>
 </nav>
 <section id="overview" class="view active">
 <div id="hero" class="hero"></div>
@@ -92,19 +92,55 @@
   </div>
   <div class="card">
     <div class="card-title"><h2>전략 성과 비교</h2></div>
+    <div class="research-control">
+      <label>학습 시작 <input id="studyTrainStart" type="number" min="1" max="9999" step="1" value="1"></label>
+      <label>개발 종료 <input id="studyDevelopmentEnd" type="number" min="1" max="9998" step="1" value="1000"></label>
+      <label>평가 시작 <input id="studyEvalStart" type="number" min="1" max="9999" step="1" placeholder="개발 종료 다음 회"></label>
+      <label>평가 종료 <input id="studyEvalEnd" type="number" min="1" max="9999" step="1" placeholder="최신 회차"></label>
+      <label>학습창 <select id="studyWindow"><option value="0">확장형</option><option value="50">이동형 50회</option><option value="100">이동형 100회</option><option value="250">이동형 250회</option><option value="500">이동형 500회</option></select></label>
+    </div>
     <p class="research-help" id="strategyStatus" role="status"></p>
     <p class="research-help" id="strategyBaseline"></p>
     <div id="strategyResults"></div>
     <details class="research-method"><summary>비교 조건과 해석</summary>
-      <p class="research-help">개발은 1,000회까지, 평가는 1,001회부터로 고정했습니다. 추첨 직전 연속 50회가 있는 회차를 사용합니다. 같은 회차의 5번째 게임은 전 전략이 공유하며, 나머지 4게임을 전략별로 생성합니다. 무작위 5게임은 각각 균등하게 생성합니다.</p>
+      <p class="research-help">기본 구간은 개발 1~1,000회, 평가 1,001회부터입니다. 추첨 직전 연속 50회가 있는 회차를 사용합니다. 같은 회차의 5번째 게임은 전 전략이 공유하며, 나머지 4게임을 전략별로 생성합니다. 평가 결과를 본 뒤 설정을 바꾼 결과는 탐색용입니다.</p>
       <p class="research-help">빈출·저빈출 가중과 번호 분산은 조합 생성기의 규칙을 사용합니다. 장기 미출현은 마지막 등장 이후 회차 수 순서, 번호쌍은 동시 출현 횟수 순서로 선택합니다. 패턴 필터는 홀짝 3:3, 합계 100~149, 연속번호 1쌍 이상을 고정 적용합니다.</p>
       <p class="research-help">평균 일치의 95% 추정 구간은 회차 단위 블록 부트스트랩입니다. 보정 p는 당회차의 게임 간 번호 중복을 반영한 단측 순차 검정에 Holm 보정을 적용한 값입니다. 이 평가는 과거 재현입니다. 미래 성과는 추첨 전에 조합을 기록하고 별도로 확인해야 합니다.</p>
       <p class="research-help">모의 수익률은 해당 회차 게임 가격과 공시된 세전 1게임당 당첨금을 사용합니다. 5개 적중 등수는 보너스로 구분하며, 당첨금 자료가 빠진 경우 수익률을 표시하지 않습니다.</p>
     </details>
   </div>
+  <div class="card"><div class="card-title"><h2>평가 기간 성과 추이</h2>
+    <label class="research-period">전략 <select id="studyTrendStrategy"></select></label></div>
+    <div id="studyTrend"></div><div id="studyExclusions"></div>
+  </div>
   <div class="card"><div class="card-title"><h2>무작위 추첨의 기준</h2></div>
     <p class="research-help">6/45 한 조합의 기대 일치 수는 0.800개, 1등 확률은 1 / 8,145,060입니다. 당첨 패턴의 출현 빈도와 개별 조합의 당첨 확률은 별개입니다.</p>
   </div>
+</section>
+<section id="montecarlo" class="view research-section">
+  <div class="section-head"><div><h1>몬테카를로 연구실</h1><div class="tiny">공정한 6/45 비복원 추첨에서 전략 성과의 변동을 측정합니다</div></div></div>
+  <div class="card">
+    <div class="card-title"><h2>실험 설정</h2></div>
+    <div class="research-control">
+      <label>전략 <select id="mcStrategy"></select></label>
+      <label>실험 방식 <select id="mcMode"><option value="fixed">과거 조합 고정</option><option value="adaptive">가상 이력 순차 갱신</option></select></label>
+      <label>반복 횟수 <select id="mcReps"><option value="10000">10,000회</option><option value="100000">100,000회</option></select></label>
+      <label>난수 시드 <input id="mcSeed" type="number" min="0" max="4294967295" step="1" value="645"></label>
+      <button type="button" class="btn primary" id="mcRun">실험 실행</button>
+      <button type="button" class="btn" id="mcCancel" hidden>취소</button>
+      <button type="button" class="btn" id="mcSave" disabled>실험 저장</button>
+    </div>
+    <p id="mcScope" class="research-help"></p>
+    <div class="research-status">
+      <p id="mcStatus" class="research-help" role="status"></p>
+      <progress id="mcProgress" max="1" value="0" aria-label="전략 실험 진행률" hidden></progress>
+    </div>
+    <details class="research-method"><summary>실험 방식과 판정</summary>
+      <p class="research-help">두 방식 모두 평가 회차마다 합성 추첨 하나를 뽑아 모든 전략과 균등 무작위 기준에 공유합니다. 고정 방식은 과거에 생성한 조합을 유지하는 조건부 비교입니다. 순차 갱신 방식은 평가 시작 전 실제 이력만 먼저 사용하고, 이후 각 가상 추첨을 학습창에 넣어 다음 조합을 다시 생성합니다.</p>
+      <p class="research-help">경험적 p값은 관측된 무작위 대비 차이 이상인 반복의 비율에 +1 보정을 적용합니다. Holm 보정 범위는 이번 실험의 선택 전략입니다. 선택한 구간·방법·시드를 반복 탐색한 결과는 별도 최종 검증이 필요합니다. 순차 실험은 전략과 기간을 좁히면 더 빠릅니다.</p>
+    </details>
+  </div>
+  <div id="mcOutput"></div>
 </section>
 <section id="live" class="view research-section">
   <div class="section-head"><div><h1>실전 예측 검증</h1><div class="tiny">추첨 전에 GitHub에 확정한 9개 전략 · 회차당 5게임</div></div><button class="btn" id="liveRefresh">기록 확인 ↻</button></div>
@@ -139,6 +175,7 @@
   <p class="research-help" id="manualEvidence"></p>
   <div class="research-control"><button class="btn primary" id="manualGenerate">선택 전략으로 생성</button>
     <button class="btn" id="manualCopy" disabled>번호 복사</button>
+    <button class="btn" id="manualCopyReport" disabled>추천 보고서 복사</button>
     <button class="btn" id="manualSavePurchase" disabled>구매 기록에 추가</button></div>
   <p class="research-help research-status" id="manualGenStatus" role="status"></p>
   <div id="manualGenOutput"></div>
@@ -154,6 +191,28 @@
 <div class="cols"><div><div class="card"><div class="card-title"><h2>전략 설정</h2><span class="chip accent">5게임 · 5,000원</span></div><label class="form-label" for="genMode">수동 4게임 생성 방식</label><select id="genMode" style="width:100%"><option value="spread" selected>중복 최소화 · 24개 숫자 분산</option><option value="random">완전 무작위 · 각 게임 독립</option><option value="hot">최근 50회 빈출 번호 가중</option><option value="cold">최근 50회 저빈도 번호 가중</option></select><div class="optionrow"><label><input type="checkbox" id="genUnique" checked> 수동 A~D 간 번호 중복 금지</label></div><div class="optionrow"><label for="weeklyLimit">이번 회차 예산 상한 (원)</label><input type="number" id="weeklyLimit" min="1000" step="1000" value="5000" style="width:120px"></div><div class="controls" style="margin-top:15px"><button id="makeNumbers" class="btn primary">✳ 새 조합 생성</button><button id="copyNumbers" class="btn">번호 복사</button></div><div class="tiny" style="margin-top:12px">'고빈도 가중'과 '저빈도 가중'도 예측 우위가 검증된 방법은 아닙니다.</div></div><div class="card"><div class="card-title"><h2>조합 진단</h2></div><div id="genDiagnostics"></div><div class="notice">서로 다른 번호를 분산하면 4게임의 구성이 다양해집니다. 그러나 분산 자체가 1등 당첨 확률을 높이지는 않습니다.</div></div></div>
 <div class="card"><div class="card-title"><h2>생성된 5게임</h2><span class="chip">클릭 없이 텍스트 수정 가능</span></div><div id="generatedLines"></div><div class="controls" style="margin-top:20px"><button id="saveGenerated" class="btn primary">▣ 구매 기록에 저장</button><button class="btn" id="resetGenerated">초기 조합으로 복원</button></div><div class="tiny" style="margin-top:12px">저장은 이 기기의 브라우저 저장소에 기록됩니다. 실제 로또 구매는 실행되지 않습니다.</div></div>
 </details>
+</section>
+<section id="archive" class="view research-section">
+  <div class="section-head"><div><h1>연구 아카이브</h1><div class="tiny">추천 당시 근거와 저장한 실험 결과를 다시 확인합니다</div></div></div>
+  <div class="card">
+    <div class="card-title"><h2>저장과 복원</h2></div>
+    <p class="research-help">수동 추천과 실험은 이 브라우저에 저장됩니다. 사전 확정 공개 기록은 GitHub 기록에서 확인할 수 있습니다.</p>
+    <div class="research-control">
+      <button class="btn" id="archiveExportManual">추천 JSON</button>
+      <button class="btn" id="archiveExportStudies">실험 JSON</button>
+      <label class="btn">연구 JSON 복원 <input id="archiveImport" type="file" accept=".json,application/json" hidden></label>
+      <button class="btn" data-jump="live">GitHub 사전 확정 기록</button>
+    </div>
+    <p id="archiveStatus" class="research-help research-status" role="status"></p>
+  </div>
+  <div class="card"><div class="card-title"><h2>수동 추천 기록</h2></div><div id="archiveRecommendations"></div></div>
+  <div class="card"><div class="card-title"><h2>전략 실험 기록</h2></div>
+    <div class="research-control">
+      <label>기준 실험 <select id="archiveStudy"></select></label>
+      <label>비교 실험 <select id="archiveCompare"></select></label>
+    </div>
+    <div id="archiveComparison"></div><div id="archiveStudies"></div>
+  </div>
 </section>
 <section id="records" class="view">
 <div class="section-head"><div><h1>내 로또 구매 기록</h1><div class="tiny">이 브라우저에서 저장한 기록만 표시됩니다</div></div><button class="btn" data-jump="data">기록 백업 ↗</button></div><div class="metrics" id="recordMetrics"></div>
@@ -593,4 +652,6 @@ makeGenerated();renderAll();renderStorageNotice();syncGithubData({silent:true});
 <script type="module" src="./assets/research-ui.js"></script>
 <script type="module" src="./assets/live-ui.js"></script>
 <script type="module" src="./assets/manual-ui.js"></script>
+<script type="module" src="./assets/strategy-lab-ui.js"></script>
+<script type="module" src="./assets/research-archive-ui.js"></script>
 </body></html>

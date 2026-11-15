@@ -1,5 +1,6 @@
 import { STRATEGIES } from './lotto-strategies.js';
 import { MIN_LIVE_ROUNDS } from './live-summary.js';
+import { evidenceHTML, validationText } from './recommendation-report.js';
 import { EPOCH, KST, scheduleFor, WEEK } from './lotto-calendar.js';
 
 const $ = id => document.getElementById(id);
@@ -84,17 +85,19 @@ function roundDetail(row, prefix) {
   if (!prediction || !receipt) return '<p class="research-help">확인된 조합이 없습니다.</p>';
   const draw = evaluation?.official || archived.get(row.round);
   const metadata = `<p class="research-help">생성 ${kst(prediction.generatedAtUTC)} · GitHub 확정 ${kst(receipt.confirmedAtUTC)} · ` +
-    `확정 입력 ${prediction.history.first}~${prediction.latestFinalRound}회 · 시드 ${prediction.settings.seed}</p>` +
+    `확정 입력 ${prediction.history.first}~${prediction.latestFinalRound}회 · 시드 ${prediction.settings.seed} · SHA-256 ${escape(prediction.dataSha256)}</p>` +
     `<p class="research-help">${/^[a-f0-9]{40}$/.test(receipt.commit) ? asLink(`${repoURL}/commit/${receipt.commit}`, '확정 커밋') : ''}` +
     `${validRunLink(receipt.workflow) ? ` · ${asLink(receipt.workflow, 'GitHub 실행 기록')}` : ''}</p>`;
   return metadata + (draw ? `<p class="research-help">당첨 ${draw.numbers.join(' · ')} · 보너스 ${draw.bonus}</p>` : '') +
     '<div class="live-ticket-grid">' + prediction.strategies.map((strategy, index) => {
       const outcome = evaluation?.strategies[index];
       return `<details${index === 0 && prefix === 'current' ? ' open' : ''}><summary>${escape(names.get(strategy.id))} <small>v${escape(strategy.version)}</small></summary>` +
+        `<p class="research-help">${strategy.research ? escape(validationText(strategy.research).join(' / ')) : '생성 당시 확인 가능한 선정 근거 없음'}</p>` +
         strategy.games.map((line, k) => {
           const score = outcome?.games[k];
           const grade = score ? `${score.matches}개${score.bonus ? ' + 보너스' : ''} · ${score.rank ? `${score.rank}등` : '낙첨'}` : '';
-          return `<div class="live-game"><span>${line.join(' · ')}</span><span>${grade}${score?.prize === null ? ' · 금액 미확정' : ''}</span></div>`;
+          return `<div class="live-game"><span>${line.join(' · ')}</span><span>${grade}${score?.prize === null ? ' · 금액 미확정' : ''}</span></div>` +
+            (strategy.research ? evidenceHTML(line, strategy.research, k) : '');
         }).join('') + '</details>';
     }).join('') + '</div>';
 }
@@ -181,6 +184,8 @@ async function refresh() {
     catalog = index;
     details = new Map(currentDetail ? [[target, currentDetail]] : []);
     aggregate = index.summary;
+    window.lottoLiveSummary = aggregate;
+    window.dispatchEvent(new Event('lotto-live-summary'));
     $('liveHistoryRound').innerHTML = index.rounds.slice().reverse().map(row => `<option value="${row.round}">${row.round}회 · ${displayState(row.round, row)}</option>`).join('');
     if (current) $('liveHistoryRound').value = String(target);
     healthLine();
@@ -204,6 +209,7 @@ document.querySelector('[data-tab="live"]').addEventListener('click', () => {
   if (!backtest) window.dispatchEvent(new Event('lotto-backtest-request'));
 });
 window.addEventListener('lotto-backtest-result', event => { backtest = event.detail; if (active) renderComparison(); });
+window.addEventListener('lotto-live-request', () => { if (!loaded && !$('liveRefresh').disabled) refresh(); });
 window.addEventListener('lotto-draws-changed', event => {
   archived = new Map(event.detail.map(row => [row.round, row]));
   if (active && !backtest) window.dispatchEvent(new Event('lotto-backtest-request'));

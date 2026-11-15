@@ -2,6 +2,7 @@ import { DEFAULT_SEED } from './research-math.js';
 import { GROUPS, THEORY, matchingRounds, observePatterns, referenceRange, selectWindow } from './research-patterns.js';
 import { patternJob } from './research-simulation.js';
 import { BASELINE_REPETITIONS, DEVELOPMENT_END, EXPECTED_MATCHES, GAMES_PER_DRAW } from './research-backtest.js';
+import { STRATEGIES } from './lotto-strategies.js';
 
 const $ = id => document.getElementById(id);
 const fmt = number => number.toLocaleString('ko-KR');
@@ -10,7 +11,7 @@ const signed = (number, digits = 2) => `${number > 0 ? '+' : ''}${number.toFixed
 const pv = value => value < .0001 ? value.toExponential(2) : value.toFixed(4);
 const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
-function createJobs() {
+export function createJobs() {
   const cache = new Map();
   let worker = null;
   let active = null;
@@ -234,12 +235,30 @@ const formatRange = values => values.length ? `${values[0]}~${values.at(-1)}회`
 const mean = value => value === null ? '—' : value.toFixed(3);
 const bounds = values => values ? values.map(value => value.toFixed(3)).join('~') : '—';
 
+const scopeInputs = { trainStart: 'studyTrainStart', developmentEnd: 'studyDevelopmentEnd',
+  evalStart: 'studyEvalStart', evalEnd: 'studyEvalEnd', window: 'studyWindow' };
+export function studyForm() {
+  return Object.fromEntries(Object.entries(scopeInputs).flatMap(([key, id]) => {
+    const value = $(id).value;
+    return value === '' ? [] : [[key, Number(value)]];
+  }));
+}
+
+function researchScopeMatches(left, right) {
+  return left?.data?.sha256 === right?.data?.sha256 &&
+    JSON.stringify(left?.settings) === JSON.stringify(right?.settings);
+}
+
 function strategyTable(result) {
   const evaluation = result.evaluation.length;
   if (!evaluation && !result.development.length) return '<p class="research-help">연속 50회 이력과 그 이후 추첨 결과가 필요합니다.</p>';
+  const live = window.lottoLiveSummary;
+  const experiment = window.lottoMonteCarloResult;
+  const comparable = experiment && researchScopeMatches(result, experiment);
   return `<div class="tablewrap research-table" tabindex="0" aria-label="전략별 성과"><table class="datatable"><thead>` +
-    '<tr><th>전략</th><th>평가 평균</th><th>기준선 차이</th><th>평가 회차 / 게임</th>' +
-    '<th>95% 추정 구간</th><th>정확히 3 / 4 / 5 / 6개</th><th>모의 수익률</th><th>보정 p</th><th>개발 평균</th></tr></thead>' +
+    '<tr><th>전략</th><th>평가 평균 / 누적</th><th>이론 / 무작위 대비</th><th>평가 회차 / 게임</th>' +
+    '<th>95% 추정 구간</th><th>0~6개 적중 비율</th><th>모의 수익률</th><th>과거 검정</th><th>개발 평균</th>' +
+    '<th>동일 구간 모의실험</th><th>GitHub 실전 평균 / 회차</th></tr></thead>' +
     `<tbody>${result.strategies.map(row => {
       const e = row.evaluation;
       const d = row.development;
@@ -247,31 +266,69 @@ function strategyTable(result) {
       const roi = e.roi === null ? '—' : pct(e.roi);
       const payout = e.games ? `<details><summary>${roi}</summary><p>비용 ${fmt(e.spent)}원 · ` +
         `확인된 당첨금 ${fmt(e.prize)}원${e.unpriced ? ` · 당첨금 누락 ${e.unpriced}게임` : ''}</p></details>` : '—';
-      return `<tr><td><strong>${row.label}</strong></td><td>${mean(e.mean)}</td>` +
-        `<td class="${delta === null ? '' : delta < 0 ? 'research-below' : 'research-above'}">${delta === null ? '—' : signed(delta, 3)}</td>` +
+      const paired = result.strategies.at(-1).evaluation.mean;
+      const simulation = comparable && experiment.strategies.find(strategy => strategy.id === row.id);
+      const verified = live?.strategies.find(strategy => strategy.id === row.id);
+      const verdict = row.id === 'random' ? '기준 전략' : e.adjusted === null ? '검증 불충분'
+        : e.adjusted <= .05 ? `보정 p ${pv(e.adjusted)} · 과거 구간 편차` : `보정 p ${pv(e.adjusted)} · 우위 미입증`;
+      const hitRate = e.games ? `<details><summary>분포 보기</summary><p>${e.hits.map((count, k) =>
+        `${k}개 ${pct(count / e.games)} (${fmt(count)}건)`).join('<br>')}</p></details>` : '—';
+      return `<tr><td><strong>${row.label}</strong></td><td>${mean(e.mean)} / ${fmt(e.totalHits)}</td>` +
+        `<td>${delta === null ? '—' : `${signed(delta, 3)} / ${signed(e.mean - paired, 3)}`}</td>` +
         `<td>${fmt(e.draws)} / ${fmt(e.games)}</td><td>${bounds(e.interval)}</td>` +
-        `<td>${e.games ? e.hits.slice(3).map(fmt).join(' / ') : '—'}</td><td>${payout}</td>` +
-        `<td>${e.adjusted === null ? '—' : pv(e.adjusted)}</td><td>${mean(d.mean)}</td></tr>`;
+        `<td>${hitRate}</td><td>${payout}</td><td>${verdict}</td><td>${mean(d.mean)}</td>` +
+        `<td>${simulation?.adjusted != null ? `보정 p ${pv(simulation.adjusted)}` : simulation ? '검증 불충분 또는 기준' : '실험 대기'}</td>` +
+        `<td>${verified?.games ? `${mean(verified.mean)} / ${verified.draws}회${verified.draws < 20 ? ' · 표본 부족' : ''}` : '공개 평가 대기'}</td></tr>`;
     }).join('')}</tbody></table></div>`;
+}
+
+function renderTrend(result) {
+  const timeline = result?.timeline ?? [];
+  const slot = Number($('studyTrendStrategy').value);
+  if (!timeline.length) { $('studyTrend').textContent = '기간별 성과를 계산하려면 평가를 실행하세요.'; return; }
+  const series = [slot, STRATEGIES.length - 1].map(index => timeline.map((_, i) => {
+    const segment = timeline.slice(Math.max(0, i - 19), i + 1);
+    return segment.reduce((sum, point) => sum + point.hits[index], 0) / (segment.length * GAMES_PER_DRAW);
+  }));
+  const low = Math.min(EXPECTED_MATCHES, ...series.flat());
+  const high = Math.max(low + .1, EXPECTED_MATCHES, ...series.flat());
+  const y = value => 140 - (value - low) / (high - low) * 124;
+  const path = points => points.map((value, i) => `${(20 + 560 * i / Math.max(1, points.length - 1)).toFixed(1)},${y(value).toFixed(1)}`).join(' ');
+  $('studyTrend').innerHTML = '<div class="research-legend"><span><i></i>선택 전략</span><span><i class="baseline"></i>동일 구간 무작위</span><span><i class="expected"></i>이론 0.800</span></div>' +
+    `<svg class="live-graph" viewBox="0 0 600 160" role="img" aria-label="최근 최대 20회 게임당 평균 적중 추이">` +
+    `<line x1="20" x2="580" y1="${y(EXPECTED_MATCHES)}" y2="${y(EXPECTED_MATCHES)}" stroke="var(--gold)" stroke-dasharray="5 4"/>` +
+    series.map((points, i) => `<polyline fill="none" stroke="var(--${i ? 'blue' : 'mint'})" stroke-width="2" points="${path(points)}"/>`).join('') +
+    `</svg><p class="research-help">${timeline[0].round}~${timeline.at(-1).round}회 · 최근 최대 20개 평가 회차 · 마지막 평균 ${series[0].at(-1).toFixed(3)}개</p>`;
+}
+
+function renderCompletedStudy() {
+  const result = window.lottoBacktestResult;
+  if (result) $('strategyResults').innerHTML = strategyTable(result);
 }
 
 function startBacktest() {
   $('strategyRun').disabled = true;
   $('strategyStatus').textContent = '워크포워드 평가를 계산하는 중…';
-  strategyJobs.start('backtest', signature, rows, {
+  const settings = studyForm();
+  strategyJobs.start('backtest', `${signature}:${JSON.stringify(settings)}`, { rows, settings }, {
     update: value => { $('strategyStatus').textContent = `과거 회차 순차 평가 ${Math.floor(value * 100)}%`; },
     complete: result => {
       $('strategyRun').disabled = false;
       $('strategyStatus').textContent = `개발 ${formatRange(result.development)} (${fmt(result.development.length)}회) · ` +
-        `평가 ${formatRange(result.evaluation)} (${fmt(result.evaluation.length)}회) · 시드 ${result.seed}`;
+        `평가 ${formatRange(result.evaluation)} (${fmt(result.evaluation.length)}회) · 시드 ${result.seed} · ` +
+        (result.settings.window ? `이동 학습창 ${result.settings.window}회` : '확장 학습창');
       const candidates = result.strategies.filter(row => row.evaluation.adjusted !== null && row.evaluation.adjusted <= .05);
       $('strategyBaseline').textContent = result.baseline ?
-        `무작위 기준 게임당 ${EXPECTED_MATCHES.toFixed(3)}개 · ${fmt(result.baseline.repetitions)}번 반복의 95% 범위 ` +
+        `무작위 기준 게임당 ${EXPECTED_MATCHES.toFixed(3)}개 · 합계 ${fmt(result.baseline.expectedTotalHits)}개 (${fmt(result.baseline.games)}게임) · ${fmt(result.baseline.repetitions)}번 반복의 95% 범위 ` +
         `${bounds(result.baseline.interval)} · 정확히 3/4/5/6개 기대 횟수 ` +
         result.baseline.expectedHits.slice(3).map(value => value.toFixed(3)).join(' / ') +
         (candidates.length ? ` · 추가 미래 평가 후보 ${candidates.length}개` : ' · 기준선 대비 통계적 우위 확인 없음')
         : '고정 평가 구간의 결과가 쌓이면 기준선과 비교합니다.';
       $('strategyResults').innerHTML = strategyTable(result);
+      renderTrend(result);
+      $('studyExclusions').innerHTML = result.exclusions.length ?
+        `<details class="research-method"><summary>평가 제외 ${result.exclusions.length}회</summary><p class="research-help">${result.exclusions.map(row =>
+          `${row.round}회 · ${row.reason === 'missing-result' ? '당첨 자료 누락' : '직전 연속 50회 부족'}`).join('<br>')}</p></details>` : '';
       window.lottoBacktestResult = result;
       window.dispatchEvent(new CustomEvent('lotto-backtest-result', { detail: result }));
     },
@@ -305,6 +362,8 @@ function updateDraws(draws) {
   $('strategyRun').disabled = false;
   $('strategyResults').innerHTML = '';
   $('strategyBaseline').textContent = '';
+  $('studyExclusions').textContent = '';
+  renderTrend(null);
   $('strategyStatus').textContent = `개발 구간 ${DEVELOPMENT_END}회까지 · 평가 ${DEVELOPMENT_END + 1}회부터 · 회차당 ${GAMES_PER_DRAW}게임`;
   if ($('backtest').classList.contains('active')) startBacktest();
 }
@@ -333,7 +392,22 @@ $('patternCancel').addEventListener('click', () => clearSimulation('계산을 �
 $('patternSeed').addEventListener('change', () => clearSimulation('시드가 바뀌었습니다. 다시 실행해 주세요.'));
 $('patternRepetitions').addEventListener('change', () => clearSimulation('반복 횟수가 바뀌었습니다. 다시 실행해 주세요.'));
 $('strategyRun').addEventListener('click', startBacktest);
+$('studyTrendStrategy').innerHTML = STRATEGIES.map(([, label], i) => `<option value="${i}">${label}</option>`).join('');
+$('studyTrendStrategy').addEventListener('change', () => renderTrend(window.lottoBacktestResult));
+for (const id of Object.values(scopeInputs)) $(id).addEventListener('change', () => {
+  strategyJobs.cancel();
+  $('strategyRun').disabled = false;
+  $('strategyStatus').textContent = '평가 설정이 바뀌었습니다. 다시 실행해 주세요.';
+  for (const target of ['strategyResults', 'strategyBaseline', 'studyExclusions']) $(target).textContent = '';
+  renderTrend(null);
+  window.lottoBacktestResult = null;
+  window.dispatchEvent(new CustomEvent('lotto-backtest-result', { detail: null }));
+  window.dispatchEvent(new Event('lotto-study-settings'));
+});
+window.addEventListener('lotto-live-summary', renderCompletedStudy);
+window.addEventListener('lotto-monte-carlo-result', renderCompletedStudy);
 document.querySelector('[data-tab="backtest"]').addEventListener('click', () => {
+  window.dispatchEvent(new Event('lotto-live-request'));
   if (!$('strategyResults').innerHTML && !$('strategyRun').disabled) startBacktest();
 });
 window.addEventListener('lotto-draws-changed', event => updateDraws(event.detail));

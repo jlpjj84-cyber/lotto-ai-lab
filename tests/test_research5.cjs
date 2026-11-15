@@ -1,5 +1,8 @@
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
+const { join } = require('node:path');
+const { pathToFileURL } = require('node:url');
+const { Worker } = require('node:worker_threads');
 const { draws } = require('../data/draws.json');
 const frozenPrediction = require('../data/predictions/1250.json');
 
@@ -184,4 +187,36 @@ test('future GitHub records include replayable evidence; legacy records keep the
   assert.equal(current.strategies[0].research.validation.monteCarlo, null);
   assert.deepEqual(verifyPrediction(previous, bytes), previous);
   assert.deepEqual(verifyPrediction(current, bytes), current);
+});
+
+test('the browser worker protocol posts progress and results while the caller remains responsive', async t => {
+  const workerScript = pathToFileURL(join(__dirname, '../assets/research-worker.js')).href;
+  const workerHarness = `
+    import { parentPort } from 'node:worker_threads';
+    globalThis.self = {
+      addEventListener(event, callback) { parentPort.on('message', data => callback({ data })); },
+      postMessage: message => parentPort.postMessage(message),
+    };
+    await import(${JSON.stringify(workerScript)});
+  `;
+  const worker = new Worker(new URL('data:text/javascript,' + encodeURIComponent(workerHarness)));
+  t.after(() => worker.terminate());
+  const progress = [];
+  const result = new Promise((resolve, reject) => {
+    worker.on('error', reject);
+    worker.on('message', message => {
+      if (message.error) reject(Error(message.error));
+      if (message.progress !== undefined) progress.push(message.progress);
+      if (message.result) resolve(message.result);
+    });
+  });
+  worker.postMessage({ kind: 'strategy-simulation', job: { rows, settings, repetitions: 10_000 } });
+  let ticks = 0;
+  const timer = setInterval(() => { ticks++; }, 5);
+  t.after(() => clearInterval(timer));
+  const run = await result;
+  assert.ok(ticks > 0);
+  assert.equal(progress.at(-1), 1);
+  assert.match(run.data.sha256, /^[a-f0-9]{64}$/);
+  assert.equal(run.repetitions, 10_000);
 });
