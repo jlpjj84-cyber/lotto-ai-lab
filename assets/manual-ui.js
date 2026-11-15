@@ -2,7 +2,7 @@ import { STRATEGIES } from './lotto-strategies.js';
 import { EXPECTED_MATCHES } from './research-backtest.js';
 import { DEFAULT_SEED } from './research-math.js';
 import { createManualRecord, MANUAL_KEY, manualOutcome, readManualRecords, removeManualRecord } from './manual-generation.js';
-import { evidenceHTML, recommendationReport, validationText } from './recommendation-report.js';
+import { recommendationHTML, recommendationReport } from './recommendation-report.js';
 import { datasetStamp, sealResearch } from './research-provenance.js';
 import { backtestEvidence, simulationEvidence } from './selection-evidence.js';
 
@@ -28,7 +28,9 @@ function read() {
 
 function renderEvidence() {
   const evidence = $('manualEvidence');
-  const choice = latest?.strategy || $('manualStrategy').value;
+  evidence.hidden = Boolean(latest);
+  if (latest) return;
+  const choice = $('manualStrategy').value;
   const result = baseline?.strategies.find(row => row.id === choice)?.evaluation;
   const random = baseline?.strategies.find(row => row.id === 'random')?.evaluation;
   const delta = value => `${value >= 0 ? '+' : ''}${value.toFixed(3)}개`;
@@ -39,8 +41,8 @@ function renderEvidence() {
       `보정 p ${result.adjusted.toFixed(4)} · ${result.adjusted <= .05 ? '과거 구간에서 유의한 차이' : '통계적 우위 확인 없음'}`)
     : '과거 워크포워드 평가 대기 또는 표본 부족';
   const sameWindow = !baseline?.settings?.window && (baseline?.settings?.trainStart ?? 1) === 1;
-  const comparable = sameWindow && (latest ? latest.comparable : $('manualGames').valueAsNumber === 5 && !$('manualUnique').checked &&
-    !$('manualSpread').checked && $('manualSeed').valueAsNumber === DEFAULT_SEED);
+  const comparable = sameWindow && $('manualGames').valueAsNumber === 5 && !$('manualUnique').checked &&
+    !$('manualSpread').checked && $('manualSeed').valueAsNumber === DEFAULT_SEED;
   evidence.textContent = comparable ? reference : `기존 백테스트의 직접 비교 대상이 아닌 설정입니다. 전략 참고 성적 · ${reference}`;
 }
 
@@ -51,20 +53,8 @@ function renderLatest() {
   $('manualSavePurchase').title = latest?.lines.length > 5 ? '구매 기록 1건에는 최대 5게임을 넣을 수 있습니다.' : '';
   $('manualGenOutput').innerHTML = latest ? `<p class="research-help">${latest.round}회 · ${rowLabel(latest)} · ` +
     `${kst(latest.generatedAtUTC)} KST · 데이터 ${latest.dataRound}회까지 · 시드 ${latest.seed}</p>` +
-    `<p class="research-help">사용 이력 ${latest.historyCount ? `${latest.historyFirst}~${latest.dataRound}회 중 ${latest.historyCount}회` : '번호 선택에는 이력 미사용'} · ${optionsText(latest)}</p>` +
-    latest.lines.map((line, index) => {
-      const shared = latest.research?.lines?.[index]?.selection?.shared;
-      const label = shared === true ? `공통 무작위 게임 · v${latest.version}`
-        : shared === false ? `분산 무작위 게임 · v${latest.version}` : rowLabel(latest);
-      return `<div class="live-game"><span>${index + 1}게임 · ${line.join(' · ')}</span><span>${label}</span></div>` +
-        evidenceHTML(line, latest.research, index, latest);
-    }).join('') : '';
-  if (latest) {
-    const note = document.createElement('p');
-    note.className = 'research-help';
-    note.textContent = validationText(latest.research).join(' / ');
-    $('manualGenOutput').append(note);
-  }
+    `<p class="research-help">사용 이력 ${latest.historyCount ? `${latest.historyFirst}~${latest.dataRound}회 중 ${latest.historyCount}회` : '번호 선택에는 이력 미사용'}</p>` +
+    recommendationHTML(latest) : '';
   renderEvidence();
 }
 

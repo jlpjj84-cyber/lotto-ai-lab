@@ -1,6 +1,6 @@
 import { STRATEGIES } from './lotto-strategies.js';
 import { MIN_LIVE_ROUNDS } from './live-summary.js';
-import { evidenceHTML, validationText } from './recommendation-report.js';
+import { recommendationHTML } from './recommendation-report.js';
 import { EPOCH, KST, scheduleFor, WEEK } from './lotto-calendar.js';
 
 const $ = id => document.getElementById(id);
@@ -90,15 +90,10 @@ function roundDetail(row, prefix) {
     `${validRunLink(receipt.workflow) ? ` · ${asLink(receipt.workflow, 'GitHub 실행 기록')}` : ''}</p>`;
   return metadata + (draw ? `<p class="research-help">당첨 ${draw.numbers.join(' · ')} · 보너스 ${draw.bonus}</p>` : '') +
     '<div class="live-ticket-grid">' + prediction.strategies.map((strategy, index) => {
-      const outcome = evaluation?.strategies[index];
+      const scores = evaluation?.strategies[index]?.games.map(score =>
+        `${score.matches}개${score.bonus ? ' + 보너스' : ''} · ${score.rank ? `${score.rank}등` : '낙첨'}${score.prize === null ? ' · 금액 미확정' : ''}`);
       return `<details${index === 0 && prefix === 'current' ? ' open' : ''}><summary>${escape(names.get(strategy.id))} <small>v${escape(strategy.version)}</small></summary>` +
-        `<p class="research-help">${strategy.research ? escape(validationText(strategy.research).join(' / ')) : '생성 당시 확인 가능한 선정 근거 없음'}</p>` +
-        strategy.games.map((line, k) => {
-          const score = outcome?.games[k];
-          const grade = score ? `${score.matches}개${score.bonus ? ' + 보너스' : ''} · ${score.rank ? `${score.rank}등` : '낙첨'}` : '';
-          return `<div class="live-game"><span>${line.join(' · ')}</span><span>${grade}${score?.prize === null ? ' · 금액 미확정' : ''}</span></div>` +
-            (strategy.research ? evidenceHTML(line, strategy.research, k, { strategy: strategy.id }) : '');
-        }).join('') + '</details>';
+        recommendationHTML({ strategy: strategy.id, lines: strategy.games, research: strategy.research }, scores) + '</details>';
     }).join('') + '</div>';
 }
 

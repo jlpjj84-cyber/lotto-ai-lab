@@ -1,4 +1,4 @@
-import { evidenceHTML, validationText } from './recommendation-report.js';
+import { recommendationHTML } from './recommendation-report.js';
 import { manualOutcome, MANUAL_KEY } from './manual-generation.js';
 import { EXPERIMENT_KEY, exportResearch, importResearch, verifyManual } from './research-archive.js';
 import { verifiedResearch } from './research-provenance.js';
@@ -20,15 +20,11 @@ function recommendation(record, integrity, draw) {
   const match = outcome ? `평균 ${fixed(outcome.mean)}개 일치` : '결과 대기';
   const label = integrity === 'verified' ? 'SHA-256 일치' : integrity === 'legacy' ? '이전 기록 · SHA-256 없음' : '무결성 확인 실패';
   const evidence = integrity === 'verified' ? record.research : null;
+  const scores = outcome?.games.map(game => `${game.matches}개 · ${game.rank ? `${game.rank}등` : '낙첨'}`);
   return `<details class="manual-history-item"><summary>${record.round}회 · ${safe(names.get(record.strategy))} · ${label} · ${integrity === 'mismatch' ? '평가 제외' : match}</summary>` +
     `<p class="research-help">${kst(record.generatedAtUTC)} KST · v${safe(record.version)} · 데이터 기준 ${record.dataRound}회 · 시드 ${record.seed}` +
     (evidence ? ` · 입력 SHA-256 <code class="study-digest">${safe(evidence.data.sha256)}</code>` : '') + '</p>' +
-    record.lines.map((line, i) => {
-      const game = outcome?.games[i];
-      return `<div class="live-game"><span>${line.join(' · ')}</span><span>${game ? `${game.matches}개 · ${game.rank ? `${game.rank}등` : '낙첨'}` : ''}</span></div>` +
-        evidenceHTML(line, evidence, i, record);
-    }).join('') +
-    (evidence ? `<p class="research-help">${safe(validationText(evidence).join(' / '))}</p>` : '') + '</details>';
+    recommendationHTML({ ...record, research: evidence }, scores) + '</details>';
 }
 
 const describe = ({ result, generatedAtUTC }) =>
