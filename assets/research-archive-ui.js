@@ -26,7 +26,7 @@ function recommendation(record, integrity, draw) {
     record.lines.map((line, i) => {
       const game = outcome?.games[i];
       return `<div class="live-game"><span>${line.join(' · ')}</span><span>${game ? `${game.matches}개 · ${game.rank ? `${game.rank}등` : '낙첨'}` : ''}</span></div>` +
-        evidenceHTML(line, evidence, i, record.options);
+        evidenceHTML(line, evidence, i, record);
     }).join('') +
     (evidence ? `<p class="research-help">${safe(validationText(evidence).join(' / '))}</p>` : '') + '</details>';
 }

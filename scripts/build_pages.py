@@ -28,6 +28,7 @@ FILES = (
     "assets/selection-evidence.js",
     "assets/research-provenance.js",
     "assets/research-archive.js",
+    "assets/recommendation-narration.js",
     "assets/recommendation-report.js",
     "assets/strategy-lab-ui.js",
     "assets/research-archive-ui.js",
