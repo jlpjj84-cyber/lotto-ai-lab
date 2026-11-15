@@ -1,10 +1,11 @@
 import { DEFAULT_SEED, DRAW_SPACE, hitProbabilities, holm, sampleQuantile } from './research-math.js';
-import { addDraw, GAMES_PER_DRAW, makePicks, newHistory, randomFor, STRATEGIES, WARMUP } from './lotto-strategies.js';
+import { addDraw, GAMES_PER_DRAW, makePicks, randomFor, STRATEGIES } from './lotto-strategies.js';
 import { scoreTickets } from './lotto-scoring.js';
+import { canForecast, evaluationSchedule, sessionHistory, studyRows, studySettings } from './research-study.js';
 
 export { GAMES_PER_DRAW, STRATEGIES, forecastAt } from './lotto-strategies.js';
 export { scoreTickets } from './lotto-scoring.js';
-export const DEVELOPMENT_END = 1000;
+export { DEVELOPMENT_END } from './research-study.js';
 export const BASELINE_REPETITIONS = 10_000;
 export const EXPECTED_MATCHES = 6 * 6 / 45;
 const TILTS = [.025, .05, .1, .2, .4, .8, 1.6];
@@ -109,26 +110,30 @@ export function simulateBaseline(games, repetitions = BASELINE_REPETITIONS) {
     distribution[rep] = total / games;
   }
   distribution.sort();
-  return { repetitions, games, mean: EXPECTED_MATCHES,
+  return { repetitions, games, mean: EXPECTED_MATCHES, expectedTotalHits: games * EXPECTED_MATCHES,
     expectedHits: probabilities.map(probability => games * probability),
     interval: [sampleQuantile(distribution, .025), sampleQuantile(distribution, .975)] };
 }
 
-export function backtest(rows, progress = () => {}) {
-  const history = newHistory();
+export function backtest(input, progress = () => {}, options = {}) {
+  const rows = studyRows(input);
+  const settings = studySettings(rows, options);
+  const history = sessionHistory(settings);
   const development = STRATEGIES.map(emptyScores);
   const evaluation = STRATEGIES.map(emptyScores);
   const periods = { development: [], evaluation: [] };
+  const timeline = [];
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i];
-    if (history.contiguous >= WARMUP && row.round === history.lastRound + 1) {
-      const evaluate = row.round > DEVELOPMENT_END;
+    const evaluate = row.round >= settings.evalStart && row.round <= settings.evalEnd;
+    if ((evaluate || row.round <= settings.developmentEnd) && canForecast(history, row.round)) {
       const scores = evaluate ? evaluation : development;
       periods[evaluate ? 'evaluation' : 'development'].push(row.round);
       makePicks(history, row.round).forEach((tickets, index) => addScore(scores[index], tickets, row, evaluate));
+      if (evaluate) timeline.push({ round: row.round, hits: scores.map(score => Math.round(score.points.at(-1) * GAMES_PER_DRAW)) });
     }
     // Update only after the prediction and scoring of this round are complete.
-    addDraw(history, row);
+    if (row.round >= settings.trainStart) addDraw(history, row);
     if ((i + 1) % 64 === 0 || i + 1 === rows.length) progress(i + 1, rows.length);
   }
   const trained = development.map((scores, i) => summarize(scores, i, false));
@@ -136,9 +141,10 @@ export function backtest(rows, progress = () => {}) {
   const comparisons = evaluated.slice(0, -1).map(row => row.pValue);
   const adjusted = comparisons[0] === null ? [] : holm(comparisons);
   return {
-    development: periods.development, evaluation: periods.evaluation,
+    development: periods.development, evaluation: periods.evaluation, settings, timeline,
+    exclusions: evaluationSchedule(rows, settings).exclusions,
     skipped: rows.length - periods.development.length - periods.evaluation.length,
-    baseline: simulateBaseline(evaluated[0].games), seed: DEFAULT_SEED,
+    baseline: options.includeBaseline === false ? null : simulateBaseline(evaluated[0].games), seed: DEFAULT_SEED,
     strategies: STRATEGIES.map(([id, label], index) => ({ id, label, development: trained[index],
       evaluation: { ...evaluated[index], adjusted: adjusted[index] ?? null } })),
   };

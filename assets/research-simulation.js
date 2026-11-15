@@ -6,7 +6,7 @@ const SELECTABLE_TEST_SCOPES = 4 * SIMULATION_COUNTS.length;
 const UINT32_SPACE = 2 ** 32;
 const UNIFORM_LIMIT = UINT32_SPACE - UINT32_SPACE % 45;
 
-function rng32(seed) {
+export function fairNumberSource(seed) {
   const random = seededRandom(seed);
   return () => {
     let value;
@@ -15,7 +15,7 @@ function rng32(seed) {
   };
 }
 
-function draw(next, picked) {
+export function fairDraw(next, picked) {
   let low = 0;
   let high = 0;
   let count = 0;
@@ -47,7 +47,7 @@ export function simulatePatterns({ rounds, hasPrior, tests, tailLength, repetiti
   }
   const n = rounds.length;
   const transitions = rounds.map((round, index) => index === 0 ? hasPrior : rounds[index - 1] === round - 1);
-  const next = rng32(seed);
+  const next = fairNumberSource(seed);
   const picked = new Uint8Array(6);
   const counts = new Uint16Array(46);
   const pairCounts = new Uint16Array(PAIRS.length);
@@ -62,7 +62,7 @@ export function simulatePatterns({ rounds, hasPrior, tests, tailLength, repetiti
     latest.fill(-1);
     let lastLow = 0, lastHigh = 0;
     if (hasPrior) {
-      draw(next, picked);
+      fairDraw(next, picked);
       for (const number of picked) {
         if (number <= 32) lastLow |= 1 << (number - 1);
         else lastHigh |= 1 << (number - 33);
@@ -72,7 +72,7 @@ export function simulatePatterns({ rounds, hasPrior, tests, tailLength, repetiti
     let maxPair = 0, maxTriple = 0;
 
     for (let i = 0; i < n; i++) {
-      draw(next, picked);
+      fairDraw(next, picked);
       let low = 0, high = 0, sum = 0, odd = 0, small = 0, digits = 0;
       let run = 1, longest = 1;
       for (let j = 0; j < 6; j++) {
