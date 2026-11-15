@@ -50,6 +50,15 @@ export function readManualRecords(raw) {
   return value.records;
 }
 
+export function removeManualRecord(raw, id) {
+  if (typeof id !== 'string' || !/^[a-zA-Z0-9_-]{1,100}$/.test(id)) {
+    throw Error('삭제할 기록 ID가 올바르지 않습니다.');
+  }
+  const existing = readManualRecords(raw);
+  const remaining = existing.filter(record => record.id !== id);
+  return { removed: remaining.length !== existing.length, records: remaining };
+}
+
 export function manualOutcome(record, draw) {
   if (!draw || draw.round !== record.round) return null;
   const result = scoreTickets(record.lines, draw);
