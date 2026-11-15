@@ -2,6 +2,9 @@ import { STRATEGIES } from './lotto-strategies.js';
 import { EXPECTED_MATCHES } from './research-backtest.js';
 import { DEFAULT_SEED } from './research-math.js';
 import { createManualRecord, MANUAL_KEY, manualOutcome, readManualRecords } from './manual-generation.js';
+import { evidenceHTML, recommendationReport, validationText } from './recommendation-report.js';
+import { datasetStamp, sealResearch } from './research-provenance.js';
+import { backtestEvidence, simulationEvidence } from './selection-evidence.js';
 
 const $ = id => document.getElementById(id);
 const names = new Map(STRATEGIES);
@@ -35,20 +38,29 @@ function renderEvidence() {
     (choice === 'random' ? '무작위 기준 전략' : result.adjusted === null ? '유의성 판단 표본 부족' :
       `보정 p ${result.adjusted.toFixed(4)} · ${result.adjusted <= .05 ? '과거 구간에서 유의한 차이' : '통계적 우위 확인 없음'}`)
     : '과거 워크포워드 평가 대기 또는 표본 부족';
-  const comparable = latest ? latest.comparable : $('manualGames').valueAsNumber === 5 && !$('manualUnique').checked &&
-    !$('manualSpread').checked && $('manualSeed').valueAsNumber === DEFAULT_SEED;
+  const sameWindow = !baseline?.settings?.window && (baseline?.settings?.trainStart ?? 1) === 1;
+  const comparable = sameWindow && (latest ? latest.comparable : $('manualGames').valueAsNumber === 5 && !$('manualUnique').checked &&
+    !$('manualSpread').checked && $('manualSeed').valueAsNumber === DEFAULT_SEED);
   evidence.textContent = comparable ? reference : `기존 백테스트의 직접 비교 대상이 아닌 설정입니다. 전략 참고 성적 · ${reference}`;
 }
 
 function renderLatest() {
   $('manualCopy').disabled = !latest;
+  $('manualCopyReport').disabled = !latest;
   $('manualSavePurchase').disabled = !latest || latest.lines.length > 5 || savingPurchase || purchased.has(latest.id);
   $('manualSavePurchase').title = latest?.lines.length > 5 ? '구매 기록 1건에는 최대 5게임을 넣을 수 있습니다.' : '';
   $('manualGenOutput').innerHTML = latest ? `<p class="research-help">${latest.round}회 · ${rowLabel(latest)} · ` +
     `${kst(latest.generatedAtUTC)} KST · 데이터 ${latest.dataRound}회까지 · 시드 ${latest.seed}</p>` +
     `<p class="research-help">사용 이력 ${latest.historyCount ? `${latest.historyFirst}~${latest.dataRound}회 중 ${latest.historyCount}회` : '번호 선택에는 이력 미사용'} · ${optionsText(latest)}</p>` +
     latest.lines.map((line, index) => `<div class="live-game"><span>${index + 1}게임 · ${line.join(' · ')}</span>` +
-      `<span>${(index + 1) % 5 === 0 ? `무작위 게임 · v${latest.version}` : rowLabel(latest)}</span></div>`).join('') : '';
+      `<span>${latest.research?.lines[index].selection.shared ? `무작위 게임 · v${latest.version}` : rowLabel(latest)}</span></div>` +
+      evidenceHTML(line, latest.research, index, latest.options)).join('') : '';
+  if (latest) {
+    const note = document.createElement('p');
+    note.className = 'research-help';
+    note.textContent = validationText(latest.research).join(' / ');
+    $('manualGenOutput').append(note);
+  }
   renderEvidence();
 }
 
@@ -81,10 +93,20 @@ async function generate() {
   try {
     const input = $('manualSeed');
     const seed = input.value.trim() ? input.valueAsNumber : crypto.getRandomValues(new Uint32Array(1))[0];
-    const record = createManualRecord(draws, {
+    const source = draws;
+    const historical = baseline;
+    const monteCarlo = window.lottoMonteCarloResult;
+    const draft = createManualRecord(source, {
       strategy: $('manualStrategy').value, games: $('manualGames').valueAsNumber,
-      uniqueLines: $('manualUnique').checked, spread: $('manualSpread').checked, seed, id: crypto.randomUUID(),
+      uniqueLines: $('manualUnique').checked, spread: $('manualSpread').checked, seed, id: crypto.randomUUID(), explain: true,
     });
+    const data = await datasetStamp(source);
+    draft.research.data = data;
+    draft.research.validation = {
+      backtest: backtestEvidence(historical?.data?.sha256 === data.sha256 ? historical : null, draft.strategy),
+      monteCarlo: simulationEvidence(monteCarlo?.data?.sha256 === data.sha256 ? monteCarlo : null, draft.strategy),
+    };
+    const record = await sealResearch(draft);
     const save = () => {
       const stored = readManualRecords(localStorage.getItem(MANUAL_KEY));
       const next = [...stored, record];
@@ -97,6 +119,7 @@ async function generate() {
     $('manualGenStatus').textContent = '생성 기록에 저장했습니다.';
     renderLatest();
     renderHistory();
+    window.dispatchEvent(new Event('lotto-research-saved'));
   } catch (error) { $('manualGenStatus').textContent = error.message; }
   finally { button.disabled = false; }
 }
@@ -111,6 +134,13 @@ $('manualCopy').addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText(latest.lines.map(line => line.join(' ')).join('\n'));
     $('manualGenStatus').textContent = '번호를 복사했습니다.';
+  } catch { $('manualGenStatus').textContent = '클립보드에 복사하지 못했습니다.'; }
+});
+$('manualCopyReport').addEventListener('click', async () => {
+  if (!latest) return;
+  try {
+    await navigator.clipboard.writeText(recommendationReport(latest));
+    $('manualGenStatus').textContent = '추천 보고서를 복사했습니다.';
   } catch { $('manualGenStatus').textContent = '클립보드에 복사하지 못했습니다.'; }
 });
 $('manualSavePurchase').addEventListener('click', async () => {
@@ -147,4 +177,5 @@ window.addEventListener('lotto-backtest-result', event => { baseline = event.det
 window.addEventListener('storage', event => {
   if (event.key === MANUAL_KEY || event.key === null) { read(); if (active) renderHistory(); }
 });
+window.addEventListener('lotto-recommendations-restored', () => { read(); if (active) renderHistory(); });
 read();

@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { DEFAULT_SEED } from '../assets/research-math.js';
-import { forecastAt, GAMES_PER_DRAW, STRATEGIES, STRATEGY_VERSION } from '../assets/lotto-strategies.js';
+import { forecastAt, generateForStrategy, GAMES_PER_DRAW, STRATEGIES, STRATEGY_VERSION } from '../assets/lotto-strategies.js';
+import { backtest } from '../assets/research-backtest.js';
+import { backtestEvidence, explainSelections } from '../assets/selection-evidence.js';
 import { scoreTickets } from '../assets/lotto-scoring.js';
 import { KST, roundOnSaturday, scheduleFor } from '../assets/lotto-calendar.js';
 
@@ -44,7 +46,7 @@ export function sameDraw(left, right) {
     left.numbers.every((number, i) => number === right.numbers[i]);
 }
 
-export function createPrediction(bytes, now, officialLatest, runId) {
+export function createPrediction(bytes, now, officialLatest, runId, { schema = 2 } = {}) {
   const when = roundOnSaturday(now);
   assert(when && now >= new Date(when.opensUTC) && now < new Date(when.cutoffUTC), '토요일 18:00~20:00 KST에만 예측을 확정할 수 있습니다.');
   assert(typeof runId === 'string' && /^[0-9]+$/.test(runId), 'GitHub Actions 실행 번호가 필요합니다.');
@@ -54,12 +56,23 @@ export function createPrediction(bytes, now, officialLatest, runId) {
   assert(sameDraw(last, officialLatest), '동행복권의 최신 확정 회차를 대조하지 못했습니다.');
   const picks = forecastAt(rows, when.round);
   assert(picks, '직전 연속 50회 자료가 필요합니다.');
+  assert(schema === 1 || schema === 2, '지원하지 않는 예측 기록 형식입니다.');
+  const validation = schema === 2 ? backtest(rows, undefined, { includeBaseline: false }) : null;
   const data = {
-    schema: 1, round: when.round, drawDate: when.date, cutoffUTC: when.cutoffUTC, runId,
+    schema, round: when.round, drawDate: when.date, cutoffUTC: when.cutoffUTC, runId,
     generatedAtUTC: now.toISOString(), generatedAtKST: new Date(now.getTime() + KST).toISOString().replace('Z', '+09:00'),
     latestFinalRound: last.round, history: { first: rows[0].round, last: last.round, count: rows.length },
     dataSha256: sha256(bytes), settings: fixedSettings,
-    strategies: STRATEGIES.map(([id], index) => ({ id, version: STRATEGY_VERSION, games: picks[index] })),
+    strategies: STRATEGIES.map(([id], index) => {
+      const strategy = { id, version: STRATEGY_VERSION, games: picks[index] };
+      if (!validation) return strategy;
+      const generated = generateForStrategy(rows, when.round, id, { explain: true });
+      assert.deepEqual(generated.lines, strategy.games);
+      return { ...strategy, research: {
+        ...explainSelections(rows, when.round, generated),
+        validation: { backtest: backtestEvidence(validation, id), monteCarlo: null },
+      } };
+    }),
   };
   return { ...data, sha256: digest(data) };
 }
@@ -71,7 +84,8 @@ export function verifyPrediction(record, bytes) {
     strategy.games?.length === GAMES_PER_DRAW && strategy.games.every(validNumbers)), '전략별 5게임 형식이 일치하지 않습니다.');
   const last = parseArchive(bytes).at(-1);
   // The committed input snapshot is the proof here. The live caller checks the official feed before writing.
-  assert.deepEqual(record, createPrediction(bytes, new Date(record.generatedAtUTC), last, record.runId), '확정 커밋 입력에서 예측을 재현할 수 없습니다.');
+  assert.deepEqual(record, createPrediction(bytes, new Date(record.generatedAtUTC), last, record.runId,
+    { schema: record.schema }), '확정 커밋 입력에서 예측을 재현할 수 없습니다.');
   return record;
 }
 
