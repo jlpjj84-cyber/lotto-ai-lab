@@ -60,6 +60,9 @@
 #archive .research-control label { max-width: 100%; min-width: 0; }
 #archive .research-control select { min-width: 0; }
 #mcScope { margin-top: 12px; }
+.recommendation-narration { margin-top: 7px; padding: 8px 10px; border-left: 2px solid var(--mint); background: var(--panel2); }
+.recommendation-narration p { margin: 0; color: var(--text); font-size: 13px; line-height: 1.65; word-break: keep-all; overflow-wrap: anywhere; }
+.recommendation-narration .recommendation-narration-title { margin-bottom: 3px; color: var(--mint); font-weight: 750; }
 .recommendation-detail { margin: 7px 0 14px; }
 .live-ticket-grid .recommendation-detail { padding: 7px; }
 .live-ticket-grid > details > .research-help { margin-top: 9px; overflow-wrap: anywhere; }

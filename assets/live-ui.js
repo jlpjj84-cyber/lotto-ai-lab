@@ -97,7 +97,7 @@ function roundDetail(row, prefix) {
           const score = outcome?.games[k];
           const grade = score ? `${score.matches}개${score.bonus ? ' + 보너스' : ''} · ${score.rank ? `${score.rank}등` : '낙첨'}` : '';
           return `<div class="live-game"><span>${line.join(' · ')}</span><span>${grade}${score?.prize === null ? ' · 금액 미확정' : ''}</span></div>` +
-            (strategy.research ? evidenceHTML(line, strategy.research, k) : '');
+            (strategy.research ? evidenceHTML(line, strategy.research, k, { strategy: strategy.id }) : '');
         }).join('') + '</details>';
     }).join('') + '</div>';
 }

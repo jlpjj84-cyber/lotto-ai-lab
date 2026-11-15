@@ -52,9 +52,13 @@ function renderLatest() {
   $('manualGenOutput').innerHTML = latest ? `<p class="research-help">${latest.round}회 · ${rowLabel(latest)} · ` +
     `${kst(latest.generatedAtUTC)} KST · 데이터 ${latest.dataRound}회까지 · 시드 ${latest.seed}</p>` +
     `<p class="research-help">사용 이력 ${latest.historyCount ? `${latest.historyFirst}~${latest.dataRound}회 중 ${latest.historyCount}회` : '번호 선택에는 이력 미사용'} · ${optionsText(latest)}</p>` +
-    latest.lines.map((line, index) => `<div class="live-game"><span>${index + 1}게임 · ${line.join(' · ')}</span>` +
-      `<span>${latest.research?.lines[index].selection.shared ? `무작위 게임 · v${latest.version}` : rowLabel(latest)}</span></div>` +
-      evidenceHTML(line, latest.research, index, latest.options)).join('') : '';
+    latest.lines.map((line, index) => {
+      const shared = latest.research?.lines?.[index]?.selection?.shared;
+      const label = shared === true ? `공통 무작위 게임 · v${latest.version}`
+        : shared === false ? `분산 무작위 게임 · v${latest.version}` : rowLabel(latest);
+      return `<div class="live-game"><span>${index + 1}게임 · ${line.join(' · ')}</span><span>${label}</span></div>` +
+        evidenceHTML(line, latest.research, index, latest);
+    }).join('') : '';
   if (latest) {
     const note = document.createElement('p');
     note.className = 'research-help';

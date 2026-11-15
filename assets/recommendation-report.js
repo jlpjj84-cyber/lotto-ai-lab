@@ -1,7 +1,9 @@
 import { featuresText, reasonFor, referenceFor } from './selection-evidence.js';
 import { STRATEGIES } from './lotto-strategies.js';
+import { MISSING_SELECTION, recommendationNarration } from './recommendation-narration.js';
 
 const names = new Map(STRATEGIES);
+const narrationTitle = 'LOTTO LAB 추천 해설';
 const sanitize = value => String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
 const kst = value => new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Seoul', dateStyle: 'short', timeStyle: 'medium' }).format(new Date(value));
 const format = value => Number.isFinite(value) ? value.toFixed(3) : '—';
@@ -29,15 +31,23 @@ function conditions(selection, options) {
   ].filter(Boolean).join(' · ') || '게임 내 6개 번호 비복원 선택';
 }
 
-export function evidenceHTML(line, evidence, index, options) {
+function gameNarration(line, game, context) {
+  if (!Array.isArray(game?.reference) || !Array.isArray(game.features?.bands) ||
+      !Array.isArray(game.features?.runs) || !game.features.runs.every(Array.isArray)) return null;
+  return recommendationNarration(line, game, context);
+}
+
+export function evidenceHTML(line, evidence, index, context) {
   const game = evidence?.lines?.[index];
-  if (!game) return '<p class="research-help">생성 당시 확인 가능한 선정 근거 없음</p>';
-  return `<details class="research-method recommendation-detail"><summary>${index + 1}게임 추천 근거 보기</summary>` +
-    `<p class="research-help">선택 조건 · ${sanitize(conditions(game.selection, options))}</p>` +
+  const summary = gameNarration(line, game, { ...context, validation: evidence?.validation });
+  if (!summary) return `<p class="research-help">${MISSING_SELECTION}</p>`;
+  return `<div class="recommendation-narration"><p class="recommendation-narration-title">${narrationTitle}</p><p>${sanitize(summary)}</p></div>` +
+    '<details class="research-method recommendation-detail"><summary>자세한 선정 근거 보기</summary>' +
+    `<p class="research-help">선택 조건 · ${sanitize(conditions(game.selection, context?.options))}</p>` +
     '<div class="tablewrap research-table" tabindex="0" aria-label="번호별 선정 근거"><table class="datatable"><thead>' +
     '<tr><th>번호</th><th>실제 선정 근거</th><th>참고 통계</th></tr></thead><tbody>' +
     line.map(number => `<tr><td>${number}</td><td>${sanitize(reasonFor(game.selection, number))}</td>` +
-      `<td>${sanitize(referenceFor(evidence, game.reference.find(row => row.number === number)))}</td></tr>`).join('') +
+      `<td>${sanitize(referenceFor(evidence, game.reference.find(row => row?.number === number)))}</td></tr>`).join('') +
     `</tbody></table></div><p class="research-help">선택 후 조합 통계 · ${sanitize(featuresText(game.features))}</p></details>`;
 }
 
@@ -49,7 +59,10 @@ export function recommendationReport(record) {
   record.lines.forEach((line, index) => {
     lines.push('', `${index + 1}게임 · ${line.join(' ')}`);
     const info = research?.lines?.[index];
-    if (!info) { lines.push('생성 당시 확인 가능한 선정 근거 없음'); return; }
+    const summary = gameNarration(line, info, { strategy: record.strategy, options: record.options,
+      validation: research?.validation, comparable: record.comparable });
+    if (!summary) { lines.push(MISSING_SELECTION); return; }
+    lines.push(narrationTitle, summary);
     lines.push(`선택 조건 · ${conditions(info.selection, record.options)}`);
     for (const n of line) lines.push(`${n}번 · ${reasonFor(info.selection, n)}`);
     lines.push(`선택 후 조합 통계 · ${featuresText(info.features)}`);
