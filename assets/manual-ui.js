@@ -1,7 +1,7 @@
 import { STRATEGIES } from './lotto-strategies.js';
 import { EXPECTED_MATCHES } from './research-backtest.js';
 import { DEFAULT_SEED } from './research-math.js';
-import { createManualRecord, MANUAL_KEY, manualOutcome, readManualRecords } from './manual-generation.js';
+import { createManualRecord, MANUAL_KEY, manualOutcome, readManualRecords, removeManualRecord } from './manual-generation.js';
 import { evidenceHTML, recommendationReport, validationText } from './recommendation-report.js';
 import { datasetStamp, sealResearch } from './research-provenance.js';
 import { backtestEvidence, simulationEvidence } from './selection-evidence.js';
@@ -82,13 +82,31 @@ function renderHistory() {
   $('manualGenMore').hidden = matching.length <= historyLimit;
   list.innerHTML = matching.slice(-historyLimit).reverse().map(record => {
     const result = manualOutcome(record, drawByRound.get(record.round));
-    return `<details class="manual-history-item"><summary>${record.round}회 · ${rowLabel(record)} · ${record.lines.length}게임 · ` +
+    return `<div class="manual-history-row"><details class="manual-history-item"><summary>${record.round}회 · ${rowLabel(record)} · ${record.lines.length}게임 · ` +
       `${result ? `평균 ${result.mean.toFixed(3)}개` : '결과 대기'}</summary>` +
       `<p class="research-help">${kst(record.generatedAtUTC)} KST · 기준 ${record.dataRound}회 · 시드 ${record.seed} · ${optionsText(record)}</p>` +
       record.lines.map((line, i) => `<div class="live-game"><span>${line.join(' · ')}</span><span>${result ?
         `${result.games[i].matches}개${result.games[i].bonus ? ' + 보너스' : ''} · ${result.games[i].rank ? `${result.games[i].rank}등` : '낙첨'}` : ''}</span></div>`).join('') +
-      (result ? `<p class="research-help">세전 당첨금 ${money(result.prize)}${result.unpriced ? ` + 미확정 ${result.unpriced}게임` : ''}</p>` : '') + '</details>';
+      (result ? `<p class="research-help">세전 당첨금 ${money(result.prize)}${result.unpriced ? ` + 미확정 ${result.unpriced}게임` : ''}</p>` : '') + `</details><button type="button" class="btn tinybtn manual-delete" data-manual-delete="${record.id}" aria-label="${record.round}회 수동 생성 기록 삭제">삭제</button></div>`;
   }).join('');
+}
+
+async function removeSavedRecord(id) {
+  const remove = () => {
+    const result = removeManualRecord(localStorage.getItem(MANUAL_KEY), id);
+    if (result.removed) {
+      localStorage.setItem(MANUAL_KEY, JSON.stringify({ schema: 1, records: result.records }));
+    }
+    records = result.records;
+    return result.removed;
+  };
+  const removed = navigator.locks ? await navigator.locks.request(MANUAL_KEY, remove) : remove();
+  if (latest?.id === id && removed) { latest = null; renderLatest(); }
+  renderHistory();
+  $('manualHistoryStatus').textContent = removed
+    ? '수동 생성 기록 1건을 이 브라우저에서 삭제했습니다. 별도 구매 기록과 GitHub 사전 확정 기록은 유지됩니다.'
+    : '이미 삭제된 기록입니다. 목록을 새로 고쳤습니다.';
+  if (removed) window.dispatchEvent(new Event('lotto-research-saved'));
 }
 
 async function generate() {
@@ -131,6 +149,17 @@ async function generate() {
 $('manualStrategy').innerHTML = STRATEGIES.map(([id, label]) => `<option value="${id}">${label}</option>`).join('');
 $('manualStrategy').value = 'spread';
 $('manualGenerate').addEventListener('click', generate);
+$('manualGenHistory').addEventListener('click', async event => {
+  const button = event.target.closest('button[data-manual-delete]');
+  if (!button || !$('manualGenHistory').contains(button)) return;
+  const record = records.find(item => item.id === button.dataset.manualDelete);
+  if (!record) { $('manualHistoryStatus').textContent = '삭제할 기록을 찾지 못했습니다. 목록을 새로 고쳐 주세요.'; return; }
+  const message = record.round + '회 · ' + kst(record.generatedAtUTC) + ' 생성 기록 1건을 삭제할까요?\n복원하려면 미리 내보낸 연구 JSON 백업이 필요합니다.';
+  if (!window.confirm(message)) return;
+  button.disabled = true;
+  try { await removeSavedRecord(record.id); }
+  catch (error) { $('manualHistoryStatus').textContent = '삭제 실패: ' + error.message; button.disabled = false; }
+});
 $('manualGenRound').addEventListener('change', () => { historyLimit = 30; renderHistory(); });
 $('manualGenMore').addEventListener('click', () => { historyLimit += 30; renderHistory(); });
 $('manualCopy').addEventListener('click', async () => {
@@ -179,7 +208,7 @@ window.addEventListener('lotto-draws-changed', event => {
 });
 window.addEventListener('lotto-backtest-result', event => { baseline = event.detail; if (active) renderEvidence(); });
 window.addEventListener('storage', event => {
-  if (event.key === MANUAL_KEY || event.key === null) { read(); if (active) renderHistory(); }
+  if (event.key === MANUAL_KEY || event.key === null) { read(); if (latest && !records.some(item => item.id === latest.id)) { latest = null; renderLatest(); } if (active) renderHistory(); }
 });
 window.addEventListener('lotto-recommendations-restored', () => { read(); if (active) renderHistory(); });
 read();
