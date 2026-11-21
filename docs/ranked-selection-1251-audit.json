@@ -1,0 +1,2799 @@
+{
+  "version": "5.2.2",
+  "data": {
+    "first": 1,
+    "last": 1251,
+    "count": 1251,
+    "sha256": "71d92c4459d6ad18a9172330c639afb07b238dfc1d0ad8ac385f7a2954c482c2"
+  },
+  "passed": true,
+  "scoresVerified": 45,
+  "positionsVerified": 30,
+  "currentConditionsRecounted": 900,
+  "walkForwardDrawsVerified": 251,
+  "rankingModuleHasNoRng": true,
+  "lines": [
+    [
+      3,
+      18,
+      27,
+      34,
+      37,
+      45
+    ],
+    [
+      1,
+      12,
+      19,
+      24,
+      31,
+      39
+    ],
+    [
+      10,
+      13,
+      17,
+      20,
+      33,
+      34
+    ],
+    [
+      8,
+      16,
+      21,
+      36,
+      43,
+      44
+    ],
+    [
+      11,
+      14,
+      15,
+      18,
+      35,
+      38
+    ]
+  ],
+  "scores": [
+    {
+      "number": 1,
+      "score": 0.4005968744785463,
+      "rank": 12,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.34869525717358146,
+          "contribution": 0.0021717863930641496
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.10171502021630935,
+          "contribution": 0.0004680753996496884
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 1.473865545680753,
+          "contribution": 0.0013661069520716244
+        }
+      ],
+      "contributorIds": [
+        "7:5>1",
+        "8:1+26>1",
+        "16:29|8:1>1"
+      ],
+      "remainingContribution": 0.0033109560425482825,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 2,
+      "score": -0.3667082585144624,
+      "rank": 36,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.24813823311370098,
+          "contribution": -0.0015454848530017382
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.18098334954256828,
+          "contribution": -0.0008328549066492106
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -1.3903989324247323,
+          "contribution": -0.0012887428254936754
+        }
+      ],
+      "contributorIds": [
+        "7:25>2",
+        "7:5+25>2",
+        "18:15|9:44>2"
+      ],
+      "remainingContribution": -0.004325925577505115,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 3,
+      "score": 0.5548908973167678,
+      "rank": 6,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.3359569546252676,
+          "contribution": 0.002092448141177945
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.45007257034760473,
+          "contribution": 0.002071158200517551
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 1.49457538135761,
+          "contribution": 0.0013853026314721816
+        }
+      ],
+      "contributorIds": [
+        "10:16>3",
+        "10:4+31>3",
+        "20:36|10:16>3"
+      ],
+      "remainingContribution": 0.00493741947282562,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 4,
+      "score": -0.28961163496792797,
+      "rank": 33,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.2801183204698277,
+          "contribution": -0.0017446671393683822
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.16591500823323646,
+          "contribution": 0.0007635129366488696
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -2.0660144693699403,
+          "contribution": -0.0019149621469597671
+        }
+      ],
+      "contributorIds": [
+        "5:22>4",
+        "2:23+27>4",
+        "12:20|6:22>4"
+      ],
+      "remainingContribution": -0.0029803979177673388,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 5,
+      "score": -0.26676789999080563,
+      "rank": 30,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.250601816978682,
+          "contribution": -0.0015608288469508005
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.2189672660205716,
+          "contribution": -0.0010076504958148212
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -0.10702453170585467,
+          "contribution": -0.00009919965714243465
+        }
+      ],
+      "contributorIds": [
+        "3:25>5",
+        "5:14+22>5",
+        "8:38|4:42>5"
+      ],
+      "remainingContribution": -0.0033918677987414786,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 6,
+      "score": -0.4291730267215344,
+      "rank": 38,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.14132399738907786,
+          "contribution": -0.0008802113829447481
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.4248069471585666,
+          "contribution": -0.0019548900559853313
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -1.5715277926075717,
+          "contribution": -0.0014566288282852648
+        }
+      ],
+      "contributorIds": [
+        "2:27>6",
+        "5:8+21>6",
+        "2:27|1:40>6"
+      ],
+      "remainingContribution": -0.0049076127352526405,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 7,
+      "score": -0.3926471852613472,
+      "rank": 37,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.18981544454492066,
+          "contribution": -0.0011822317372411747
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.12131484828137813,
+          "contribution": -0.0005582705088391886
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -2.3583990126752115,
+          "contribution": -0.0021859696065331087
+        }
+      ],
+      "contributorIds": [
+        "2:23>7",
+        "9:38+43>7",
+        "4:16|2:27>7"
+      ],
+      "remainingContribution": -0.003979789553715954,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 8,
+      "score": 0.12025946463115891,
+      "rank": 22,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.041953898774911846,
+          "contribution": -0.00026130239692358936
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.14403168757793094,
+          "contribution": 0.000662809578977492
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 0.8642772887259726,
+          "contribution": 0.0008010874642576864
+        }
+      ],
+      "contributorIds": [
+        "10:2>8",
+        "4:36+38>8",
+        "3:2|1:14>8"
+      ],
+      "remainingContribution": 0.0005930565064798557,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 9,
+      "score": -0.7554933080629918,
+      "rank": 42,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.7290857728203459,
+          "contribution": -0.00454098106645499
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.24836689829601022,
+          "contribution": -0.0011429426542159586
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -2.018594684045749,
+          "contribution": -0.0018710093599589687
+        }
+      ],
+      "contributorIds": [
+        "5:22>9",
+        "8:18+34>9",
+        "4:18|2:28>9"
+      ],
+      "remainingContribution": -0.008224554439442986,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 10,
+      "score": 0.34666407367707935,
+      "rank": 13,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.061739411761069646,
+          "contribution": 0.0003845329456595619
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.2947901439873549,
+          "contribution": 0.0013565746156883277
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 1.8616433298493176,
+          "contribution": 0.0017255331754229039
+        }
+      ],
+      "contributorIds": [
+        "3:16>10",
+        "10:10+31>10",
+        "6:27|3:35>10"
+      ],
+      "remainingContribution": 0.003987085571492829,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 11,
+      "score": -0.20339807431634963,
+      "rank": 28,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.14620351956625424,
+          "contribution": -0.0009106026189912167
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.0016964612289091067,
+          "contribution": 0.000007806828981827281
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -1.220412886207846,
+          "contribution": -0.0011311849531541068
+        }
+      ],
+      "contributorIds": [
+        "3:34>11",
+        "2:1+18>11",
+        "16:21|8:38>11"
+      ],
+      "remainingContribution": -0.002657902486937428,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 12,
+      "score": 0.46272842557065275,
+      "rank": 8,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.45252310057210593,
+          "contribution": 0.0028184596496546757
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.042921140513908634,
+          "contribution": 0.00019751586301358136
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 1.7384088677807683,
+          "contribution": 0.0016113087430382703
+        }
+      ],
+      "contributorIds": [
+        "4:36>12",
+        "4:16+36>12",
+        "18:31|9:18>12"
+      ],
+      "remainingContribution": 0.004015397415125197,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 13,
+      "score": 0.3151900845898556,
+      "rank": 15,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.45024463251751556,
+          "contribution": 0.002804268616607365
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.030900437196029546,
+          "contribution": -0.0001421986099901739
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 0.5284687235753408,
+          "contribution": 0.0004898308392813652
+        }
+      ],
+      "contributorIds": [
+        "3:25>13",
+        "3:25+35>13",
+        "2:18|1:19>13"
+      ],
+      "remainingContribution": 0.002257990885485997,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 14,
+      "score": 0.08499868551169816,
+      "rank": 24,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.0998517507013769,
+          "contribution": 0.0006219088703834368
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.11611427673577437,
+          "contribution": -0.0005343383540852641
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 0.8225557827262933,
+          "contribution": 0.000762416338818809
+        }
+      ],
+      "contributorIds": [
+        "2:1>14",
+        "2:1+27>14",
+        "16:18|8:38>14"
+      ],
+      "remainingContribution": 0.0001692014728102482,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 15,
+      "score": -0.06148752108593547,
+      "rank": 26,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.0026268543533371352,
+          "contribution": -0.00001636089514776213
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.07524717393169655,
+          "contribution": 0.000346274826821899
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -1.0193141635080176,
+          "contribution": -0.0009447891425334915
+        }
+      ],
+      "contributorIds": [
+        "2:28>15",
+        "10:4+41>15",
+        "10:41|5:14>15"
+      ],
+      "remainingContribution": -0.0005470124100624836,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 16,
+      "score": 0.11240607454243977,
+      "rank": 23,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.10859117440867207,
+          "contribution": 0.0006763408166180181
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.267537711886278,
+          "contribution": 0.0012311635110155864
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -0.8452416562640526,
+          "contribution": -0.0007834435822092067
+        }
+      ],
+      "contributorIds": [
+        "7:28>16",
+        "5:14+42>16",
+        "7:28|1:45>16"
+      ],
+      "remainingContribution": 0.0003165762065246721,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 17,
+      "score": 0.29507649091238414,
+      "rank": 17,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.22567582347000933,
+          "contribution": 0.0014055817295264511
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.2153829489283708,
+          "contribution": 0.0009911560719643889
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 0.597728797203742,
+          "contribution": 0.0005540271076330007
+        }
+      ],
+      "contributorIds": [
+        "6:22>17",
+        "7:25+32>17",
+        "8:26|4:16>17"
+      ],
+      "remainingContribution": 0.002244575217465082,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 18,
+      "score": 1.0506113720063603,
+      "rank": 2,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.7349197699412392,
+          "contribution": 0.0045773170799328685
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.71342438347834,
+          "contribution": 0.00328305891014228
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 2.8544336717006504,
+          "contribution": 0.002645737729988455
+        }
+      ],
+      "contributorIds": [
+        "5:45>18",
+        "10:10+31>18",
+        "8:13|1:14>18"
+      ],
+      "remainingContribution": 0.009701117565414363,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 19,
+      "score": 0.4573155466971813,
+      "rank": 9,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.29072500731783246,
+          "contribution": 0.001810729001977893
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.3484208036600662,
+          "contribution": 0.0016033738829587445
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 1.250478715230485,
+          "contribution": 0.0011590525820351749
+        }
+      ],
+      "contributorIds": [
+        "10:41>19",
+        "10:16+41>19",
+        "5:21|1:19>19"
+      ],
+      "remainingContribution": 0.0038819387476666817,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 20,
+      "score": 0.308291588892189,
+      "rank": 16,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.09344351920710839,
+          "contribution": 0.0005819963402398752
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.3401850466001273,
+          "contribution": 0.0015654743154312485
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 1.0092332061328346,
+          "contribution": 0.0009354452332507664
+        }
+      ],
+      "contributorIds": [
+        "9:43>20",
+        "3:2+25>20",
+        "16:34|8:18>20"
+      ],
+      "remainingContribution": 0.00302642433512574,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 21,
+      "score": 0.18788004876103523,
+      "rank": 19,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.19345432802076756,
+          "contribution": 0.0012048958757868166
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.21258379735035776,
+          "contribution": 0.0009782748476302426
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -0.3283789772140122,
+          "contribution": -0.00030437023580670694
+        }
+      ],
+      "contributorIds": [
+        "2:5>21",
+        "5:21+42>21",
+        "3:34|1:19>21"
+      ],
+      "remainingContribution": 0.001110691484178409,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 22,
+      "score": -0.903362348950489,
+      "rank": 43,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.6528651513772818,
+          "contribution": -0.004066254481807078
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.2972854113193985,
+          "contribution": -0.001368057415880426
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -3.883225493658754,
+          "contribution": -0.003599311591817384
+        }
+      ],
+      "contributorIds": [
+        "8:34>22",
+        "8:13+38>22",
+        "16:18|8:13>22"
+      ],
+      "remainingContribution": -0.009035410707483286,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 23,
+      "score": -1.2029673023182939,
+      "rank": 44,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.76168112059961,
+          "contribution": -0.004743995392941685
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.8157772944703116,
+          "contribution": -0.003754069775754773
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -3.810181281699711,
+          "contribution": -0.003531607854486479
+        }
+      ],
+      "contributorIds": [
+        "1:14>23",
+        "10:31+41>23",
+        "5:22|1:29>23"
+      ],
+      "remainingContribution": -0.011984680983589091,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 24,
+      "score": 0.5484460777021366,
+      "rank": 7,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.3357514096692066,
+          "contribution": 0.0020911679409757553
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.27359146824035896,
+          "contribution": 0.0012590218786272948
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 2.3026223711955796,
+          "contribution": 0.002134270957418316
+        }
+      ],
+      "contributorIds": [
+        "3:25>24",
+        "4:16+27>24",
+        "2:18|1:45>24"
+      ],
+      "remainingContribution": 0.004674681964224667,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 25,
+      "score": -0.7036241000104142,
+      "rank": 40,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.512175860700553,
+          "contribution": -0.003189996256736168
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.45337285237057595,
+          "contribution": -0.0020863455427957488
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -1.8987201490052212,
+          "contribution": -0.001759899200572225
+        }
+      ],
+      "contributorIds": [
+        "10:16>25",
+        "4:27+42>25",
+        "4:18|2:28>25"
+      ],
+      "remainingContribution": -0.0070671983315684726,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 26,
+      "score": -0.27547937026063285,
+      "rank": 31,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.16450598209134332,
+          "contribution": -0.0010245962516943073
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.33057848191857464,
+          "contribution": -0.001521266521999995
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -0.22541141239603704,
+          "contribution": -0.00020893092891202618
+        }
+      ],
+      "contributorIds": [
+        "10:41>26",
+        "6:16+23>26",
+        "12:19|6:16>26"
+      ],
+      "remainingContribution": -0.0026762731773730592,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 27,
+      "score": 0.6959111458964319,
+      "rank": 3,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.48599466799068225,
+          "contribution": 0.0030269313543271788
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.37608431763243155,
+          "contribution": 0.0017306767171988875
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 2.375158099096319,
+          "contribution": 0.0022015033874382517
+        }
+      ],
+      "contributorIds": [
+        "5:8>27",
+        "8:13+34>27",
+        "16:18|8:13>27"
+      ],
+      "remainingContribution": 0.006173150631660476,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 28,
+      "score": -0.7442643830933505,
+      "rank": 41,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.48257757978411947,
+          "contribution": -0.003005648628169482
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.5288964931438164,
+          "contribution": -0.0024338926234801586
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -2.1611074239785792,
+          "contribution": -0.002003102579283864
+        }
+      ],
+      "contributorIds": [
+        "2:18>28",
+        "4:16+38>28",
+        "14:42|7:5>28"
+      ],
+      "remainingContribution": -0.008075468485444465,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 29,
+      "score": -0.3665613236064091,
+      "rank": 35,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.1562817068183071,
+          "contribution": -0.0009733728158621918
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.5040771784828919,
+          "contribution": -0.0023196783156597604
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -0.40194982441036553,
+          "contribution": -0.00037256210454213873
+        }
+      ],
+      "contributorIds": [
+        "5:45>29",
+        "1:29+45>29",
+        "3:16|1:45>29"
+      ],
+      "remainingContribution": -0.004293806828225994,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 30,
+      "score": -0.24971139566052594,
+      "rank": 29,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.3081212544099962,
+          "contribution": -0.0019190784330294763
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.06649345920747946,
+          "contribution": -0.0003059917053198469
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -0.2935026500193368,
+          "contribution": -0.00027204381825593607
+        }
+      ],
+      "contributorIds": [
+        "3:16>30",
+        "1:29+45>30",
+        "11:16|1:29>30"
+      ],
+      "remainingContribution": -0.00254073218382684,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 31,
+      "score": 0.4217838593883469,
+      "rank": 11,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.22862370977224308,
+          "contribution": 0.0014239421150716565
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.3181164269818327,
+          "contribution": 0.0014639182431266595
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 1.434886994103263,
+          "contribution": 0.001329978235685153
+        }
+      ],
+      "contributorIds": [
+        "5:8>31",
+        "8:18+26>31",
+        "8:1|4:27>31"
+      ],
+      "remainingContribution": 0.00420090665467028,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 32,
+      "score": -1.6450056734617124,
+      "rank": 45,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -1.0469053276957343,
+          "contribution": -0.006520463639068452
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -1.0009655619548168,
+          "contribution": -0.00460627500688881
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -5.743221720434915,
+          "contribution": -0.005323318088659864
+        }
+      ],
+      "contributorIds": [
+        "5:14>32",
+        "4:18+42>32",
+        "12:13|6:24>32"
+      ],
+      "remainingContribution": -0.016039249105493446,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 33,
+      "score": 0.3392206402685335,
+      "rank": 14,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.23681691632946436,
+          "contribution": 0.00147497204493296
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.1621134613961871,
+          "contribution": 0.0007460188580825502
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 1.2636010444957582,
+          "contribution": 0.0011712154996698242
+        }
+      ],
+      "contributorIds": [
+        "8:13>33",
+        "1:14+18>33",
+        "7:5|1:19>33"
+      ],
+      "remainingContribution": 0.0026084687321221945,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 34,
+      "score": 1.296031613498689,
+      "rank": 1,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 1.004409017926626,
+          "contribution": 0.006255782931736534
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.6275960842887668,
+          "contribution": 0.00288809152618092
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 4.117482812310438,
+          "contribution": 0.003816441677069436
+        }
+      ],
+      "contributorIds": [
+        "5:45>34",
+        "10:4+10>34",
+        "9:24|1:19>34"
+      ],
+      "remainingContribution": 0.012238038241857879,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 35,
+      "score": -0.11747017613275738,
+      "rank": 27,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.10614515072525642,
+          "contribution": -0.0006611061931367175
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.029057991599246064,
+          "contribution": 0.0001337199855233721
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -0.698375841185705,
+          "contribution": -0.0006473155537142285
+        }
+      ],
+      "contributorIds": [
+        "1:40>35",
+        "3:16+34>35",
+        "10:10|1:40>35"
+      ],
+      "remainingContribution": -0.0017807503584872935,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 36,
+      "score": 0.16374995393174374,
+      "rank": 20,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.11995529397069292,
+          "contribution": 0.0007471202141756539
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.08839803206711024,
+          "contribution": -0.0004067928620577914
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 1.3994932026585278,
+          "contribution": 0.001297172187199575
+        }
+      ],
+      "contributorIds": [
+        "10:2>36",
+        "6:27+28>36",
+        "10:2|1:29>36"
+      ],
+      "remainingContribution": 0.0009576335937336657,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 37,
+      "score": 0.6074407382225961,
+      "rank": 5,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.43633465029521123,
+          "contribution": 0.0027176327662575953
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.28104389196425317,
+          "contribution": 0.001293316678013878
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 2.226223616753193,
+          "contribution": 0.0020634579379544874
+        }
+      ],
+      "contributorIds": [
+        "8:26>37",
+        "10:4+10>37",
+        "5:21|1:18>37"
+      ],
+      "remainingContribution": 0.005464454650695099,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 38,
+      "score": -0.007612532401589085,
+      "rank": 25,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.17730905395364424,
+          "contribution": 0.001104337907733311
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.06232835896209679,
+          "contribution": -0.0002868246151713862
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -0.9641288811732804,
+          "contribution": -0.0008936386165778156
+        }
+      ],
+      "contributorIds": [
+        "9:9>38",
+        "10:4+10>38",
+        "16:21|8:18>38"
+      ],
+      "remainingContribution": -0.0006814348988515199,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 39,
+      "score": 0.4415683860250425,
+      "rank": 10,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.20049102800800717,
+          "contribution": 0.001248722710164303
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.23476856343962496,
+          "contribution": 0.0010803654064413745
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 2.251186533864344,
+          "contribution": 0.002086595743644748
+        }
+      ],
+      "contributorIds": [
+        "3:25>39",
+        "5:42+45>39",
+        "10:16|1:40>39"
+      ],
+      "remainingContribution": 0.003686574214343102,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 40,
+      "score": -0.2808431418968669,
+      "rank": 32,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.09292961676834574,
+          "contribution": -0.0005787955902987551
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.17529475775829811,
+          "contribution": -0.0008066769649135294
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -1.5352019393731993,
+          "contribution": -0.0014229588637563843
+        }
+      ],
+      "contributorIds": [
+        "6:27>40",
+        "1:14+40>40",
+        "3:35|1:14>40"
+      ],
+      "remainingContribution": -0.00280726683991647,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 41,
+      "score": -0.6679278160170168,
+      "rank": 39,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.6320577246922985,
+          "contribution": -0.003936659125347636
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.1975192898629022,
+          "contribution": -0.0009089505202327651
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -1.9783083906828447,
+          "contribution": -0.0018336685145897659
+        }
+      ],
+      "contributorIds": [
+        "10:31>41",
+        "1:19+40>41",
+        "18:15|9:18>41"
+      ],
+      "remainingContribution": -0.00669514059968258,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 42,
+      "score": -0.3157744149536035,
+      "rank": 34,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": -0.2029346809504769,
+          "contribution": -0.0012639425679072636
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": -0.3178113793545899,
+          "contribution": -0.001462514465299843
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": -0.4653070684467804,
+          "contribution": -0.0004312871163289279
+        }
+      ],
+      "contributorIds": [
+        "8:13>42",
+        "1:18+45>42",
+        "10:2|5:45>42"
+      ],
+      "remainingContribution": -0.0031507853904593234,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 43,
+      "score": 0.14897917847708372,
+      "rank": 21,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.030276408838812285,
+          "contribution": 0.00018857122772463524
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.05248253714316519,
+          "contribution": 0.00024151580067205942
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 1.1432943274649097,
+          "contribution": 0.0010597047563741426
+        }
+      ],
+      "contributorIds": [
+        "4:27>43",
+        "1:14+40>43",
+        "16:12|8:26>43"
+      ],
+      "remainingContribution": 0.0014637078456164556,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 44,
+      "score": 0.24023384983348312,
+      "rank": 18,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.002899817966911831,
+          "contribution": 0.00001806100046771501
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.28344835847772043,
+          "contribution": 0.0013043816281249042
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 1.1650781169969104,
+          "contribution": 0.001079895869742212
+        }
+      ],
+      "contributorIds": [
+        "3:11>44",
+        "10:4+41>44",
+        "6:22|1:14>44"
+      ],
+      "remainingContribution": 0.0017401466865157576,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    },
+    {
+      "number": 45,
+      "score": 0.6456158168535895,
+      "rank": 4,
+      "relationCount": 900,
+      "components": [
+        {
+          "family": "transition",
+          "conditions": 60,
+          "reliabilitySum": 53.518961515917645,
+          "weightedEffectSum": 0.494366310186336,
+          "contribution": 0.003079072638827276
+        },
+        {
+          "family": "same-draw-set",
+          "conditions": 150,
+          "reliabilitySum": 72.43492557853837,
+          "weightedEffectSum": 0.16802557499969015,
+          "contribution": 0.0007732254096011855
+        },
+        {
+          "family": "temporal-chain",
+          "conditions": 690,
+          "reliabilitySum": 359.6266855109011,
+          "weightedEffectSum": 2.809252753584759,
+          "contribution": 0.002603860120107433
+        }
+      ],
+      "contributorIds": [
+        "4:18>45",
+        "5:14+21>45",
+        "8:34|4:18>45"
+      ],
+      "remainingContribution": 0.005744580955027637,
+      "evidenceStatus": "과거 조건 집계 · 예측 우위 미확인"
+    }
+  ],
+  "positions": [
+    {
+      "game": 1,
+      "position": 1,
+      "number": 34,
+      "score": 1.296031613498689,
+      "rank": 1,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 1.296031613498689,
+      "relations": [
+        {
+          "id": "5:45>34",
+          "successes": 36,
+          "trials": 175,
+          "contribution": 0.0003630799235803951,
+          "registeredTrials": 167,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "10:4+10>34",
+          "successes": 8,
+          "trials": 22,
+          "contribution": 0.0002907884551910129,
+          "registeredTrials": 14,
+          "status": "표본 부족"
+        },
+        {
+          "id": "9:24|1:19>34",
+          "successes": 9,
+          "trials": 23,
+          "contribution": 0.00006840951435760249,
+          "registeredTrials": 15,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 1,
+      "position": 2,
+      "number": 18,
+      "score": 1.0506113720063603,
+      "rank": 2,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 1.0506113720063603,
+      "relations": [
+        {
+          "id": "5:45>18",
+          "successes": 34,
+          "trials": 175,
+          "contribution": 0.0003057515145940169,
+          "registeredTrials": 167,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "10:10+31>18",
+          "successes": 12,
+          "trials": 30,
+          "contribution": 0.00044177583871890145,
+          "registeredTrials": 22,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "8:13|1:14>18",
+          "successes": 9,
+          "trials": 29,
+          "contribution": 0.00005746880133632099,
+          "registeredTrials": 21,
+          "status": "통계적 우위 확인 없음"
+        }
+      ]
+    },
+    {
+      "game": 1,
+      "position": 3,
+      "number": 27,
+      "score": 0.6959111458964319,
+      "rank": 3,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.6959111458964319,
+      "relations": [
+        {
+          "id": "5:8>27",
+          "successes": 31,
+          "trials": 158,
+          "contribution": 0.0003085198838571783,
+          "registeredTrials": 150,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "8:13+34>27",
+          "successes": 10,
+          "trials": 22,
+          "contribution": 0.0004055733717137811,
+          "registeredTrials": 14,
+          "status": "표본 부족"
+        },
+        {
+          "id": "16:18|8:13>27",
+          "successes": 11,
+          "trials": 33,
+          "contribution": 0.00007186757173288268,
+          "registeredTrials": 25,
+          "status": "통계적 우위 확인 없음"
+        }
+      ]
+    },
+    {
+      "game": 1,
+      "position": 4,
+      "number": 45,
+      "score": 0.6456158168535895,
+      "rank": 4,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.6456158168535895,
+      "relations": [
+        {
+          "id": "4:18>45",
+          "successes": 38,
+          "trials": 180,
+          "contribution": 0.00039238429530726537,
+          "registeredTrials": 172,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "5:14+21>45",
+          "successes": 7,
+          "trials": 22,
+          "contribution": 0.00023339599692962876,
+          "registeredTrials": 14,
+          "status": "표본 부족"
+        },
+        {
+          "id": "8:34|4:18>45",
+          "successes": 11,
+          "trials": 26,
+          "contribution": 0.00008579692127136447,
+          "registeredTrials": 18,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 1,
+      "position": 5,
+      "number": 37,
+      "score": 0.6074407382225961,
+      "rank": 5,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.6074407382225961,
+      "relations": [
+        {
+          "id": "8:26>37",
+          "successes": 32,
+          "trials": 165,
+          "contribution": 0.0003002697310083773,
+          "registeredTrials": 157,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "10:4+10>37",
+          "successes": 7,
+          "trials": 22,
+          "contribution": 0.00023339599692962876,
+          "registeredTrials": 14,
+          "status": "표본 부족"
+        },
+        {
+          "id": "5:21|1:18>37",
+          "successes": 10,
+          "trials": 25,
+          "contribution": 0.00007628700359285615,
+          "registeredTrials": 17,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 1,
+      "position": 6,
+      "number": 3,
+      "score": 0.5548908973167678,
+      "rank": 6,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.5548908973167678,
+      "relations": [
+        {
+          "id": "10:16>3",
+          "successes": 32,
+          "trials": 169,
+          "contribution": 0.0002789531366261293,
+          "registeredTrials": 161,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "10:4+31>3",
+          "successes": 7,
+          "trials": 18,
+          "contribution": 0.0002638723413400641,
+          "registeredTrials": 10,
+          "status": "표본 부족"
+        },
+        {
+          "id": "20:36|10:16>3",
+          "successes": 10,
+          "trials": 29,
+          "contribution": 0.00006866402237586404,
+          "registeredTrials": 21,
+          "status": "통계적 우위 확인 없음"
+        }
+      ]
+    },
+    {
+      "game": 2,
+      "position": 1,
+      "number": 24,
+      "score": 0.5484460777021366,
+      "rank": 7,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.5484460777021366,
+      "relations": [
+        {
+          "id": "3:25>24",
+          "successes": 36,
+          "trials": 154,
+          "contribution": 0.0004899931600261013,
+          "registeredTrials": 146,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "4:16+27>24",
+          "successes": 7,
+          "trials": 19,
+          "contribution": 0.00025676667519959536,
+          "registeredTrials": 11,
+          "status": "표본 부족"
+        },
+        {
+          "id": "2:18|1:45>24",
+          "successes": 9,
+          "trials": 26,
+          "contribution": 0.00006301897757100223,
+          "registeredTrials": 18,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 2,
+      "position": 2,
+      "number": 12,
+      "score": 0.46272842557065275,
+      "rank": 8,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.46272842557065275,
+      "relations": [
+        {
+          "id": "4:36>12",
+          "successes": 33,
+          "trials": 165,
+          "contribution": 0.00033029670410921505,
+          "registeredTrials": 157,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "4:16+36>12",
+          "successes": 7,
+          "trials": 24,
+          "contribution": 0.00021678049937136175,
+          "registeredTrials": 16,
+          "status": "표본 부족"
+        },
+        {
+          "id": "18:31|9:18>12",
+          "successes": 10,
+          "trials": 31,
+          "contribution": 0.00006480963710075447,
+          "registeredTrials": 23,
+          "status": "통계적 우위 확인 없음"
+        }
+      ]
+    },
+    {
+      "game": 2,
+      "position": 3,
+      "number": 19,
+      "score": 0.4573155466971813,
+      "rank": 9,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.4573155466971813,
+      "relations": [
+        {
+          "id": "10:41>19",
+          "successes": 31,
+          "trials": 150,
+          "contribution": 0.00035559624718898663,
+          "registeredTrials": 142,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "10:16+41>19",
+          "successes": 8,
+          "trials": 24,
+          "contribution": 0.00027382799920593065,
+          "registeredTrials": 16,
+          "status": "표본 부족"
+        },
+        {
+          "id": "5:21|1:19>19",
+          "successes": 8,
+          "trials": 20,
+          "contribution": 0.0000617924729102135,
+          "registeredTrials": 12,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 2,
+      "position": 4,
+      "number": 39,
+      "score": 0.4415683860250425,
+      "rank": 10,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.4415683860250425,
+      "relations": [
+        {
+          "id": "3:25>39",
+          "successes": 31,
+          "trials": 154,
+          "contribution": 0.00033159019881076683,
+          "registeredTrials": 146,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "5:42+45>39",
+          "successes": 9,
+          "trials": 24,
+          "contribution": 0.0003308754990404995,
+          "registeredTrials": 16,
+          "status": "표본 부족"
+        },
+        {
+          "id": "10:16|1:40>39",
+          "successes": 9,
+          "trials": 24,
+          "contribution": 0.00006664394805605668,
+          "registeredTrials": 16,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 2,
+      "position": 5,
+      "number": 31,
+      "score": 0.4217838593883469,
+      "rank": 11,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.4217838593883469,
+      "relations": [
+        {
+          "id": "5:8>31",
+          "successes": 12,
+          "trials": 158,
+          "contribution": -0.00028160204164145135,
+          "registeredTrials": 150,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "8:18+26>31",
+          "successes": 7,
+          "trials": 23,
+          "contribution": 0.00022515541927376257,
+          "registeredTrials": 15,
+          "status": "표본 부족"
+        },
+        {
+          "id": "8:1|4:27>31",
+          "successes": 9,
+          "trials": 20,
+          "contribution": 0.00007337856158087852,
+          "registeredTrials": 12,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 2,
+      "position": 6,
+      "number": 1,
+      "score": 0.4005968744785463,
+      "rank": 12,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.4005968744785463,
+      "relations": [
+        {
+          "id": "7:5>1",
+          "successes": 31,
+          "trials": 153,
+          "contribution": 0.0003375018496841058,
+          "registeredTrials": 145,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "8:1+26>1",
+          "successes": 8,
+          "trials": 21,
+          "contribution": 0.00029894111632525314,
+          "registeredTrials": 13,
+          "status": "표본 부족"
+        },
+        {
+          "id": "16:29|8:1>1",
+          "successes": 8,
+          "trials": 22,
+          "contribution": 0.0000585697362278214,
+          "registeredTrials": 14,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 3,
+      "position": 1,
+      "number": 10,
+      "score": 0.34666407367707935,
+      "rank": 13,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.34666407367707935,
+      "relations": [
+        {
+          "id": "3:16>10",
+          "successes": 10,
+          "trials": 172,
+          "contribution": -0.00037584391895544066,
+          "registeredTrials": 164,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "10:10+31>10",
+          "successes": 0,
+          "trials": 30,
+          "contribution": -0.00022088791935945073,
+          "registeredTrials": 22,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "6:27|3:35>10",
+          "successes": 10,
+          "trials": 25,
+          "contribution": 0.00007628700359285615,
+          "registeredTrials": 17,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 3,
+      "position": 2,
+      "number": 33,
+      "score": 0.3392206402685335,
+      "rank": 14,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.3392206402685335,
+      "relations": [
+        {
+          "id": "8:13>33",
+          "successes": 42,
+          "trials": 183,
+          "contribution": 0.00048679123427947444,
+          "registeredTrials": 175,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "1:14+18>33",
+          "successes": 7,
+          "trials": 23,
+          "contribution": 0.00022515541927376257,
+          "registeredTrials": 15,
+          "status": "표본 부족"
+        },
+        {
+          "id": "7:5|1:19>33",
+          "successes": 9,
+          "trials": 21,
+          "contribution": 0.000071791017009903,
+          "registeredTrials": 13,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 3,
+      "position": 3,
+      "number": 13,
+      "score": 0.3151900845898556,
+      "rank": 15,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.3151900845898556,
+      "relations": [
+        {
+          "id": "3:25>13",
+          "successes": 36,
+          "trials": 154,
+          "contribution": 0.0004899931600261013,
+          "registeredTrials": 146,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "3:25+35>13",
+          "successes": 8,
+          "trials": 17,
+          "contribution": 0.0003276297967936014,
+          "registeredTrials": 9,
+          "status": "표본 부족"
+        },
+        {
+          "id": "2:18|1:19>13",
+          "successes": 10,
+          "trials": 25,
+          "contribution": 0.00007628700359285615,
+          "registeredTrials": 17,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 3,
+      "position": 4,
+      "number": 20,
+      "score": 0.308291588892189,
+      "rank": 16,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.308291588892189,
+      "relations": [
+        {
+          "id": "9:43>20",
+          "successes": 13,
+          "trials": 166,
+          "contribution": -0.0002729496710289726,
+          "registeredTrials": 158,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "3:2+25>20",
+          "successes": 8,
+          "trials": 24,
+          "contribution": 0.00027382799920593065,
+          "registeredTrials": 16,
+          "status": "표본 부족"
+        },
+        {
+          "id": "16:34|8:18>20",
+          "successes": 9,
+          "trials": 30,
+          "contribution": 0.00005561322561919214,
+          "registeredTrials": 22,
+          "status": "통계적 우위 확인 없음"
+        }
+      ]
+    },
+    {
+      "game": 3,
+      "position": 5,
+      "number": 17,
+      "score": 0.29507649091238414,
+      "rank": 17,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.29507649091238414,
+      "relations": [
+        {
+          "id": "6:22>17",
+          "successes": 30,
+          "trials": 146,
+          "contribution": 0.00034759504355720826,
+          "registeredTrials": 138,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "7:25+32>17",
+          "successes": 7,
+          "trials": 14,
+          "contribution": 0.00028608849609463655,
+          "registeredTrials": 6,
+          "status": "표본 부족"
+        },
+        {
+          "id": "8:26|4:16>17",
+          "successes": 10,
+          "trials": 27,
+          "contribution": 0.00007250615200691415,
+          "registeredTrials": 19,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 3,
+      "position": 6,
+      "number": 34,
+      "score": 1.296031613498689,
+      "rank": 1,
+      "priorUses": 1,
+      "diversityPenalty": 1.0293630504361404,
+      "selectionScore": 0.2666685630625485,
+      "relations": [
+        {
+          "id": "5:45>34",
+          "successes": 36,
+          "trials": 175,
+          "contribution": 0.0003630799235803951,
+          "registeredTrials": 167,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "10:4+10>34",
+          "successes": 8,
+          "trials": 22,
+          "contribution": 0.0002907884551910129,
+          "registeredTrials": 14,
+          "status": "표본 부족"
+        },
+        {
+          "id": "9:24|1:19>34",
+          "successes": 9,
+          "trials": 23,
+          "contribution": 0.00006840951435760249,
+          "registeredTrials": 15,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 4,
+      "position": 1,
+      "number": 44,
+      "score": 0.24023384983348312,
+      "rank": 18,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.24023384983348312,
+      "relations": [
+        {
+          "id": "3:11>44",
+          "successes": 32,
+          "trials": 168,
+          "contribution": 0.00028420772860643937,
+          "registeredTrials": 160,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "10:4+41>44",
+          "successes": 8,
+          "trials": 18,
+          "contribution": 0.00032123589380529536,
+          "registeredTrials": 10,
+          "status": "표본 부족"
+        },
+        {
+          "id": "6:22|1:14>44",
+          "successes": 7,
+          "trials": 15,
+          "contribution": 0.00005674818940733892,
+          "registeredTrials": 7,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 4,
+      "position": 2,
+      "number": 21,
+      "score": 0.18788004876103523,
+      "rank": 19,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.18788004876103523,
+      "relations": [
+        {
+          "id": "2:5>21",
+          "successes": 33,
+          "trials": 154,
+          "contribution": 0.0003949513832969006,
+          "registeredTrials": 146,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "5:21+42>21",
+          "successes": 7,
+          "trials": 13,
+          "contribution": 0.00028932238187704816,
+          "registeredTrials": 5,
+          "status": "표본 부족"
+        },
+        {
+          "id": "3:34|1:19>21",
+          "successes": 11,
+          "trials": 27,
+          "contribution": 0.0000838352382579945,
+          "registeredTrials": 19,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 4,
+      "position": 3,
+      "number": 36,
+      "score": 0.16374995393174374,
+      "rank": 20,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.16374995393174374,
+      "relations": [
+        {
+          "id": "10:2>36",
+          "successes": 32,
+          "trials": 156,
+          "contribution": 0.0003513082533742733,
+          "registeredTrials": 148,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "6:27+28>36",
+          "successes": 7,
+          "trials": 19,
+          "contribution": 0.00025676667519959536,
+          "registeredTrials": 11,
+          "status": "표본 부족"
+        },
+        {
+          "id": "10:2|1:29>36",
+          "successes": 9,
+          "trials": 21,
+          "contribution": 0.000071791017009903,
+          "registeredTrials": 13,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 4,
+      "position": 4,
+      "number": 43,
+      "score": 0.14897917847708372,
+      "rank": 21,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.14897917847708372,
+      "relations": [
+        {
+          "id": "4:27>43",
+          "successes": 15,
+          "trials": 182,
+          "contribution": -0.0002574324309600106,
+          "registeredTrials": 174,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "1:14+40>43",
+          "successes": 7,
+          "trials": 24,
+          "contribution": 0.00021678049937136175,
+          "registeredTrials": 16,
+          "status": "표본 부족"
+        },
+        {
+          "id": "16:12|8:26>43",
+          "successes": 10,
+          "trials": 30,
+          "contribution": 0.00006673587074303057,
+          "registeredTrials": 22,
+          "status": "통계적 우위 확인 없음"
+        }
+      ]
+    },
+    {
+      "game": 4,
+      "position": 5,
+      "number": 8,
+      "score": 0.12025946463115891,
+      "rank": 22,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.12025946463115891,
+      "relations": [
+        {
+          "id": "10:2>8",
+          "successes": 31,
+          "trials": 156,
+          "contribution": 0.00031994144503728466,
+          "registeredTrials": 148,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "4:36+38>8",
+          "successes": 6,
+          "trials": 17,
+          "contribution": 0.00021334033279583347,
+          "registeredTrials": 9,
+          "status": "표본 부족"
+        },
+        {
+          "id": "3:2|1:14>8",
+          "successes": 9,
+          "trials": 18,
+          "contribution": 0.00007625636199861524,
+          "registeredTrials": 10,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 4,
+      "position": 6,
+      "number": 16,
+      "score": 0.11240607454243977,
+      "rank": 23,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.11240607454243977,
+      "relations": [
+        {
+          "id": "7:28>16",
+          "successes": 36,
+          "trials": 157,
+          "contribution": 0.0004702636033619776,
+          "registeredTrials": 149,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "5:14+42>16",
+          "successes": 7,
+          "trials": 17,
+          "contribution": 0.00027048506479471744,
+          "registeredTrials": 9,
+          "status": "표본 부족"
+        },
+        {
+          "id": "7:28|1:45>16",
+          "successes": 10,
+          "trials": 30,
+          "contribution": 0.00006673587074303057,
+          "registeredTrials": 22,
+          "status": "통계적 우위 확인 없음"
+        }
+      ]
+    },
+    {
+      "game": 5,
+      "position": 1,
+      "number": 14,
+      "score": 0.08499868551169816,
+      "rank": 24,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": 0.08499868551169816,
+      "relations": [
+        {
+          "id": "2:1>14",
+          "successes": 34,
+          "trials": 171,
+          "contribution": 0.0003269779495447183,
+          "registeredTrials": 163,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "2:1+27>14",
+          "successes": 8,
+          "trials": 22,
+          "contribution": 0.0002907884551910129,
+          "registeredTrials": 14,
+          "status": "표본 부족"
+        },
+        {
+          "id": "16:18|8:38>14",
+          "successes": 9,
+          "trials": 26,
+          "contribution": 0.00006301897757100223,
+          "registeredTrials": 18,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 5,
+      "position": 2,
+      "number": 18,
+      "score": 1.0506113720063603,
+      "rank": 2,
+      "priorUses": 1,
+      "diversityPenalty": 1.0293630504361404,
+      "selectionScore": 0.02124832157021994,
+      "relations": [
+        {
+          "id": "5:45>18",
+          "successes": 34,
+          "trials": 175,
+          "contribution": 0.0003057515145940169,
+          "registeredTrials": 167,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "10:10+31>18",
+          "successes": 12,
+          "trials": 30,
+          "contribution": 0.00044177583871890145,
+          "registeredTrials": 22,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "8:13|1:14>18",
+          "successes": 9,
+          "trials": 29,
+          "contribution": 0.00005746880133632099,
+          "registeredTrials": 21,
+          "status": "통계적 우위 확인 없음"
+        }
+      ]
+    },
+    {
+      "game": 5,
+      "position": 3,
+      "number": 38,
+      "score": -0.007612532401589085,
+      "rank": 25,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": -0.007612532401589085,
+      "relations": [
+        {
+          "id": "9:9>38",
+          "successes": 27,
+          "trials": 136,
+          "contribution": 0.00030861793504333585,
+          "registeredTrials": 128,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "10:4+10>38",
+          "successes": 7,
+          "trials": 22,
+          "contribution": 0.00023339599692962876,
+          "registeredTrials": 14,
+          "status": "표본 부족"
+        },
+        {
+          "id": "16:21|8:18>38",
+          "successes": 8,
+          "trials": 19,
+          "contribution": 0.00006329564286266444,
+          "registeredTrials": 11,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 5,
+      "position": 4,
+      "number": 15,
+      "score": -0.06148752108593547,
+      "rank": 26,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": -0.06148752108593547,
+      "relations": [
+        {
+          "id": "2:28>15",
+          "successes": 10,
+          "trials": 159,
+          "contribution": -0.00034616260668160687,
+          "registeredTrials": 151,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "10:4+41>15",
+          "successes": 6,
+          "trials": 18,
+          "contribution": 0.00020650878887483278,
+          "registeredTrials": 10,
+          "status": "표본 부족"
+        },
+        {
+          "id": "10:41|5:14>15",
+          "successes": 9,
+          "trials": 21,
+          "contribution": 0.000071791017009903,
+          "registeredTrials": 13,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 5,
+      "position": 5,
+      "number": 35,
+      "score": -0.11747017613275738,
+      "rank": 27,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": -0.11747017613275738,
+      "relations": [
+        {
+          "id": "1:40>35",
+          "successes": 31,
+          "trials": 174,
+          "contribution": 0.0002246008826364409,
+          "registeredTrials": 166,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "3:16+34>35",
+          "successes": 8,
+          "trials": 18,
+          "contribution": 0.00032123589380529536,
+          "registeredTrials": 10,
+          "status": "표본 부족"
+        },
+        {
+          "id": "10:10|1:40>35",
+          "successes": 8,
+          "trials": 21,
+          "contribution": 0.00006021182071798316,
+          "registeredTrials": 13,
+          "status": "표본 부족"
+        }
+      ]
+    },
+    {
+      "game": 5,
+      "position": 6,
+      "number": 11,
+      "score": -0.20339807431634963,
+      "rank": 28,
+      "priorUses": 0,
+      "diversityPenalty": 0,
+      "selectionScore": -0.20339807431634963,
+      "relations": [
+        {
+          "id": "3:34>11",
+          "successes": 37,
+          "trials": 187,
+          "contribution": 0.0003279890152774709,
+          "registeredTrials": 179,
+          "status": "통계적 우위 확인 없음"
+        },
+        {
+          "id": "2:1+18>11",
+          "successes": 7,
+          "trials": 21,
+          "contribution": 0.00024145244010885834,
+          "registeredTrials": 13,
+          "status": "표본 부족"
+        },
+        {
+          "id": "16:21|8:38>11",
+          "successes": 7,
+          "trials": 17,
+          "contribution": 0.0000544802883876024,
+          "registeredTrials": 9,
+          "status": "표본 부족"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "mode": "every-draw-walk-forward",
+    "from": 1001,
+    "to": 1251,
+    "n": 251,
+    "games": 1255,
+    "activeRounds": 251,
+    "frequency": {
+      "experimental": [
+        499,
+        524,
+        200,
+        32,
+        0,
+        0,
+        0
+      ],
+      "baseline": [
+        492,
+        552,
+        183,
+        27,
+        1,
+        0,
+        0
+      ]
+    },
+    "experimentalMean": 0.8127490039840638,
+    "baselineMean": 0.799203187250996,
+    "difference": 0.013545816733067729,
+    "pValue": 1,
+    "interval": [
+      -0.03585657370517928,
+      0.061354581673306784
+    ],
+    "status": "무작위보다 높은 예측력 확인 없음"
+  },
+  "durationMs": 3873.0486
+}

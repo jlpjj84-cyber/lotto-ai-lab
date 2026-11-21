@@ -42,6 +42,14 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
       assert.equal(initial.record.result.model.target, 1252);
       if (mode !== 'failure') {
         assert.equal(initial.record.result.validation.n, 251);
+        assert.equal(initial.record.result.model.scores.length, 45);
+        assert.ok(initial.record.result.recommendation.trace.every(t => t.method === 'ranked' && t.decisions.length === 6 && t.shared === false));
+        await page.locator('[data-auto-chain="overview"] [data-score-table] > summary').click();
+        assert.equal(await page.locator('[data-auto-chain="overview"] [data-score-table] tbody tr').count(), 45);
+        await page.locator('[data-auto-chain="overview"] [data-auto-mode]').selectOption('control');
+        assert.ok((await page.locator('[data-auto-chain="overview"] .recommendation-game h3').allTextContents()).every(t => t.includes('무작위 대조군')));
+        await page.locator('[data-auto-chain="overview"] [data-auto-mode]').selectOption('evidence');
+        assert.ok((await page.locator('[data-auto-chain="overview"] .recommendation-game h3').allTextContents()).every(t => t.includes('분석 점수 순위')));
         await page.locator('[data-auto-chain="overview"] .recommendation-detail').first().locator('summary').click();
         assert.equal(await page.locator('[data-auto-chain="overview"] .recommendation-detail').first().locator('tbody tr').count(), 6);
         await page.locator('[data-auto-chain="overview"] [data-auto-generator]').click();
@@ -51,8 +59,12 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
         assert.equal(await page.locator('#manualGenOutput .recommendation-game').count(), 5);
         await page.locator('#manualCopyReport').click();
         assert.match(await page.evaluate(() => navigator.clipboard.readText()), /10번째 연쇄 패턴 기반 실험 추천/);
+        await page.locator('#manualChainMode').selectOption('control');
+        await page.locator('#manualGenerate').click();
+        await page.locator('#manualGenStatus').getByText('생성 기록에 저장했습니다.').waitFor();
+        assert.ok((await page.locator('#manualGenOutput .recommendation-game h3').allTextContents()).every(t => t.includes('무작위 대조군')));
         await page.locator('[data-tab="archive"]').click();
-        await page.locator('#archiveRecommendations').getByText(/연쇄 패턴 기반 실험 추천.*SHA-256 일치/).waitFor();
+        await page.locator('#archiveRecommendations').getByText(/연쇄 패턴 기반 실험 추천.*SHA-256 일치/).first().waitFor();
         await page.locator('[data-tab="chains"]').click();
         await page.locator('.chain-advanced > summary').click();
         await page.locator('#chainRun').click();
@@ -73,6 +85,8 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
         await page.waitForFunction(() => window.qaService.getState().phase === 'ready' && window.qaService.getState().source === 'cache');
       } else {
         assert.equal(initial.record.result.model.fallback, true); assert.equal(initial.record.result.validation.pValue, null);
+        assert.equal(initial.record.result.recommendation.lines.length, 0);
+        assert.equal(initial.record.result.control.lines.length, 5);
         assert.match(await page.locator('[data-auto-chain="overview"] [data-auto-status]').innerText(), /분석 실패/);
       }
       assert.equal(await page.evaluate(() => localStorage.getItem('lotto-auto-test-keep')), 'original');

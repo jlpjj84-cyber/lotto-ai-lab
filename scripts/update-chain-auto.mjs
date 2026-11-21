@@ -47,7 +47,7 @@ export async function updateAutomaticChain({ root = rootDefault, destination = j
       } else atomicFile(path, bytes, true);
     }
     atomicFile(latestPath, JSON.stringify(record) + '\n');
-    atomicFile(healthPath, JSON.stringify({ schema: 1, state: record.result.model.fallback ? 'fallback' : 'ok', latest: sourceRound,
+    atomicFile(healthPath, JSON.stringify({ schema: 1, state: record.result.recommendation.unavailable ? 'unavailable' : record.result.model.fallback ? 'weak-evidence' : 'ok', latest: sourceRound,
       inputSha256: record.data.sha256, checkedAtUTC: now.toISOString(), predictionAdvantage: record.result.validation.status }) + '\n');
     return record;
   } catch (error) {
