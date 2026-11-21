@@ -1,31 +1,32 @@
-import { addDraw, newHistory, picksFor, randomFor } from './lotto-strategies.js';
+import { addDraw, newHistory, picksFor } from './lotto-strategies.js';
 import { cleanChainRows, numberMask } from './chain-research.js';
 import { bootstrapRoundMean } from './research-backtest.js';
 import { seededRandom } from './research-math.js';
 import { bernoulliLogE, conditionalInterval, eToP, FORECAST_TILTS, logMeanExp, pairedLogMgfs } from './chain-math.js';
 import { scheduleFor } from './lotto-calendar.js';
+import { scoreAllNumbers, emptyRankingModel, generateRankedGames } from './chain-ranking.js';
+import { generateControlGames } from './chain-control.js';
 
 export const AUTO_CHAIN_ID = 'chain-experiment';
 export const AUTO_CHAIN_NAME = '연쇄 패턴 기반 실험 추천';
-export const AUTO_CHAIN_VERSION = '5.2.1';
+export const AUTO_CHAIN_VERSION = '5.2.2';
 export const AUTO_CHAIN_DEFAULTS = Object.freeze({ seed: 645, maxLag: 10, maxLength: 10,
-  minSupport: 8, minSuccesses: 3, topK: 24, beam: 12, maxModels: 50000, maxPending: 60000,
-  maxLongQueries: 512, evaluationStart: 1001, shrinkage: 20 });
+  minSupport: 8, beam: 12, maxModels: 50000, maxPending: 60000,
+  maxLongQueries: 512, evaluationStart: 1001, shrinkage: 20, diversityStrength: .35 });
 
 export function autoChainSettings(options = {}) {
   const s = { ...AUTO_CHAIN_DEFAULTS, ...options };
   for (const [key, min, max] of [['seed', 0, 0xffffffff], ['maxLag', 1, 10], ['maxLength', 2, 100],
-    ['minSupport', 2, 1000], ['minSuccesses', 1, 1000], ['topK', 1, 50], ['beam', 1, 30],
+    ['minSupport', 2, 1000], ['beam', 1, 30],
     ['maxModels', 1, 100000], ['maxPending', 1, 200000], ['maxLongQueries', 1, 3000],
     ['evaluationStart', 51, 9999], ['shrinkage', 1, 1000]]) {
     if (!Number.isInteger(s[key]) || s[key] < min || s[key] > max) throw Error(`자동 연쇄 설정 오류: ${key}`);
   }
+  if (!Number.isFinite(s.diversityStrength) || s.diversityStrength < 0 || s.diversityStrength > 2) throw Error('분산 감점 설정 오류');
   return s;
 }
 const p0 = 6 / 45;
-const allNumbers = Array.from({ length: 45 }, (_, i) => i + 1);
 const matches = (row, mask) => row && (row.low & mask.low) === mask.low && (row.high & mask.high) === mask.high;
-const compare = (a, b) => b.score - a.score || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
 export const contextName = c => c.stages.map((stage, i) => `${c.lags[i]}회 전 ${stage.join('+')}`).join(' & ');
 export const autoHistorySignature = input => cleanChainRows(input).map(row => `${row.round}:${row.numbers.join(',')}`).join('|');
 
@@ -132,24 +133,7 @@ export class AutomaticChainState {
     for (const entry of this.longModels) if (!contexts.has(entry.key) && contextMatches(this.index, entry, target)) {
       contexts.set(entry.key, entry); active.push(entry);
     }
-    const top = [];
-    for (const entry of active) {
-      if (entry.trials < s.minSupport) continue;
-      const denominator = Math.sqrt(entry.trials * p0 * (1 - p0));
-      for (let n = 1; n <= 45; n++) {
-        const hits = entry.counts[n];
-        if (hits < s.minSuccesses) continue;
-        const score = (hits - entry.trials * p0) / denominator;
-        const candidate = { id: `${entry.key}>${n}`, number: n, score, entry,
-          contribution: Math.max(0, (hits - entry.trials * p0) / (entry.trials + s.shrinkage)) };
-        if (score <= 0 || (top.length >= s.topK && compare(candidate, top.at(-1)) >= 0)) continue;
-        top.push(candidate); top.sort(compare); if (top.length > s.topK) top.pop();
-      }
-    }
-    const weights = Array(46).fill(1);
-    for (const p of top) weights[p.number] += p.contribution;
-    for (let n = 1; n <= 45; n++) weights[n] = Math.min(2, weights[n]);
-    return { target, contexts, candidates: top, weights, fallback: top.length === 0 };
+    return { target, contexts, ...scoreAllNumbers(active, s), diversityStrength: s.diversityStrength };
   }
   append(row, prepared) {
     for (const [key, entry] of prepared.contexts) {
@@ -166,40 +150,8 @@ export class AutomaticChainState {
   }
 }
 
-export function generateChainGames(model, { seed = 645, games = 5, uniqueLines = false, spread = false } = {}) {
-  if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff || !Number.isInteger(games) || games < 1 || games > 20 ||
-    typeof uniqueLines !== 'boolean' || typeof spread !== 'boolean') throw Error('연쇄 추천의 시드·게임 수·옵션을 확인해 주세요.');
-  if (spread && games > 7) throw Error('번호를 모두 분산하면 최대 7게임입니다.');
-  const lines = [], trace = [], seen = new Set();
-  let available = allNumbers;
-  for (let batch = 0; batch < 256 && lines.length < games; batch++) {
-    const batchSeed = (seed + Math.imul(batch, 0x9e3779b1)) >>> 0, random = randomFor(model.target, 10, batchSeed);
-    for (let game = 0; game < 5 && lines.length < games; game++) {
-      const shared = game === 4 && !spread, uniform = game === 4 || model.fallback;
-      const rng = game === 4 ? randomFor(model.target, 1, batchSeed) : random;
-      const pool = [...available], selected = [], decisions = [];
-      if (game === 4) {
-        const originalTrace = [];
-        selected.push(...globalThis.LottoPicks.uniformLine(rng, available, originalTrace));
-        decisions.push(...originalTrace.map(d => ({ ...d, weight: 1, selectionProbability: 1 / d.pool, influences: [] })));
-      }
-      while (selected.length < 6) {
-        const total = pool.reduce((sum, n) => sum + (uniform ? 1 : model.weights[n]), 0);
-        let cursor = rng() * total, index = 0;
-        for (; index < pool.length - 1; index++) { cursor -= uniform ? 1 : model.weights[pool[index]]; if (cursor < 0) break; }
-        const n = pool[index], weight = uniform ? 1 : model.weights[n];
-        decisions.push({ number: n, pool: pool.length, weight, selectionProbability: weight / total,
-          influences: uniform ? [] : model.candidates.filter(p => p.number === n).map(p => p.id) });
-        selected.push(n); pool.splice(index, 1);
-      }
-      const line = selected.sort((a, b) => a - b), key = line.join(',');
-      if (uniqueLines && seen.has(key)) continue;
-      seen.add(key); lines.push(line); trace.push({ method: uniform ? 'uniform' : 'chain', shared, batch, decisions });
-      if (spread) available = available.filter(n => !line.includes(n));
-    }
-  }
-  if (lines.length !== games) throw Error('선택한 중복 제한으로 조합을 구성하지 못했습니다.');
-  return { lines, trace };
+export function generateChainGames(model, options = {}) {
+  return generateRankedGames(model, options);
 }
 
 function evidence(candidate, index, through) {
@@ -210,6 +162,7 @@ function evidence(candidate, index, through) {
   return { id: candidate.id, number, context: { key: entry.key, lags: entry.lags, stages: entry.stages },
     trials: entry.trials, successes: entry.counts[number], conditionalRate: entry.counts[number] / entry.trials,
     effect: entry.counts[number] / entry.trials - p0, contribution: candidate.contribution,
+    family: candidate.family, scoreCoefficient: candidate.coefficient, shrunkEffect: candidate.effect,
     targets: [...entry.targets], successfulTargets: entry.targets.filter(t => index.get(t).numbers.includes(number)),
     through, validation: { registeredAt: entry.registeredAt, trials: n, successes, adjustedP,
       interval: conditionalInterval(successes, n), method: '등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정',
@@ -234,15 +187,17 @@ export function automaticChainAnalysis(input, options = {}, progress = () => {})
       const mgfs = pairedLogMgfs(experimental, baseline);
       FORECAST_TILTS.forEach((tilt, j) => { logWealth[j] += tilt * difference - mgfs[j]; });
       rounds.push({ round: row.round, through: row.round - 1, games: 5, experimental, baseline, experimentalHits: a,
-        baselineHits: b, difference, fallback: model.fallback, patterns: model.candidates.map(p => p.id) });
+        baselineHits: b, difference, weakEvidence: model.fallback, scoreVector: model.scores.map(row => row.score),
+        rankVector: model.scores.map(row => row.rank), selectionMethod: model.scoringMethod });
       experimentalHits += a; baselineHits += b; if (!model.fallback) activeRounds++;
     }
     state.append(row, model); addDraw(history, row);
     if (i % 10 === 0) progress((i + 1) / rows.length * .95);
   }
-  const model = complete ? state.prepare(latest + 1) : { target: latest + 1, weights: Array(46).fill(1), candidates: [], fallback: true };
+  const model = complete ? state.prepare(latest + 1) : emptyRankingModel(latest + 1, '1회부터 최신 회차까지 자료가 불완전해 분석 점수 산출을 중단했습니다.');
   const candidates = model.candidates.map(p => evidence(p, state.index, latest));
-  const forecast = generateChainGames(model, { seed: settings.seed });
+  const forecast = complete ? generateChainGames(model) : { lines: [], trace: [], mode: 'evidence', unavailable: true };
+  const control = generateControlGames(latest + 1, { seed: settings.seed });
   const n = rounds.length, games = n * 5, difference = n ? (experimentalHits - baselineHits) / games : null;
   const pValue = n >= 20 ? eToP(logMeanExp(logWealth)) : null;
   const validation = { mode: 'every-draw-walk-forward', from: rounds[0]?.round ?? null, to: rounds.at(-1)?.round ?? null,
@@ -252,9 +207,11 @@ export function automaticChainAnalysis(input, options = {}, progress = () => {})
     status: n < 20 ? '표본 부족' : difference > 0 && pValue <= .05 ? '과거 순차 평가의 개선 신호 · 미래 재검증 필요' : '무작위보다 높은 예측력 확인 없음' };
   progress(1);
   return { version: AUTO_CHAIN_VERSION, strategy: AUTO_CHAIN_ID, settings, data: { first: rows[0].round, latest,
-    count: rows.length, complete, signature: autoHistorySignature(rows) }, model: { target: model.target, weights: model.weights, candidates, fallback: model.fallback,
-      fallbackReason: !complete ? '1회부터 최신 회차까지 자료가 완전하지 않아 균등 무작위로 대체' : model.fallback ? '표본 기준을 만족하는 활성 조건이 없어 균등 무작위로 대체' : null },
-    recommendation: { target: latest + 1, ...scheduleFor(latest + 1), ...forecast }, validation,
+    count: rows.length, complete, signature: autoHistorySignature(rows) }, model: { target: model.target, scores: model.scores,
+      scoringMethod: model.scoringMethod, diversityStrength: model.diversityStrength, candidates, fallback: model.fallback,
+      fallbackReason: !complete ? model.fallbackReason : model.fallback ? '조건 표본 부족: 점수 0과 명시적 동점/분산 규칙을 쓰는 미검증 실험 추천' : null },
+    recommendation: { target: latest + 1, ...scheduleFor(latest + 1), ...forecast },
+    control: { target: latest + 1, ...scheduleFor(latest + 1), ...control }, validation,
     search: { registered: state.models.size, pending: state.pending.size, limits: state.limits,
       policy: '전이 1~10회 · 동일 회차 번호쌍 · 동일/혼합 간격 연쇄 · 빈발 조건 빔 확장' }, durationMs: performance.now() - started };
 }

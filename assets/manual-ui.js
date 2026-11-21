@@ -35,7 +35,7 @@ function renderEvidence() {
   const choice = $('manualStrategy').value;
   if (choice === AUTO_CHAIN_ID) {
     const state = getAutoChainService().getState(), v = state.record?.result.validation;
-    evidence.textContent = v ? `자동 워크포워드 ${v.n}회 · ${v.status}. 데이터가 갱신되면 자동 재분석합니다. 시드·게임 수·중복 제한 변경은 참고 성적으로만 표시합니다.` : '자동 연쇄 분석 중입니다. 완료 후 실험 추천을 생성할 수 있습니다.';
+    evidence.textContent = v ? `45개 전체 점수 → 순위 → 6개 선정 → 근거 기록. 자동 워크포워드 ${v.n}회 · ${v.status}. 무작위는 별도 대조군에서만 사용합니다. 시드는 대조군에만 적용하며 점수 추천에는 사용하지 않습니다.` : '자동 연쇄 분석 중입니다. 완료 후 실험 추천을 생성할 수 있습니다.';
     return;
   }
   const result = baseline?.strategies.find(row => row.id === choice)?.evaluation;
@@ -119,6 +119,7 @@ async function generate() {
       strategy: $('manualStrategy').value, games: $('manualGames').valueAsNumber,
       uniqueLines: $('manualUnique').checked, spread: $('manualSpread').checked, seed, id: crypto.randomUUID(), explain: true,
       autoChain: getAutoChainService().getState().record,
+      mode: $('manualChainMode').value,
     });
     const data = await datasetStamp(source);
     draft.research.data = data;
@@ -188,7 +189,7 @@ $('manualSavePurchase').addEventListener('click', async () => {
   } catch (error) { $('manualGenStatus').textContent = error.message; }
   finally { savingPurchase = false; renderLatest(); }
 });
-for (const id of ['manualStrategy', 'manualGames', 'manualUnique', 'manualSpread', 'manualSeed']) {
+for (const id of ['manualStrategy', 'manualGames', 'manualUnique', 'manualSpread', 'manualSeed', 'manualChainMode']) {
   $(id).addEventListener('change', () => { latest = null; renderLatest(); });
 }
 document.querySelector('[data-tab="generator"]').addEventListener('click', () => {
@@ -212,4 +213,7 @@ window.addEventListener('lotto-recommendations-restored', () => { read(); if (ac
 read();
 getAutoChainService().subscribe(state => {
   if ($('manualStrategy').value === AUTO_CHAIN_ID && !latest) renderEvidence();
+});
+$('manualStrategy').addEventListener('change', () => {
+  $('manualChainModeLabel').hidden = $('manualStrategy').value !== AUTO_CHAIN_ID;
 });

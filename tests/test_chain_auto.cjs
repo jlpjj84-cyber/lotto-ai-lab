@@ -16,7 +16,7 @@ test('all published draws feed the next recommendation and the user catalog has 
   const r = await result;
   assert.deepEqual(r.data.count, 1251); assert.equal(r.model.target, 1252);
   assert.equal(r.validation.n, 251); assert.equal(r.validation.games, 1255);
-  for (const row of r.validation.rounds) assert.deepEqual(row.experimental[4], row.baseline[4]);
+  for (const row of r.validation.rounds) { assert.equal(row.selectionMethod, 'conditional-family-ranking-v1'); assert.equal(row.scoreVector.length, 45); }
   assert.equal(r.recommendation.lines.length, 5); assert.equal(r.model.fallback, false);
   const { RECOMMENDATION_STRATEGIES } = await import('../assets/strategy-catalog.js');
   const { STRATEGIES, forecastAt } = await import('../assets/lotto-strategies.js');
@@ -48,20 +48,26 @@ test('future outcomes never alter a prior prediction; the same prefix reproduces
   const original = automaticChainAnalysis(shortRows, smallOptions);
   const changed = shortRows.map(r => r.round >= 100 ? { ...r, numbers: [1, 2, 3, 4, 5, 6] } : r);
   const alternative = automaticChainAnalysis(changed, smallOptions);
-  const through = r => r.validation.rounds.filter(p => p.round <= 100).map(p => [p.experimental, p.patterns]);
+  const through = r => r.validation.rounds.filter(p => p.round <= 100).map(p => [p.experimental, p.scoreVector, p.rankVector]);
   assert.deepEqual(through(original), through(alternative));
   const prefix = automaticChainAnalysis(shortRows.filter(r => r.round < 100), smallOptions);
   assert.deepEqual(prefix.recommendation.lines, original.validation.rounds.find(r => r.round === 100).experimental);
   assert.ok(original.validation.rounds.every(r => r.through === r.round - 1 && r.experimental.length === r.baseline.length));
 });
 
-test('small/incomplete data falls back to the exact legacy uniform baseline and never fabricates validation', async () => {
+test('weak samples use explicit zero-score ties, incomplete data suspends ranking, and controls remain separate', async () => {
   const { automaticChainAnalysis } = await core;
   const { newHistory, picksFor } = await import('../assets/lotto-strategies.js');
   for (const input of [rows.slice(0, 5), rows.filter(r => r.round !== 10)]) {
     const r = automaticChainAnalysis(input);
     assert.equal(r.model.fallback, true);
-    assert.deepEqual(r.recommendation.lines, picksFor(newHistory(), r.model.target, 8, 645));
+    assert.deepEqual(r.control.lines, picksFor(newHistory(), r.model.target, 8, 645));
+    assert.equal(r.model.scores.length, 45);
+    if (input.length === 5) {
+      assert.ok(r.model.scores.every(s => s.score === 0 && s.relationCount === 0));
+      assert.deepEqual(r.recommendation.lines[0], [1, 2, 3, 4, 5, 6]);
+      assert.ok(r.recommendation.trace.every(t => t.method === 'ranked'));
+    } else { assert.equal(r.recommendation.lines.length, 0); assert.equal(r.recommendation.unavailable, true); }
     assert.equal(r.validation.n, 0); assert.equal(r.validation.pValue, null);
     assert.equal(r.validation.experimentalMean, null);
   }
@@ -93,12 +99,15 @@ test('manual chain options, number-level evidence, copy and research backup roun
   const manual = await sealResearch(createManualRecord(shortRows, base));
   assert.deepEqual(manual.lines, snapshot.result.recommendation.lines);
   const { recommendationHTML, recommendationReport } = await import('../assets/recommendation-report.js');
-  assert.match(recommendationHTML(manual), /10번째/); assert.match(recommendationReport(manual), /역사적 패턴|가중치|기본 가중치/);
+  assert.ok(recommendationHTML(manual).includes('10번째')); assert.ok(recommendationReport(manual).includes('45개 전체 점수'));
   const { chainNumberReason } = await import('../assets/chain-auto-report.js');
   for (const n of manual.lines[4]) {
-    assert.match(chainNumberReason(manual, 4, n), /사용하지 않았/);
-    assert.deepEqual(manual.research.trace[4].decisions.find(d => d.number === n).influences, []);
+    assert.ok(chainNumberReason(manual, 4, n).includes('분석 점수'));
+    assert.equal(manual.research.trace[4].method, 'ranked');
   }
+  const control = await sealResearch(createManualRecord(shortRows, { ...base, id: 'control-manual', mode: 'control' }));
+  assert.deepEqual(control.lines, snapshot.result.control.lines);
+  assert.ok(control.research.trace.every(t => t.method === 'uniform-control'));
   const spread = createManualRecord(shortRows, { ...base, games: 7, spread: true });
   assert.equal(new Set(spread.lines.flat()).size, 42); assert.equal(spread.comparable, false);
   assert.throws(() => createManualRecord(shortRows, { ...base, games: 8, spread: true }), /최대 7/);

@@ -33,7 +33,7 @@ function validExplanation(record) {
   if (!evidence) return !record.sha256;
   if (record.strategy === AUTO_CHAIN_ID) return evidence.kind === 'auto-chain' && /^[0-9a-f]{64}$/.test(evidence.data?.sha256) &&
     evidence.model?.target === record.round && evidence.model.candidates.every(p => p.through === record.dataRound) &&
-    validChainSelection(record.lines, evidence.trace, evidence.model);
+    validChainSelection(record.lines, evidence.trace, evidence.model, { ...record.options, seed: record.seed });
   const methods = new Set(['uniform', 'hot', 'cold', 'overdue', 'pairs', 'pattern']);
   return /^[0-9a-f]{64}$/.test(evidence.data?.sha256) && finite(evidence.recent) && finite(evidence.earlier) &&
     Array.isArray(evidence.lines) && evidence.lines.length === record.lines.length &&

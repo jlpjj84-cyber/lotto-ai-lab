@@ -3,3 +3,4 @@
 .auto-chain-card>details{margin:14px 0;font-size:13px;line-height:1.7}.auto-chain-card summary{cursor:pointer;color:var(--mint)}.auto-chain-card progress{width:100%;accent-color:var(--mint)}.auto-validation{font-weight:700;color:var(--mint)}.auto-chain-card .auto-reason,.auto-reason{white-space:normal!important;min-width:220px;line-height:1.7}.auto-chain-card .recommendation-overview{margin-top:15px}.auto-chain-card>h2{margin-bottom:12px}
 .auto-chain-card{min-width:0;max-width:100%;overflow-wrap:anywhere}.auto-chain-card .research-help{overflow-wrap:anywhere}
 .chain-advanced>summary{cursor:pointer;padding:15px;color:var(--mint);font-weight:700}
+#manualChainModeLabel[hidden]{display:none}.auto-chain-card [data-auto-mode]{max-width:100%;margin:7px 0}

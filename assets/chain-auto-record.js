@@ -1,6 +1,8 @@
 import { AUTO_CHAIN_ID, AUTO_CHAIN_VERSION, autoChainSettings, autoHistorySignature, automaticChainAnalysis, generateChainGames } from './chain-auto.js';
 import { datasetStamp, researchDigest, sealResearch, verifiedResearch } from './research-provenance.js';
 import { scheduleFor } from './lotto-calendar.js';
+import { generateRankedGames, emptyRankingModel } from './chain-ranking.js';
+import { generateControlGames } from './chain-control.js';
 
 export const AUTO_CHAIN_KEY = 'lotto_lab_v52_auto_chain';
 export const AUTO_CHAIN_RECORD_LIMIT = 3;
@@ -27,12 +29,13 @@ export async function createAutoSnapshot(rows, options = {}, progress = () => {}
 }
 export async function uniformAutoSnapshot(rows, reason, options = {}, now = new Date()) {
   const { data, key } = await autoInputKey(rows, options), settings = autoChainSettings(options);
-  const model = { target: data.last + 1, weights: Array(46).fill(1), candidates: [], fallback: true, fallbackReason: reason };
-  const generated = generateChainGames(model, { seed: settings.seed });
+  const model = emptyRankingModel(data.last + 1, reason);
+  const control = generateControlGames(model.target, { seed: settings.seed });
   return sealResearch({ schema: 1, kind: 'auto-chain', id: key, generatedAtUTC: now.toISOString(), source: 'automatic-research',
     officialPreDraw: false, data, result: { version: AUTO_CHAIN_VERSION, strategy: AUTO_CHAIN_ID, settings, analysisState: 'failed',
       data: { first: data.first, latest: data.last, count: data.count, signature: autoHistorySignature(rows), complete: false },
-      model, recommendation: { target: model.target, ...scheduleFor(model.target), ...generated },
+      model, recommendation: { target: model.target, ...scheduleFor(model.target), lines: [], trace: [], unavailable: true, mode: 'evidence' },
+      control: { target: model.target, ...scheduleFor(model.target), ...control },
       validation: { n: 0, games: 0, rounds: [], experimentalMean: null, baselineMean: null, difference: null, interval: null,
         pValue: null, status: '검증 대기 · 분석 실패로 평가하지 않음' },
       search: { registered: 0, pending: 0, limits: {}, policy: reason }, durationMs: 0 } });
@@ -47,10 +50,26 @@ export async function verifyAutoSnapshot(record, rows, options = {}) {
     result.data.signature === autoHistorySignature(rows) &&
     result.model.target === input.data.last + 1 && result.recommendation.target === input.data.last + 1 &&
     JSON.stringify(result.settings) === JSON.stringify(autoChainSettings(options)) &&
-    validChainSelection(result.recommendation.lines, result.recommendation.trace, result.model);
+    (result.recommendation.unavailable ? result.recommendation.lines.length === 0 && result.recommendation.trace.length === 0 &&
+      (result.analysisState === 'failed' || !result.data.complete) :
+      validChainSelection(result.recommendation.lines, result.recommendation.trace, result.model)) &&
+    validChainSelection(result.control?.lines, result.control?.trace, result.model, { mode: 'control', seed: result.settings.seed });
 }
 
-export function validChainSelection(lines, trace, model) {
+export function validChainSelection(lines, trace, model, options = {}) {
+  if (model?.scores) {
+    if (!Array.isArray(lines) || !Array.isArray(trace) || lines.length < 1 || lines.length > 20 || lines.length !== trace.length ||
+      model.scores.length !== 45 || model.scores.some((r, i) => r.number !== i + 1 || !Number.isFinite(r.score))) return false;
+    const sorted = [...model.scores].sort((a, b) => b.score - a.score || a.number - b.number);
+    if (sorted.some((r, i) => r.rank !== i + 1)) return false;
+    if (model.scores.some(r => Math.abs(r.score / 100 - r.components.reduce((n, c) => n + c.contribution, 0)) > 1e-12)) return false;
+    try {
+      const generated = options.mode === 'control' ? generateControlGames(model.target, { ...options, games: lines.length }) :
+        generateRankedGames(model, { ...options, games: lines.length });
+      return JSON.stringify(lines) === JSON.stringify(generated.lines) && JSON.stringify(trace) === JSON.stringify(generated.trace);
+    } catch { return false; }
+  }
+  // Historical v5.2.1 manual records retain their original schema and hash.
   if (!Array.isArray(lines) || !Array.isArray(trace) || lines.length !== trace.length || !Array.isArray(model?.weights) ||
     model.weights.length !== 46 || !model.weights.every(w => Number.isFinite(w) && w >= 1 && w <= 2) || !Array.isArray(model.candidates)) return false;
   const known = new Map(model.candidates.map(p => [p.id, p]));
@@ -62,24 +81,28 @@ export function validChainSelection(lines, trace, model) {
       (trace[i].method !== 'uniform' || d.influences.length === 0) && d.influences.every(id => known.get(id)?.number === d.number)));
 }
 
-export function chainRecommendationRecord(snapshot) {
+export function chainRecommendationRecord(snapshot, mode = 'evidence') {
   const r = snapshot.result;
+  const generated = mode === 'control' ? r.control : r.recommendation;
   return { schema: 1, id: `auto-${snapshot.id}`, source: 'automatic-research', strategy: AUTO_CHAIN_ID, version: AUTO_CHAIN_VERSION,
     generatedAtUTC: snapshot.generatedAtUTC, round: r.model.target, drawDate: r.recommendation.date, seed: r.settings.seed,
     dataRound: r.data.latest, historyFirst: r.data.first, historyCount: r.data.count,
-    options: { games: 5, uniqueLines: false, spread: false }, comparable: true,
-    lines: r.recommendation.lines, research: { kind: 'auto-chain', data: snapshot.data, model: r.model,
-      trace: r.recommendation.trace, validation: { ...r.validation, rounds: undefined }, search: r.search } };
+    options: { games: 5, uniqueLines: false, spread: false, mode }, comparable: true,
+    lines: generated.lines, research: { kind: 'auto-chain', mode, data: snapshot.data, model: r.model,
+      trace: generated.trace, validation: { ...r.validation, rounds: undefined }, search: r.search } };
 }
 
-export function chainManualRecord(rows, snapshot, { games, uniqueLines, spread, seed, id, now }) {
+export function chainManualRecord(rows, snapshot, { games, uniqueLines, spread, seed, id, now, mode = 'evidence' }) {
   if (!snapshot || snapshot.result?.version !== AUTO_CHAIN_VERSION || snapshot.data.count !== rows.length ||
     autoHistorySignature(rows) !== snapshot.result.data.signature ||
     rows.reduce((n, row) => Math.max(n, row.round), 0) !== snapshot.data.last) throw Error('최신 자동 분석을 기다려 주세요.');
-  const record = chainRecommendationRecord(snapshot);
+  if (!['evidence', 'control'].includes(mode)) throw Error('추천/대조군 모드를 확인해 주세요.');
+  const record = chainRecommendationRecord(snapshot, mode);
+  if (mode === 'evidence' && snapshot.result.recommendation.unavailable) throw Error('점수 분석을 완료하지 못했습니다. 무작위 대조군은 별도로 선택할 수 있습니다.');
   if (now >= new Date(scheduleFor(record.round).cutoffUTC)) throw Error('대상 회차의 생성 시간이 지났습니다. 최신 확정 결과를 확인해 주세요.');
-  const generated = generateChainGames(snapshot.result.model, { games, uniqueLines, spread, seed });
-  return { ...record, id, source: 'manual', generatedAtUTC: now.toISOString(), seed, options: { games, uniqueLines, spread },
+  const generated = mode === 'control' ? generateControlGames(record.round, { games, uniqueLines, spread, seed }) :
+    generateChainGames(snapshot.result.model, { games, uniqueLines, spread });
+  return { ...record, id, source: 'manual', generatedAtUTC: now.toISOString(), seed, options: { games, uniqueLines, spread, mode },
     comparable: games === 5 && !uniqueLines && !spread && seed === snapshot.result.settings.seed,
     lines: generated.lines, research: { ...record.research, trace: generated.trace } };
 }
