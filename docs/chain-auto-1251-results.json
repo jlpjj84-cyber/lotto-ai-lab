@@ -1,0 +1,548 @@
+{
+  "version": "5.2.1",
+  "source": {
+    "first": 1,
+    "last": 1251,
+    "count": 1251,
+    "sha256": "71d92c4459d6ad18a9172330c639afb07b238dfc1d0ad8ac385f7a2954c482c2"
+  },
+  "settings": {
+    "seed": 645,
+    "maxLag": 10,
+    "maxLength": 10,
+    "minSupport": 8,
+    "minSuccesses": 3,
+    "topK": 24,
+    "beam": 12,
+    "maxModels": 50000,
+    "maxPending": 60000,
+    "maxLongQueries": 512,
+    "evaluationStart": 1001,
+    "shrinkage": 20
+  },
+  "next": [
+    [
+      6,
+      28,
+      32,
+      33,
+      38,
+      39
+    ],
+    [
+      5,
+      13,
+      16,
+      17,
+      41,
+      42
+    ],
+    [
+      2,
+      21,
+      24,
+      32,
+      37,
+      39
+    ],
+    [
+      2,
+      7,
+      8,
+      10,
+      22,
+      30
+    ],
+    [
+      12,
+      14,
+      26,
+      28,
+      36,
+      45
+    ]
+  ],
+  "search": {
+    "registered": 49656,
+    "pending": 45,
+    "limits": {
+      "pending": 0,
+      "models": 0,
+      "longQueries": 0,
+      "deepest": 4
+    },
+    "policy": "전이 1~10회 · 동일 회차 번호쌍 · 동일/혼합 간격 연쇄 · 빈발 조건 빔 확장"
+  },
+  "ms": 2287.2281,
+  "validation": {
+    "mode": "every-draw-walk-forward",
+    "from": 1001,
+    "to": 1251,
+    "n": 251,
+    "games": 1255,
+    "activeRounds": 251,
+    "frequency": {
+      "experimental": [
+        501,
+        532,
+        203,
+        17,
+        2,
+        0,
+        0
+      ],
+      "baseline": [
+        492,
+        552,
+        183,
+        27,
+        1,
+        0,
+        0
+      ]
+    },
+    "experimentalMean": 0.7944223107569721,
+    "baselineMean": 0.799203187250996,
+    "difference": -0.004780876494023904,
+    "pValue": 1,
+    "interval": [
+      -0.033466135458167325,
+      0.022310756972111555
+    ],
+    "status": "무작위보다 높은 예측력 확인 없음"
+  },
+  "patterns": [
+    {
+      "id": "3:2|1:14>8",
+      "n": 18,
+      "hits": 9,
+      "contribution": 0.17368421052631577,
+      "validation": {
+        "registeredAt": 607,
+        "trials": 10,
+        "successes": 3,
+        "adjustedP": 1,
+        "interval": [
+          0.02046964020434014,
+          0.7771381701823051
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "8:13+34>27",
+      "n": 22,
+      "hits": 10,
+      "contribution": 0.16825396825396824,
+      "validation": {
+        "registeredAt": 462,
+        "trials": 14,
+        "successes": 6,
+        "adjustedP": 1,
+        "interval": [
+          0.09801209403137354,
+          0.8149327684515403
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "8:34|4:18>45",
+      "n": 26,
+      "hits": 11,
+      "contribution": 0.16376811594202897,
+      "validation": {
+        "registeredAt": 326,
+        "trials": 18,
+        "successes": 8,
+        "adjustedP": 1,
+        "interval": [
+          0.13212306323266176,
+          0.792990796989662
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "5:21+42>21",
+      "n": 13,
+      "hits": 7,
+      "contribution": 0.1595959595959596,
+      "validation": {
+        "registeredAt": 875,
+        "trials": 5,
+        "successes": 3,
+        "adjustedP": 1,
+        "interval": [
+          0.058319647599722996,
+          0.9863035388371066
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "10:10+31>18",
+      "n": 30,
+      "hits": 12,
+      "contribution": 0.16,
+      "validation": {
+        "registeredAt": 430,
+        "trials": 22,
+        "successes": 8,
+        "adjustedP": 1,
+        "interval": [
+          0.10254792401200127,
+          0.6994397133329968
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "통계적 우위 확인 없음"
+      }
+    },
+    {
+      "id": "3:34|1:19>21",
+      "n": 27,
+      "hits": 11,
+      "contribution": 0.1574468085106383,
+      "validation": {
+        "registeredAt": 309,
+        "trials": 19,
+        "successes": 7,
+        "adjustedP": 1,
+        "interval": [
+          0.09391606034988989,
+          0.724560085373783
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "8:1|4:27>31",
+      "n": 20,
+      "hits": 9,
+      "contribution": 0.15833333333333335,
+      "validation": {
+        "registeredAt": 351,
+        "trials": 12,
+        "successes": 5,
+        "adjustedP": 1,
+        "interval": [
+          0.07587143260371798,
+          0.8294136603561912
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "3:25+35>13",
+      "n": 17,
+      "hits": 8,
+      "contribution": 0.15495495495495495,
+      "validation": {
+        "registeredAt": 512,
+        "trials": 9,
+        "successes": 5,
+        "adjustedP": 1,
+        "interval": [
+          0.10999345579375173,
+          0.9424574616284953
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "8:13|4:27>30",
+      "n": 17,
+      "hits": 8,
+      "contribution": 0.15495495495495495,
+      "validation": {
+        "registeredAt": 549,
+        "trials": 9,
+        "successes": 2,
+        "adjustedP": 1,
+        "interval": [
+          0.006699232153109118,
+          0.7338145061138668
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "7:25+32>17",
+      "n": 14,
+      "hits": 7,
+      "contribution": 0.15098039215686274,
+      "validation": {
+        "registeredAt": 861,
+        "trials": 6,
+        "successes": 4,
+        "adjustedP": 1,
+        "interval": [
+          0.10916101204403716,
+          0.9891234740324482
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "10:2|1:29>36",
+      "n": 21,
+      "hits": 9,
+      "contribution": 0.15121951219512195,
+      "validation": {
+        "registeredAt": 424,
+        "trials": 13,
+        "successes": 5,
+        "adjustedP": 1,
+        "interval": [
+          0.06889681808062054,
+          0.7944873705745896
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "10:41|5:14>15",
+      "n": 21,
+      "hits": 9,
+      "contribution": 0.15121951219512195,
+      "validation": {
+        "registeredAt": 540,
+        "trials": 13,
+        "successes": 5,
+        "adjustedP": 1,
+        "interval": [
+          0.06889681808062054,
+          0.7944873705745896
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "7:5|1:19>33",
+      "n": 21,
+      "hits": 9,
+      "contribution": 0.15121951219512195,
+      "validation": {
+        "registeredAt": 613,
+        "trials": 13,
+        "successes": 4,
+        "adjustedP": 1,
+        "interval": [
+          0.03633903226977036,
+          0.7335537425460711
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "2:18|1:19>13",
+      "n": 25,
+      "hits": 10,
+      "contribution": 0.14814814814814814,
+      "validation": {
+        "registeredAt": 311,
+        "trials": 17,
+        "successes": 6,
+        "adjustedP": 1,
+        "interval": [
+          0.0773063939415494,
+          0.7276537027845218
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "5:21|1:18>37",
+      "n": 25,
+      "hits": 10,
+      "contribution": 0.14814814814814814,
+      "validation": {
+        "registeredAt": 373,
+        "trials": 17,
+        "successes": 8,
+        "adjustedP": 1,
+        "interval": [
+          0.14234319519186922,
+          0.8189002050279675
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "6:27|3:35>10",
+      "n": 25,
+      "hits": 10,
+      "contribution": 0.14814814814814814,
+      "validation": {
+        "registeredAt": 372,
+        "trials": 17,
+        "successes": 7,
+        "adjustedP": 1,
+        "interval": [
+          0.10783759510079755,
+          0.7756544620314723
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "10:4+41>44",
+      "n": 18,
+      "hits": 8,
+      "contribution": 0.14736842105263157,
+      "validation": {
+        "registeredAt": 497,
+        "trials": 10,
+        "successes": 5,
+        "adjustedP": 1,
+        "interval": [
+          0.095407445794641,
+          0.904592554205359
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "3:16+34>35",
+      "n": 18,
+      "hits": 8,
+      "contribution": 0.14736842105263157,
+      "validation": {
+        "registeredAt": 604,
+        "trials": 10,
+        "successes": 4,
+        "adjustedP": 1,
+        "interval": [
+          0.05002980611800113,
+          0.8475067518910986
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "8:13>33",
+      "n": 183,
+      "hits": 42,
+      "contribution": 0.08669950738916257,
+      "validation": {
+        "registeredAt": 86,
+        "trials": 175,
+        "successes": 39,
+        "adjustedP": 1,
+        "interval": [
+          0.1314825414862305,
+          0.33434424913526023
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "통계적 우위 확인 없음"
+      }
+    },
+    {
+      "id": "3:16|1:45>27",
+      "n": 22,
+      "hits": 9,
+      "contribution": 0.14444444444444443,
+      "validation": {
+        "registeredAt": 566,
+        "trials": 14,
+        "successes": 7,
+        "adjustedP": 1,
+        "interval": [
+          0.13846706798784592,
+          0.8615329320121541
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "8:38|4:42>5",
+      "n": 22,
+      "hits": 9,
+      "contribution": 0.14444444444444443,
+      "validation": {
+        "registeredAt": 697,
+        "trials": 14,
+        "successes": 5,
+        "adjustedP": 1,
+        "interval": [
+          0.06310856914819837,
+          0.7615702956897328
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "12:44|6:23>19",
+      "n": 15,
+      "hits": 7,
+      "contribution": 0.14285714285714285,
+      "validation": {
+        "registeredAt": 961,
+        "trials": 7,
+        "successes": 1,
+        "adjustedP": 1,
+        "interval": [
+          0,
+          0.7154205799326623
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "20:22|10:41>19",
+      "n": 15,
+      "hits": 7,
+      "contribution": 0.14285714285714285,
+      "validation": {
+        "registeredAt": 725,
+        "trials": 7,
+        "successes": 3,
+        "adjustedP": 1,
+        "interval": [
+          0.033908266988236235,
+          0.9163532973876861
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    },
+    {
+      "id": "6:22|1:14>44",
+      "n": 15,
+      "hits": 7,
+      "contribution": 0.14285714285714285,
+      "validation": {
+        "registeredAt": 583,
+        "trials": 7,
+        "successes": 5,
+        "adjustedP": 1,
+        "interval": [
+          0.16391503984054606,
+          0.9909898674926099
+        ],
+        "method": "등록 이후 순차 검정 · 등록 순서/45개 결과 전체 보정",
+        "status": "표본 부족"
+      }
+    }
+  ]
+}

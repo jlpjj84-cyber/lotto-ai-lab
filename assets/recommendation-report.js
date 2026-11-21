@@ -1,6 +1,8 @@
 import { featuresText, reasonFor, referenceFor } from './selection-evidence.js';
 import { STRATEGIES } from './lotto-strategies.js';
 import { describeRecommendation, MISSING_SELECTION } from './recommendation-narration.js';
+import { AUTO_CHAIN_ID } from './chain-auto.js';
+import { chainRecommendationHTML, chainRecommendationReport } from './chain-auto-report.js';
 
 const names = new Map(STRATEGIES);
 const overviewTitle = '추천 전략 및 공통 검증 요약';
@@ -33,6 +35,7 @@ function evidenceHTML(line, evidence, game, options) {
 }
 
 export function recommendationHTML(record, scoreLabels = []) {
+  if (record.strategy === AUTO_CHAIN_ID) return chainRecommendationHTML(record, scoreLabels);
   const { common, games } = describeRecommendation(record);
   const missing = `<p class="research-help">${MISSING_SELECTION}</p>`;
   const overview = common.length ? `<section class="recommendation-overview"><h3>${overviewTitle}</h3>` +
@@ -48,6 +51,7 @@ export function recommendationHTML(record, scoreLabels = []) {
 }
 
 export function recommendationReport(record) {
+  if (record.strategy === AUTO_CHAIN_ID) return chainRecommendationReport(record);
   const { research } = record;
   const { common, games } = describeRecommendation(record);
   const lines = [`${record.round}회 추천 보고서 · ${names.get(record.strategy)} v${record.version}`,

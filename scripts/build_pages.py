@@ -41,14 +41,22 @@ FILES = (
     "assets/chain-worker.js",
     "assets/chain-ui.js",
     "assets/chain.css",
+    "assets/chain-auto.js",
+    "assets/chain-auto-record.js",
+    "assets/chain-auto-service.js",
+    "assets/chain-auto-worker.js",
+    "assets/chain-auto-report.js",
+    "assets/chain-auto-ui.js",
+    "assets/strategy-catalog.js",
 )
 
 
 def build(destination: Path) -> None:
     destination.mkdir(parents=True, exist_ok=True)
     def generated(path):
-        return path.parent == destination / 'data' / 'live' and (path.name == 'index.json' or
-                 (path.suffix == '.json' and path.stem.isascii() and path.stem.isdecimal()))
+        return (path.parent == destination / 'data' / 'live' and (path.name == 'index.json' or
+                 (path.suffix == '.json' and path.stem.isascii() and path.stem.isdecimal()))) or (
+                 path.parent == destination / 'data' / 'chain-auto' and path.name in ('latest.json', 'health.json'))
 
     unexpected = [path for path in destination.rglob("*") if path.is_symlink() or
                   (path.is_file() and path.relative_to(destination).as_posix() not in FILES and not generated(path))]
@@ -64,6 +72,7 @@ def build(destination: Path) -> None:
             if generated(path):
                 path.unlink()
     subprocess.run(['node', str(ROOT / 'scripts' / 'build-live-index.mjs'), str(live.resolve())], check=True)
+    subprocess.run(['node', str(ROOT / 'scripts' / 'update-chain-auto.mjs'), str((destination / 'data' / 'chain-auto').resolve())], check=True)
 
 
 if __name__ == "__main__":

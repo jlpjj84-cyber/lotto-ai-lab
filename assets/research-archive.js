@@ -1,6 +1,8 @@
 import { MANUAL_KEY, readManualRecords } from './manual-generation.js';
 import { verifiedResearch } from './research-provenance.js';
 import { STRATEGIES } from './lotto-strategies.js';
+import { AUTO_CHAIN_ID } from './chain-auto.js';
+import { validChainSelection } from './chain-auto-record.js';
 
 export const EXPERIMENT_KEY = 'lotto_lab_v50_strategy_experiments';
 const ids = new Set(STRATEGIES.map(([id]) => id));
@@ -29,6 +31,9 @@ export function readExperiments(raw) {
 function validExplanation(record) {
   const evidence = record.research;
   if (!evidence) return !record.sha256;
+  if (record.strategy === AUTO_CHAIN_ID) return evidence.kind === 'auto-chain' && /^[0-9a-f]{64}$/.test(evidence.data?.sha256) &&
+    evidence.model?.target === record.round && evidence.model.candidates.every(p => p.through === record.dataRound) &&
+    validChainSelection(record.lines, evidence.trace, evidence.model);
   const methods = new Set(['uniform', 'hot', 'cold', 'overdue', 'pairs', 'pattern']);
   return /^[0-9a-f]{64}$/.test(evidence.data?.sha256) && finite(evidence.recent) && finite(evidence.earlier) &&
     Array.isArray(evidence.lines) && evidence.lines.length === record.lines.length &&

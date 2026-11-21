@@ -35,6 +35,7 @@ on:
       - 'scripts/update_draws.py'
       - 'scripts/live*'
       - 'scripts/build-live-index.mjs'
+      - 'scripts/update-chain-auto.mjs'
       - 'scripts/build_pages.py'
       - 'tests/**'
       - 'data/draws.json'
@@ -91,11 +92,18 @@ jobs:
           else
             node scripts/live-predictions.mjs evaluate
           fi
+      - name: Refresh automatic chain research from the current confirmed archive
+        id: chain_auto
+        continue-on-error: true
+        run: node scripts/update-chain-auto.mjs
       - name: Commit archive, receipts, evaluation results and health
         run: |
           git add data/draws.json
           for path in data/prediction-receipts data/evaluations data/evaluation-revisions data/live-health.json; do
             if [[ -e "$path" ]]; then git add -- "$path"; fi
+          done
+          for path in data/chain-auto/latest.json data/chain-auto/health.json data/chain-auto/snapshots/*.json; do
+            if [[ -f "$path" ]]; then git add -- "$path"; fi
           done
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'data: archive lotto results and live evaluation'
@@ -103,6 +111,9 @@ jobs:
       - name: Report live processing issue
         if: steps.live.outcome == 'failure'
         run: echo '::warning::Live prediction verification did not complete. See the live processing log and health record.'
+      - name: Report automatic chain research issue
+        if: steps.chain_auto.outcome == 'failure'
+        run: echo '::warning::Automatic chain research failed. Previous report and immutable snapshots were preserved; see data/chain-auto/health.json.'
 
   deploy:
     name: Publish latest dashboard + draw data
