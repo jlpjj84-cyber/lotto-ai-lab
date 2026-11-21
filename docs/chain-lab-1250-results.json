@@ -1,0 +1,834 @@
+{
+  "version": "5.2.0",
+  "scope": "historical split, not prospective evidence",
+  "settings": {
+    "developmentEnd": 1000,
+    "endRound": 1250,
+    "maxLength": 10,
+    "gap": 1,
+    "minSupport": 8,
+    "topK": 12,
+    "maxNodes": 150000,
+    "seed": 645,
+    "mode": "fixed"
+  },
+  "source": {
+    "first": 1,
+    "last": 1250,
+    "count": 1250,
+    "sha256": "747e5e29718ad1c31526a1cdcf5bef76a488a4355b039f8e7eb025600e15668b"
+  },
+  "runtime": {
+    "node": "v24.20.0",
+    "fixedMs": 52.369,
+    "walkForwardMs": 159.2732000000001,
+    "monteCarloMs": 1282.3552
+  },
+  "search": {
+    "visited": 93141,
+    "pruned": 90805,
+    "deepest": 4,
+    "effectiveLength": 10,
+    "requestedLength": 10,
+    "reason": "4단계에서 최소 8회 발생 조건을 만족하는 연쇄가 없어 더 긴 탐색을 중단했습니다.",
+    "partial": false,
+    "training": {
+      "from": 1,
+      "to": 1000,
+      "draws": 1000
+    }
+  },
+  "patterns": [
+    {
+      "chain": [
+        [
+          42
+        ],
+        [
+          19
+        ],
+        [
+          21
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 9,
+        "trials": 15,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 0,
+        "trials": 1,
+        "probability": 0,
+        "effect": -0.13333333333333333,
+        "interval": [
+          0,
+          1
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "42~1~19~1~21",
+        "pValue": 0.5523447655234477,
+        "adjustedP": 1,
+        "familyP": 1,
+        "rateRange": [
+          0,
+          0.5
+        ],
+        "rateSamples": 9899,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    },
+    {
+      "chain": [
+        [
+          23
+        ],
+        [
+          25
+        ],
+        [
+          15
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 9,
+        "trials": 16,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 0,
+        "trials": 6,
+        "probability": 0,
+        "effect": -0.13333333333333333,
+        "interval": [
+          0,
+          0.5774912565873453
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "23~1~25~1~15",
+        "pValue": 0.16078392160783922,
+        "adjustedP": 1,
+        "familyP": 0.8679132086791321,
+        "rateRange": [
+          0,
+          0.5
+        ],
+        "rateSamples": 9878,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    },
+    {
+      "chain": [
+        [
+          45
+        ],
+        [
+          7
+        ],
+        [
+          31
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 9,
+        "trials": 16,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 0,
+        "trials": 6,
+        "probability": 0,
+        "effect": -0.13333333333333333,
+        "interval": [
+          0,
+          0.5774912565873453
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "45~1~7~1~31",
+        "pValue": 0.1571842815718428,
+        "adjustedP": 1,
+        "familyP": 0.8679132086791321,
+        "rateRange": [
+          0,
+          0.5
+        ],
+        "rateSamples": 9896,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    },
+    {
+      "chain": [
+        [
+          7
+        ],
+        [
+          20
+        ],
+        [
+          14
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 9,
+        "trials": 17,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 1,
+        "trials": 6,
+        "probability": 0.16666666666666666,
+        "effect": 0.033333333333333326,
+        "interval": [
+          0,
+          0.776343563846915
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "7~1~20~1~14",
+        "pValue": 0.9322067793220677,
+        "adjustedP": 1,
+        "familyP": 1,
+        "rateRange": [
+          0,
+          0.5
+        ],
+        "rateSamples": 9894,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    },
+    {
+      "chain": [
+        [
+          8
+        ],
+        [
+          33
+        ],
+        [
+          29
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 9,
+        "trials": 17,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 0,
+        "trials": 2,
+        "probability": 0,
+        "effect": -0.13333333333333333,
+        "interval": [
+          0,
+          0.94594906081368
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "8~1~33~1~29",
+        "pValue": 0.6404359564043596,
+        "adjustedP": 1,
+        "familyP": 1,
+        "rateRange": [
+          0,
+          0.5
+        ],
+        "rateSamples": 9907,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    },
+    {
+      "chain": [
+        [
+          15
+        ],
+        [
+          32
+        ],
+        [
+          29
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 10,
+        "trials": 21,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 0,
+        "trials": 4,
+        "probability": 0,
+        "effect": -0.13333333333333333,
+        "interval": [
+          0,
+          0.7336470278517186
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "15~1~32~1~29",
+        "pValue": 0.40885911408859116,
+        "adjustedP": 1,
+        "familyP": 0.9976002399760024,
+        "rateRange": [
+          0,
+          0.5
+        ],
+        "rateSamples": 9884,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    },
+    {
+      "chain": [
+        [
+          27
+        ],
+        [
+          10
+        ],
+        [
+          45
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 9,
+        "trials": 18,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 1,
+        "trials": 2,
+        "probability": 0.5,
+        "effect": 0.3666666666666667,
+        "interval": [
+          0,
+          1
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "27~1~10~1~45",
+        "pValue": 0.29017098290170984,
+        "adjustedP": 1,
+        "familyP": 0.9852014798520148,
+        "rateRange": [
+          0,
+          0.5
+        ],
+        "rateSamples": 9881,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    },
+    {
+      "chain": [
+        [
+          29
+        ],
+        [
+          3
+        ],
+        [
+          26
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 8,
+        "trials": 15,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 0,
+        "trials": 4,
+        "probability": 0,
+        "effect": -0.13333333333333333,
+        "interval": [
+          0,
+          0.7336470278517186
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "29~1~3~1~26",
+        "pValue": 0.41055894410558946,
+        "adjustedP": 1,
+        "familyP": 0.9976002399760024,
+        "rateRange": [
+          0,
+          0.5714285714285714
+        ],
+        "rateSamples": 9884,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    },
+    {
+      "chain": [
+        [
+          37
+        ],
+        [
+          23
+        ],
+        [
+          1
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 8,
+        "trials": 15,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 2,
+        "trials": 2,
+        "probability": 1,
+        "effect": 0.8666666666666667,
+        "interval": [
+          0.05405093918631998,
+          1
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "37~1~23~1~1",
+        "pValue": 0.0064993500649935,
+        "adjustedP": 0.077992200779922,
+        "familyP": 0.0585941405859414,
+        "rateRange": [
+          0,
+          0.5
+        ],
+        "rateSamples": 9891,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    },
+    {
+      "chain": [
+        [
+          39
+        ],
+        [
+          6
+        ],
+        [
+          16
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 8,
+        "trials": 15,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 0,
+        "trials": 3,
+        "probability": 0,
+        "effect": -0.13333333333333333,
+        "interval": [
+          0,
+          0.8365705343072118
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "39~1~6~1~16",
+        "pValue": 0.5125487451254874,
+        "adjustedP": 1,
+        "familyP": 0.9998000199980002,
+        "rateRange": [
+          0,
+          0.5714285714285714
+        ],
+        "rateSamples": 9901,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    },
+    {
+      "chain": [
+        [
+          31
+        ],
+        [
+          10
+        ],
+        [
+          17
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 9,
+        "trials": 19,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 0,
+        "trials": 1,
+        "probability": 0,
+        "effect": -0.13333333333333333,
+        "interval": [
+          0,
+          1
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "31~1~10~1~17",
+        "pValue": 0.5683431656834317,
+        "adjustedP": 1,
+        "familyP": 1,
+        "rateRange": [
+          0,
+          0.5
+        ],
+        "rateSamples": 9888,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    },
+    {
+      "chain": [
+        [
+          36
+        ],
+        [
+          25
+        ],
+        [
+          37
+        ]
+      ],
+      "gaps": [
+        1,
+        1
+      ],
+      "discovery": {
+        "successes": 9,
+        "trials": 19,
+        "expected": 2.3656296296296295
+      },
+      "evaluation": {
+        "successes": 0,
+        "trials": 4,
+        "probability": 0,
+        "effect": -0.13333333333333333,
+        "interval": [
+          0,
+          0.7336470278517186
+        ],
+        "adjustedP": 1
+      },
+      "mc": {
+        "id": "36~1~25~1~37",
+        "pValue": 0.40645935406459355,
+        "adjustedP": 1,
+        "familyP": 0.9976002399760024,
+        "rateRange": [
+          0,
+          0.6
+        ],
+        "rateSamples": 9881,
+        "statisticRange": [
+          -0.47700779594145104,
+          0.495035210484311
+        ],
+        "verdict": "표본 부족"
+      }
+    }
+  ],
+  "forecast": {
+    "fixed": {
+      "mode": "fixed",
+      "n": 250,
+      "games": 1250,
+      "skipped": 0,
+      "activeRounds": 38,
+      "experimentalMean": 0.8,
+      "baselineMean": 0.7976,
+      "theoreticalMean": 0.8,
+      "difference": 0.0024,
+      "interval": [
+        -0.0048,
+        0.0096
+      ],
+      "intervalMethod": "회차 단위 순환 블록 부트스트랩(근사, 블록 10)",
+      "pValue": 0.8868401773709333,
+      "adjustedP": 1,
+      "frequency": {
+        "experimental": [
+          491,
+          545,
+          188,
+          25,
+          1,
+          0,
+          0
+        ],
+        "baseline": [
+          491,
+          549,
+          183,
+          26,
+          1,
+          0,
+          0
+        ]
+      },
+      "verdict": "무작위 기준 대비 예측력 개선 확인 없음"
+    },
+    "walkForward": {
+      "mode": "walk-forward",
+      "n": 250,
+      "games": 1250,
+      "skipped": 0,
+      "activeRounds": 41,
+      "experimentalMean": 0.7992,
+      "baselineMean": 0.7976,
+      "theoreticalMean": 0.8,
+      "difference": 0.0016,
+      "interval": [
+        -0.007199999999999999,
+        0.0104
+      ],
+      "intervalMethod": "회차 단위 순환 블록 부트스트랩(근사, 블록 10)",
+      "pValue": 0.9791175774128777,
+      "adjustedP": 1,
+      "frequency": {
+        "experimental": [
+          489,
+          550,
+          185,
+          25,
+          1,
+          0,
+          0
+        ],
+        "baseline": [
+          491,
+          549,
+          183,
+          26,
+          1,
+          0,
+          0
+        ]
+      },
+      "verdict": "무작위 기준 대비 예측력 개선 확인 없음"
+    }
+  },
+  "monteCarlo": {
+    "repetitions": 10000,
+    "seed": 645,
+    "work": 90000000,
+    "durationMs": 1282.3552,
+    "method": "발견 후보 고정 · 평가 구간 비복원 6/45 재생성 · 전체 후보 최댓값 보정",
+    "maximumRange": [
+      -0.018787882432005465,
+      1.9932302039311718
+    ]
+  },
+  "transitions": [
+    {
+      "lag": 1,
+      "windows": 999,
+      "largestCount": 34,
+      "pair": [
+        20,
+        18
+      ],
+      "expected": 17.76,
+      "interpretation": "discovery-only, selected maximum is not a significance test"
+    },
+    {
+      "lag": 2,
+      "windows": 998,
+      "largestCount": 31,
+      "pair": [
+        13,
+        34
+      ],
+      "expected": 17.74222222222222,
+      "interpretation": "discovery-only, selected maximum is not a significance test"
+    },
+    {
+      "lag": 3,
+      "windows": 997,
+      "largestCount": 31,
+      "pair": [
+        43,
+        34
+      ],
+      "expected": 17.724444444444444,
+      "interpretation": "discovery-only, selected maximum is not a significance test"
+    },
+    {
+      "lag": 4,
+      "windows": 996,
+      "largestCount": 33,
+      "pair": [
+        43,
+        34
+      ],
+      "expected": 17.706666666666667,
+      "interpretation": "discovery-only, selected maximum is not a significance test"
+    },
+    {
+      "lag": 5,
+      "windows": 995,
+      "largestCount": 34,
+      "pair": [
+        7,
+        39
+      ],
+      "expected": 17.68888888888889,
+      "interpretation": "discovery-only, selected maximum is not a significance test"
+    },
+    {
+      "lag": 6,
+      "windows": 994,
+      "largestCount": 33,
+      "pair": [
+        5,
+        1
+      ],
+      "expected": 17.67111111111111,
+      "interpretation": "discovery-only, selected maximum is not a significance test"
+    },
+    {
+      "lag": 7,
+      "windows": 993,
+      "largestCount": 36,
+      "pair": [
+        8,
+        14
+      ],
+      "expected": 17.653333333333332,
+      "interpretation": "discovery-only, selected maximum is not a significance test"
+    },
+    {
+      "lag": 8,
+      "windows": 992,
+      "largestCount": 32,
+      "pair": [
+        13,
+        33
+      ],
+      "expected": 17.635555555555555,
+      "interpretation": "discovery-only, selected maximum is not a significance test"
+    },
+    {
+      "lag": 9,
+      "windows": 991,
+      "largestCount": 35,
+      "pair": [
+        40,
+        15
+      ],
+      "expected": 17.61777777777778,
+      "interpretation": "discovery-only, selected maximum is not a significance test"
+    },
+    {
+      "lag": 10,
+      "windows": 990,
+      "largestCount": 32,
+      "pair": [
+        17,
+        34
+      ],
+      "expected": 17.6,
+      "interpretation": "discovery-only, selected maximum is not a significance test"
+    }
+  ]
+}

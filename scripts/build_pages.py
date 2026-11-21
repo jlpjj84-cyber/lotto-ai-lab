@@ -35,6 +35,12 @@ FILES = (
     "assets/research-worker.js",
     "assets/research-ui.js",
     "assets/research.css",
+    "assets/chain-math.js",
+    "assets/chain-research.js",
+    "assets/chain-validation.js",
+    "assets/chain-worker.js",
+    "assets/chain-ui.js",
+    "assets/chain.css",
 )
 
 

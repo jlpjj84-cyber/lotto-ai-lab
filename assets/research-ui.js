@@ -11,7 +11,7 @@ const signed = (number, digits = 2) => `${number > 0 ? '+' : ''}${number.toFixed
 const pv = value => value < .0001 ? value.toExponential(2) : value.toFixed(4);
 const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
-export function createJobs() {
+export function createJobs(workerModule = './research-worker.js') {
   const cache = new Map();
   let worker = null;
   let active = null;
@@ -46,7 +46,7 @@ export function createJobs() {
     if (cache.has(key)) { complete(cache.get(key)); return; }
     try {
       if (!worker) {
-        worker = new Worker(new URL('./research-worker.js', import.meta.url), { type: 'module' });
+        worker = new Worker(new URL(workerModule, import.meta.url), { type: 'module' });
         worker.onmessage = receive;
       }
       active = { key, update, complete, fail };
