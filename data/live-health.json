@@ -8,10 +8,10 @@
     "workflow": "https://github.com/jlpjj84-cyber/lotto-ai-lab/actions/runs/44919068028"
   },
   "predict": {
-    "status": "confirmed",
-    "round": 1250,
-    "reason": "마감 전 GitHub 커밋 확인 완료",
-    "checkedAtUTC": "2026-11-14T09:12:20.843Z",
-    "workflow": "https://github.com/jlpjj84-cyber/lotto-ai-lab/actions/runs/43579421478"
+    "status": "late",
+    "round": 1251,
+    "reason": "토요일 확정 시간이 지나 새 기록을 만들 수 없습니다.",
+    "checkedAtUTC": "2026-11-21T16:33:30.795Z",
+    "workflow": "https://github.com/jlpjj84-cyber/lotto-ai-lab/actions/runs/44925164363"
   }
 }
