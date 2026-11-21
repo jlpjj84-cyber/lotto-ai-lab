@@ -34,6 +34,7 @@
 <button class="tab on" data-tab="overview">◈ 개요</button><button class="tab" data-tab="statistics">▥ 통계 분석</button><button class="tab" data-tab="patterns">▧ 역대 패턴</button><button class="tab" data-tab="backtest">⌁ 전략 검증</button><button class="tab" data-tab="montecarlo">몬테카를로</button><button class="tab" data-tab="chains">번호 연쇄 연구실</button><button class="tab" data-tab="live">◉ 실전 예측 검증</button><button class="tab" data-tab="generator">✳ 조합 생성</button><button class="tab" data-tab="archive">연구 아카이브</button><button class="tab" data-tab="records">▤ 구매 기록</button><button class="tab" data-tab="data">⚙ 데이터 관리</button>
 </nav>
 <section id="overview" class="view active">
+<div class="card auto-chain-card" data-auto-chain="overview"></div>
 <div id="hero" class="hero"></div>
 <div id="syncOverview" class="notice" role="status" aria-live="polite"></div>
 <div id="metrics" class="metrics"></div>
@@ -145,6 +146,8 @@
 </section>
 <section id="chains" class="view research-section">
 <div class="section-head"><h1>번호 연쇄 연구실</h1><span class="chip accent">5.2 · 독립 연구</span></div>
+<div class="card auto-chain-card" data-auto-chain="lab"></div>
+<details class="chain-advanced"><summary>선택 기능: 기존 수동 연쇄 연구실 열기</summary>
 <p class="research-help">여러 회차에 걸친 본번호의 출현 관계를 연구합니다. 발견 구간에서 고른 후보와 이후 평가를 분리합니다. 역사적 구간 분리는 실제 추첨 전 사전 확정 예측과 다르며, 설정을 바꾸어 유리한 평가를 고르면 과적합될 수 있습니다.</p>
 <div class="card">
 <div class="chain-controls">
@@ -170,6 +173,7 @@
 <div class="card"><h2>패턴별 출현 회차와 시간 변화</h2><div id="chainDetail" class="chain-detail">연쇄 후보나 히트맵 관계를 선택해 주세요.</div></div>
 <div class="card"><h2>미래 구간 예측 평가 · 기존 균등 무작위 기준 비교</h2><div id="chainForecast"></div></div>
 <p id="chainSource" class="research-help"></p>
+</details>
 </section>
 <section id="live" class="view research-section">
   <div class="section-head"><div><h1>실전 예측 검증</h1><div class="tiny">추첨 전에 GitHub에 확정한 9개 전략 · 회차당 5게임</div></div><button class="btn" id="liveRefresh">기록 확인 ↻</button></div>
@@ -676,6 +680,7 @@ window.addEventListener('storage',event=>{
   }
 });
 window.addEventListener('focus',renderSyncStatus);
+window.addEventListener('lotto-data-refresh-request',()=>syncGithubData({silent:true}));
 setInterval(renderSyncStatus,60000);
 makeGenerated();renderAll();renderStorageNotice();syncGithubData({silent:true});
 </script>
@@ -685,4 +690,5 @@ makeGenerated();renderAll();renderStorageNotice();syncGithubData({silent:true});
 <script type="module" src="./assets/strategy-lab-ui.js"></script>
 <script type="module" src="./assets/research-archive-ui.js"></script>
 <script type="module" src="./assets/chain-ui.js"></script>
+<script type="module" src="./assets/chain-auto-ui.js"></script>
 </body></html>

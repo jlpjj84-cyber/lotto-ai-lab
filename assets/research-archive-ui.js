@@ -2,7 +2,7 @@ import { recommendationHTML } from './recommendation-report.js';
 import { manualOutcome, MANUAL_KEY } from './manual-generation.js';
 import { EXPERIMENT_KEY, exportResearch, importResearch, verifyManual } from './research-archive.js';
 import { verifiedResearch } from './research-provenance.js';
-import { STRATEGIES } from './lotto-strategies.js';
+import { RECOMMENDATION_STRATEGIES as STRATEGIES } from './strategy-catalog.js';
 
 const $ = id => document.getElementById(id);
 const names = new Map(STRATEGIES);

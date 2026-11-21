@@ -1,10 +1,12 @@
-import { STRATEGIES } from './lotto-strategies.js';
+import { RECOMMENDATION_STRATEGIES as STRATEGIES } from './strategy-catalog.js';
 import { EXPECTED_MATCHES } from './research-backtest.js';
 import { DEFAULT_SEED } from './research-math.js';
 import { createManualRecord, MANUAL_KEY, manualOutcome, readManualRecords, removeManualRecord } from './manual-generation.js';
 import { recommendationHTML, recommendationReport } from './recommendation-report.js';
 import { datasetStamp, sealResearch } from './research-provenance.js';
 import { backtestEvidence, simulationEvidence } from './selection-evidence.js';
+import { AUTO_CHAIN_ID } from './chain-auto.js';
+import { getAutoChainService } from './chain-auto-service.js';
 
 const $ = id => document.getElementById(id);
 const names = new Map(STRATEGIES);
@@ -31,6 +33,11 @@ function renderEvidence() {
   evidence.hidden = Boolean(latest);
   if (latest) return;
   const choice = $('manualStrategy').value;
+  if (choice === AUTO_CHAIN_ID) {
+    const state = getAutoChainService().getState(), v = state.record?.result.validation;
+    evidence.textContent = v ? `자동 워크포워드 ${v.n}회 · ${v.status}. 데이터가 갱신되면 자동 재분석합니다. 시드·게임 수·중복 제한 변경은 참고 성적으로만 표시합니다.` : '자동 연쇄 분석 중입니다. 완료 후 실험 추천을 생성할 수 있습니다.';
+    return;
+  }
   const result = baseline?.strategies.find(row => row.id === choice)?.evaluation;
   const random = baseline?.strategies.find(row => row.id === 'random')?.evaluation;
   const delta = value => `${value >= 0 ? '+' : ''}${value.toFixed(3)}개`;
@@ -111,10 +118,11 @@ async function generate() {
     const draft = createManualRecord(source, {
       strategy: $('manualStrategy').value, games: $('manualGames').valueAsNumber,
       uniqueLines: $('manualUnique').checked, spread: $('manualSpread').checked, seed, id: crypto.randomUUID(), explain: true,
+      autoChain: getAutoChainService().getState().record,
     });
     const data = await datasetStamp(source);
     draft.research.data = data;
-    draft.research.validation = {
+    if (draft.strategy !== AUTO_CHAIN_ID) draft.research.validation = {
       backtest: backtestEvidence(historical?.data?.sha256 === data.sha256 ? historical : null, draft.strategy),
       monteCarlo: simulationEvidence(monteCarlo?.data?.sha256 === data.sha256 ? monteCarlo : null, draft.strategy),
     };
@@ -202,3 +210,6 @@ window.addEventListener('storage', event => {
 });
 window.addEventListener('lotto-recommendations-restored', () => { read(); if (active) renderHistory(); });
 read();
+getAutoChainService().subscribe(state => {
+  if ($('manualStrategy').value === AUTO_CHAIN_ID && !latest) renderEvidence();
+});

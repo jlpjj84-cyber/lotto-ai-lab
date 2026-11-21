@@ -3,11 +3,14 @@ import { DEFAULT_SEED } from './research-math.js';
 import { generateForStrategy, STRATEGIES, STRATEGY_VERSION } from './lotto-strategies.js';
 import { scoreTickets } from './lotto-scoring.js';
 import { explainSelections } from './selection-evidence.js';
+import { RECOMMENDATION_STRATEGIES } from './strategy-catalog.js';
+import { AUTO_CHAIN_ID } from './chain-auto.js';
+import { chainManualRecord } from './chain-auto-record.js';
 
 export const MANUAL_KEY = 'lotto_lab_v41_generated_records';
-const ids = new Set(STRATEGIES.map(([id]) => id));
+const ids = new Set(RECOMMENDATION_STRATEGIES.map(([id]) => id));
 
-export function createManualRecord(rows, { strategy, games, uniqueLines, spread, seed, id, now = new Date(), explain = false }) {
+export function createManualRecord(rows, { strategy, games, uniqueLines, spread, seed, id, now = new Date(), explain = false, autoChain }) {
   if (!rows.length || !ids.has(strategy)) throw Error('전략과 추첨 자료를 확인해 주세요.');
   const ordered = rows.slice().sort((a, b) => a.round - b.round);
   const latest = ordered.at(-1).round;
@@ -15,6 +18,7 @@ export function createManualRecord(rows, { strategy, games, uniqueLines, spread,
   const when = scheduleFor(round);
   if (now >= new Date(when.cutoffUTC)) throw Error('대상 회차의 생성 시간이 지났습니다. 최신 확정 결과를 확인해 주세요.');
   if (now < new Date(`${ordered.at(-1).date}T11:35:00Z`)) throw Error('직전 회차 확정 시각을 확인할 수 없습니다.');
+  if (strategy === AUTO_CHAIN_ID) return chainManualRecord(ordered, autoChain, { games, uniqueLines, spread, seed, id, now });
   const generated = generateForStrategy(ordered, round, strategy, { games, uniqueLines, spread, seed, explain });
   if (!generated) throw Error('직전 연속 50회가 필요합니다. 공개 추첨 자료를 갱신해 주세요.');
   return {
