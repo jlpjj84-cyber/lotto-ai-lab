@@ -4,8 +4,8 @@
     "status": "idle",
     "round": 1250,
     "reason": "평가할 새 확정 예측이 없습니다.",
-    "checkedAtUTC": "2026-11-21T14:21:30.790Z",
-    "workflow": "https://github.com/jlpjj84-cyber/lotto-ai-lab/actions/runs/44913487785"
+    "checkedAtUTC": "2026-11-21T15:09:33.338Z",
+    "workflow": "https://github.com/jlpjj84-cyber/lotto-ai-lab/actions/runs/44917620863"
   },
   "predict": {
     "status": "confirmed",
