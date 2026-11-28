@@ -9,9 +9,9 @@
   },
   "predict": {
     "status": "late",
-    "round": 1251,
+    "round": 1252,
     "reason": "토요일 확정 시간이 지나 새 기록을 만들 수 없습니다.",
-    "checkedAtUTC": "2026-11-21T16:33:30.795Z",
-    "workflow": "https://github.com/jlpjj84-cyber/lotto-ai-lab/actions/runs/44925164363"
+    "checkedAtUTC": "2026-11-28T17:18:27.014Z",
+    "workflow": "https://github.com/jlpjj84-cyber/lotto-ai-lab/actions/runs/46169725468"
   }
 }
